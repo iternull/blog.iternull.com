@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>Sphinx 安装与使用 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Sphinx 安装与使用
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2016/01/11/Sphinx-Installation-and-use.html" class="article-date"><time datetime="2016-01-11T14:13:53.000Z" itemprop="datePublished">2016-01-11</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.sphinx-doc.org/" target="_blank" rel="external">Sphinx</a> 是一个使用 Python 开发的文档编写生成程序，使用 <a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="external">reStructuredText</a> 语法编写文档，编译输出 HTML 页面文件、PDF 文件或其它格式的文件。<br><a id="more"></a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装 Sphinx 前请确保以安装 <code>Python</code> 和 <code>pip</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install shpinx</div></pre></td></tr></table></figure></p>
+<h2 id="创建一个文档项目"><a href="#创建一个文档项目" class="headerlink" title="创建一个文档项目"></a>创建一个文档项目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sphinx-quickstart</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line">root@null:~/Codes/Docs/Selfoss# sphinx-quickstart</div><div class="line">Welcome to the Sphinx 1.3.3 quickstart utility.</div><div class="line"></div><div class="line">Please enter values for the following settings (just press Enter to</div><div class="line">accept a default value, if one is given in brackets).</div><div class="line"></div><div class="line">Enter the root path for documentation.</div><div class="line">&gt; Root path for the documentation [.]:</div><div class="line">// 输入文档根路径</div><div class="line">// 根路径的文件 [.]:</div><div class="line">// 默认不用更改，直接回车</div><div class="line"></div><div class="line">You have two options for placing the build directory for Sphinx output.</div><div class="line">Either, you use a directory &quot;_build&quot; within the root path, or you separate</div><div class="line">&quot;source&quot; and &quot;build&quot; directories within the root path.</div><div class="line">&gt; Separate source and build directories (y/n) [n]: y</div><div class="line">// 独立的源和生成目录 (y/n) [n]:</div><div class="line">// 建议文档源代码与生成目录区别开，输入 y 回车</div><div class="line"></div><div class="line">Inside the root directory, two more directories will be created; &quot;_templates&quot;</div><div class="line">for custom HTML templates and &quot;_static&quot; for custom stylesheets and other static</div><div class="line">files. You can enter another prefix (such as &quot;.&quot;) to replace the underscore.</div><div class="line">&gt; Name prefix for templates and static dir [_]:</div><div class="line">// 模板和静态文件夹的前缀 [_]:</div><div class="line">// 使用默认的&quot;_&quot;，直接回车</div><div class="line"></div><div class="line">The project name will occur in several places in the built documentation.</div><div class="line">&gt; Project name: Selfoss</div><div class="line">// 项目名称</div><div class="line">&gt; Author name(s): ZMOM1031</div><div class="line">// 作者名称</div><div class="line"></div><div class="line">Sphinx has the notion of a &quot;version&quot; and a &quot;release&quot; for the</div><div class="line">software. Each version can have multiple releases. For example, for</div><div class="line">Python the version is something like 2.5 or 3.0, while the release is</div><div class="line">something like 2.5.1 or 3.0a1.  If you don&apos;t need this dual structure,</div><div class="line">just set both to the same value.</div><div class="line">&gt; Project version: 1.0.0</div><div class="line">// 项目版本号</div><div class="line">&gt; Project release [1.0.0]:</div><div class="line">// 项目发布版本号</div><div class="line"></div><div class="line">If the documents are to be written in a language other than English,</div><div class="line">you can select a language here by its language code. Sphinx will then</div><div class="line">translate text that it generates into that language.</div><div class="line"></div><div class="line">For a list of supported codes, see</div><div class="line">http://sphinx-doc.org/config.html#confval-language.</div><div class="line">&gt; Project language [en]: zh_CN</div><div class="line">// 项目使用的语言</div><div class="line"></div><div class="line">The file name suffix for source files. Commonly, this is either &quot;.txt&quot;</div><div class="line">or &quot;.rst&quot;.  Only files with this suffix are considered documents.</div><div class="line">&gt; Source file suffix [.rst]:</div><div class="line">// 文档源代码的后缀</div><div class="line"></div><div class="line">One document is special in that it is considered the top node of the</div><div class="line">&quot;contents tree&quot;, that is, it is the root of the hierarchical structure</div><div class="line">of the documents. Normally, this is &quot;index&quot;, but if your &quot;index&quot;</div><div class="line">document is a custom template, you can also set this to another filename.</div><div class="line">&gt; Name of your master document (without suffix) [index]:</div><div class="line"></div><div class="line">Sphinx can also add configuration for epub output:</div><div class="line">&gt; Do you want to use the epub builder (y/n) [n]:</div><div class="line">// 是否使用 epub 电子书生成</div><div class="line"></div><div class="line">Please indicate if you want to use one of the following Sphinx extensions:</div><div class="line">&gt; autodoc: automatically insert docstrings from modules (y/n) [n]:</div><div class="line">&gt; doctest: automatically test code snippets in doctest blocks (y/n) [n]:</div><div class="line">&gt; intersphinx: link between Sphinx documentation of different projects (y/n) [n]:</div><div class="line">&gt; todo: write &quot;todo&quot; entries that can be shown or hidden on build (y/n) [n]:</div><div class="line">&gt; coverage: checks for documentation coverage (y/n) [n]:</div><div class="line">&gt; pngmath: include math, rendered as PNG images (y/n) [n]:</div><div class="line">&gt; mathjax: include math, rendered in the browser by MathJax (y/n) [n]:</div><div class="line">&gt; ifconfig: conditional inclusion of content based on config values (y/n) [n]:</div><div class="line">&gt; viewcode: include links to the source code of documented Python objects (y/n) [n]:</div><div class="line"></div><div class="line">A Makefile and a Windows command file can be generated for you so that you</div><div class="line">only have to run e.g. `make html&apos; instead of invoking sphinx-build</div><div class="line">directly.</div><div class="line">&gt; Create Makefile? (y/n) [y]:</div><div class="line">&gt; Create Windows command file? (y/n) [y]:</div><div class="line"></div><div class="line">Creating file ./source/conf.py.</div><div class="line">Creating file ./source/index.rst.</div><div class="line">Creating file ./Makefile.</div><div class="line">Creating file ./make.bat.</div><div class="line"></div><div class="line">Finished: An initial directory structure has been created.</div><div class="line"></div><div class="line">You should now populate your master file ./source/index.rst and create other documentation</div><div class="line">source files. Use the Makefile to build the docs, like so:</div><div class="line">   make builder</div><div class="line">where &quot;builder&quot; is one of the supported builders, e.g. html, latex or linkcheck.</div></pre></td></tr></table></figure>
+<p>初始化一个项目后会在当前目录创建以下文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── build				// 编译输出文件夹</div><div class="line">├── make.bat			// Windows 使用的 make 脚本</div><div class="line">├── Makefile			// 定义编译信息的</div><div class="line">└── source				// 文档源代码存放文件夹</div><div class="line">    ├── conf.py			// 项目配置文件</div><div class="line">    ├── index.rst		// 文档首页源代码</div><div class="line">    ├── _static			// 静态文件夹？</div><div class="line">    └── _templates		// 模板文件夹</div></pre></td></tr></table></figure>
+<h2 id="编写文档"><a href="#编写文档" class="headerlink" title="编写文档"></a>编写文档</h2><p>编写文档使用 <code>reStructuredText</code> 语法，并保存到 <code>source</code> 目录里，文件后缀名使用 <code>.rst</code></p>
+<h2 id="编译文档"><a href="#编译文档" class="headerlink" title="编译文档"></a>编译文档</h2><p>编译生成 HTML 网页文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make html</div></pre></td></tr></table></figure></p>
+<p>除了生成 HTML 文件外，还可以使用 <code>make</code> 生成其它文件。</p>
+<h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><p>这里的主题指的是生成的 HTML 页面样式。官方提供了好几种<a href="http://www.sphinx-doc.org/en/stable/theming.html" target="_blank" rel="external">样式</a>，这里使用的是 <a href="https://readthedocs.org/" target="_blank" rel="external">Read The Docs</a> 的样式</p>
+<p>安装样式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install sphinx_rtd_theme</div></pre></td></tr></table></figure></p>
+<p>编辑配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim <span class="built_in">source</span>/conf.py</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import sphinx_rtd_theme</div><div class="line"></div><div class="line">html_theme = &quot;sphinx_rtd_theme&quot;</div><div class="line"></div><div class="line">html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]</div></pre></td></tr></table></figure>
+<p>其他样式配置稍有差异，请按照样式官方的配置方法配置</p>
+<hr>
+<ul>
+<li>Sphinx 中文文档：<a href="https://sphinx-doc-zh.readthedocs.org/" target="_blank" rel="external">https://sphinx-doc-zh.readthedocs.org/</a></li>
+<li>Sphinx 中文文档：<a href="https://zh-sphinx-doc.readthedocs.org/" target="_blank" rel="external">https://zh-sphinx-doc.readthedocs.org/</a></li>
+<li>reStructuredText 中文文档：<a href="http://sphinx-doc-zh.readthedocs.org/" target="_blank" rel="external">http://sphinx-doc-zh.readthedocs.org/</a></li>
+<li>reStructuredText 在线编辑器：<a href="http://rst.ninjs.org/" target="_blank" rel="external">http://rst.ninjs.org/</a></li>
+<li>Read The Docs 文档存放：<a href="https://readthedocs.org/" target="_blank" rel="external">https://readthedocs.org/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2016/01/11/Sphinx-Installation-and-use.html" data-id="cixw7frt4002i8ouu9i27djki" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sphinx/">Sphinx</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2016/02/13/How-to-Install-Selfoss-of-Debian.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">在 Debian 上安装 Selfoss</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2016/01/06/How-to-Access-the-Dark-Web.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">如何访问暗网</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

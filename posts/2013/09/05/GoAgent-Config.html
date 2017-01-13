@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>GoAgent配置与使用 图文教程 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      GoAgent配置与使用 图文教程
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2013/09/05/GoAgent-Config.html" class="article-date"><time datetime="2013-09-05T06:12:52.000Z" itemprop="datePublished">2013-09-05</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>2015/05/30 (补)</li>
+</ul>
+<h2 id="一、申请-Google-App-Engine-并创建-appid"><a href="#一、申请-Google-App-Engine-并创建-appid" class="headerlink" title="一、申请 Google App Engine 并创建 appid"></a>一、申请 Google App Engine 并创建 appid</h2><p>1、申请注册一个 <a href="https://appengine.google.com/" target="_blank" rel="external">Google App Engine</a> 账号。没有 Gmail 账号先注册一个， 用你的 Gmail 账号登录。<br><a id="more"></a><br><img src="/data/images/2013-09-05_01_0001.jpg" alt=""></p>
+<p>2、登录之后，自动转向 <code>Application</code> 注册页面，如下图：</p>
+<p><img src="/data/images/2013-09-05_01_0002.jpg" alt=""></p>
+<p>3、接下来的页面，输入你的手机号码，需要注意的是，手机号码前面要+86(中国区号) 格式如：+86 13888888888</p>
+<p><img src="/data/images/2013-09-05_01_0003.jpg" alt=""></p>
+<ul>
+<li>然后等待收取手机短信，收到短信后(一串数字号码)填入下图表单，点 send 提交.(有的手机收不到信息，到 <a href="https://appengine.google.com/waitlist/sms_issues" target="_blank" rel="external">https://appengine.google.com/waitlist/sms_issues</a> 提交该情况，一个工作日就能收到谷歌提示Google App Engine成功开通)。</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0004.jpg" alt=""></p>
+<p>4、提交完成之后，GAE 账号即被激活，然后就可以创建新的应用程序了。转入 “My Applications” 页面，点击 “Create an Application” 新建应用</p>
+<p><img src="/data/images/2013-09-05_01_0005.jpg" alt=""></p>
+<ul>
+<li>一个Gmail账户最多可以创建十个GAE应用，每个应用每天 1G 免费流量。这里我们只创建一个应用就可以了。进入下一步，填写新应用的必要信息，如下图。在图中第一处添加一个应用名称，如 abc555 ,验证一下是否可用，如果显示 “Yes” 那么 abc555 就是你的 Appid(记住这个id)，而 abc555.appspot.com 就是你的应用服务器地址了。第二个空可随便填，点击 Create Application 按钮提交</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0006.jpg" alt=""></p>
+<ul>
+<li>提交之后，就能看到下图这个页面，就说明你已经成功创建了一个新的应用,你也可以点击应用名称，进入控制面板进行管理。</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0007.jpg" alt=""></p>
+<h2 id="二、下载-goagent-并上传至-Google-App-Engine"><a href="#二、下载-goagent-并上传至-Google-App-Engine" class="headerlink" title="二、下载 goagent 并上传至 Google App Engine"></a>二、下载 goagent 并上传至 Google App Engine</h2><p>1、下载 goagent 并解压 <a href="https://github.com/goagent/goagent" target="_blank" rel="external">https://github.com/goagent/goagent</a></p>
+<p>2、编辑 <code>local\proxy.ini</code> 把其中 <code>appid = goagent</code> 中的 <code>goagent</code> 改成你之前申请的应用的 <code>appid</code> (用 Windows 的记事本也可以)</p>
+<ul>
+<li>如果要使用多个 appid，appid 之间用|隔开，如：<code>appid1|appid2|appid3</code> 每个 <code>appid</code> 必须确认上传成功才能使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[gae]</div><div class="line">appid = appid1|appid2|appid3</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>3、运行 <code>goagent.exe</code> (Linux 用python运行XXX/local文件下的 <code>goagent-gtk.py</code> 来启动goagent)</p>
+<p>4、上传</p>
+<ul>
+<li>Windows 用户：双击 <code>server</code> 文件夹下的 <code>uploader.bat</code> 输入你上步创建的 <code>appid</code> (同时上传多 appid 在 appid 之间用 | 隔开,一次只能上传同一个谷歌帐户下的 appid )填完按回车。根据提示填你的谷歌帐户邮箱地址，填完按回车。根据提示填你的谷歌帐户密码(注意：如果开启了两步验证，密码应为<a href="https://accounts.google.com/b/0/IssuedAuthSubTokens" target="_blank" rel="external">16位的应用程序专用密码</a>而非谷歌帐户密码，否则会出现 AttributeError: can’t set attribute 错误)，填完按回车。</li>
+<li>Linux/Mac OSX用户上传方法：在server目录下执行：<code>python uploader.py</code></li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0008.jpg" alt=""></p>
+<ul>
+<li>如遇到上传困难的情况，可以先运行 goagent.exe(要先修改 appid )再运行 <code>uploader.bat</code></li>
+<li>上传成功就会看图下图界面</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0009.png" alt=""></p>
+<h2 id="三、运行客户端"><a href="#三、运行客户端" class="headerlink" title="三、运行客户端"></a>三、运行客户端</h2><p>1、Windows 用户运行 <code>local</code> 文件夹中的 <code>goagent.exe</code> Linux/MacOSX 用户运行 <code>python proxy.py</code></p>
+<ul>
+<li>设置浏览器或其他需要代理的程序代理地址为 <code>127.0.0.1:8087</code></li>
+<li>注意：使用过程中要一直运行 <code>goagent.exe/proxy.py</code></li>
+<li>代理地址 <code>127.0.0.1:8087</code> 如需使用 PAC，设置pac地址为 <a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="external">http://127.0.0.1:8086/proxy.pac</a></li>
+<li>也可以配合 <code>SwitchyOmega/FoxyProxy</code> 等浏览器扩展 (SwitchyOmega 用户可从 local 文件夹中的 SwitchyOptions.bak 文件导入配置)</li>
+</ul>
+<p>2、导入证书</p>
+<ul>
+<li>IE/Chrome：使用管理员身份运行 <code>goagent.exe</code> 会自动向系统导入 IE/Chrome 的证书，你也可以双击 <code>local</code> 文件夹中的 <code>CA.crt</code> 安装证书(需要安装到 “受信任的根证书颁发机构” )；</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0010.jpg" alt=""><br><img src="/data/images/2013-09-05_01_0011.jpg" alt=""></p>
+<ul>
+<li>下一步 -&gt; 完成 -&gt; 确定</li>
+<li>Firefox：需要单独导入证书，打开FireFox?-&gt;选项-&gt;高级-&gt;加密-&gt;查看证书-&gt;证书机构-&gt;导入证书, 选择 local\CA.crt, 勾选所有项，导入；</li>
+<li>Opera：导入证书方法：首选项→高级→安全性→管理证书→证书颁发机构-&gt;导入-&gt;选择 local\CA.crt文件-&gt;依次确认</li>
+</ul>
+<h2 id="浏览器设置方法"><a href="#浏览器设置方法" class="headerlink" title="浏览器设置方法"></a>浏览器设置方法</h2><p>1、使用 GoAgent 自带代理设置功能</p>
+<ul>
+<li>该功能可以为 IE 内核浏览器和未安装代理类扩展的 Chrome/Opera 等默认使用 IE 代理的浏览器和软件设置代理，但不能给 FireFox 设置代理</li>
+<li>右击 GoAgent 托盘图标，在 “设置IE代理” 菜单中选择要使用的模式。</li>
+<li>禁用代理 什么也不做，需要用户自己手动为软件设置代理</li>
+<li><a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="external">http://127.0.0.1:8086/proxy.pac</a> 使用自带的PAC自动判断是否使用代理</li>
+<li>127.0.0.1:8087 全部使用 GoAgent 代理</li>
+</ul>
+<p>2、谷歌 Chrome 配合 SwitchyOmega 扩展</p>
+<ul>
+<li>安装扩展</li>
+<li>下载 <a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="external">SwitchyOmega.crx</a> 地址栏输入 Chrome://extensions/ 后按回车，打开扩展管理页，拖拽 <code>SwitchyOmega.crx</code> 到该页面之后点击确定即可安装，扩展也可以从 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="external">Chrome 应用商店</a> 获得</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0012.png" alt=""></p>
+<ul>
+<li>导入设置<ul>
+<li>点击 <code>SwitchyOmega</code> 图标-&gt;导入/导出</li>
+</ul>
+</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0013.png" alt=""></p>
+<ul>
+<li>浏览到 <code>SwitchyOptions.bak</code> 点击确定导入设置</li>
+<li>更新自动切换规则(如果遇到无法更新规则列表，可以先运行 goagent ，并把浏览器代理设置为 GoAgent 模式再更新规则，不更新规则只会影响自动切换模式，不会影响其他模式的使用，若确实无法更新也可不更新，直接使用 PAC 模式即可)</li>
+<li>在扩展设置页点击 “自动切换” ，点击 “立即更新情景模式” ，最后点击 “应用选项” 。</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0014.png" alt=""></p>
+<ul>
+<li>单击地址栏右侧 Proxy SwitchyOmega 图标即可进行模式选择</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0015.png" alt=""></p>
+<ul>
+<li>GoAgent 模式 除匹配 <code>proxy.ini</code> 中 <code>profile</code> 的直连外，其他全部通过 GAE</li>
+<li>GoAgent PAAS 模式 全部通过 PAAS</li>
+<li>GoAgent PAC 模式 根据 GoAgent 自带的 PAC 文件自动判断是否经过代理</li>
+<li>自动切换模式 根据切换规则自动选择是否进行代理，并根据所设情景模式自动选择使用何种代理</li>
+<li>遇到规则中没有的，可以使用扩展的 “新建规则” 按钮自行添加，选情景模式为 “GoAgent” ，使用此模式可以方便的定制自己的代理切换规则</li>
+<li>如果设置无误但浏览器提示错误 130 无法连接到代理服务器，可以将自己的设置导出之后卸载重装</li>
+<li>如果遇到无法更新规则列表，可以先运行 goagent，并把浏览器代理设置为 GoAgent 模式再更新规则，不更新规则只会影响自动切换模式，不会影响其他模式的使用，若确实无法更新也可不更新，直接把扩展设置为 GoAgent PAC 模式即可</li>
+</ul>
+<p>3、Firefox 配合 FoxyProxy 扩展</p>
+<ul>
+<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/" target="_blank" rel="external">https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/</a></li>
+<li>设置</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0016.png" alt=""></p>
+<ul>
+<li>右击 <code>foxyporxy</code> 图标即可选择代理模式</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0017.png" alt=""></p>
+<ul>
+<li>添加代理规则订阅(可选)<ul>
+<li>这里以添加 <a href="http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt" target="_blank" rel="external">gfwlist</a> 为例，你也可以自行添加其他规则订阅</li>
+</ul>
+</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0018.jpg" alt=""><br><img src="/data/images/2013-09-05_01_0019.jpg" alt=""><br><img src="/data/images/2013-09-05_01_0020.jpg" alt=""><br><img src="/data/images/2013-09-05_01_0021.jpg" alt=""></p>
+<p>更多设置请自行探究</p>
+<p>4、Firefox 配合 AutoProxy 扩展(新版Firefox请将此扩展升级至最新版)</p>
+<ul>
+<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/" target="_blank" rel="external">https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/</a></li>
+<li>设置<ul>
+<li>添加代理服务器 注意:新版 autoproxy 已内置GoAgent配置，可直接进行下一步</li>
+</ul>
+</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0022.png" alt=""><br><img src="/data/images/2013-09-05_01_0023.png" alt=""><br><img src="/data/images/2013-09-05_01_0024.png" alt=""></p>
+<ul>
+<li>添加规则订阅</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0025.png" alt=""><br><img src="/data/images/2013-09-05_01_0026.png" alt=""></p>
+<ul>
+<li>选择自己需要的模式</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0027.png" alt=""></p>
+<ul>
+<li>自动模式 根据规则自行选择是否使用代理</li>
+<li>全局模式 全部使用代理</li>
+<li>禁用代理 全部不使用代理</li>
+</ul>
+<p>5、Opera 浏览器设置</p>
+<ul>
+<li>同 IE 一样有两种方式可选，不过不会影响系统其他程序的联网</li>
+<li>设置代理为 <code>127.0.0.1:8087</code> 全部使用 <code>goagent</code> 代理</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0028.png" alt=""></p>
+<ul>
+<li>使用 PAC 自动代理</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0029.png" alt=""></p>
+<ul>
+<li>不使用时应恢复为无代理状态</li>
+</ul>
+<p>6、IE浏览器设置</p>
+<ul>
+<li>工具-&gt;Internet 选项-&gt;连接，局域网用户单击”局域网设置”。宽带用户选中自己正在使用的宽带连接之后单击”设置”，不要选 “局域网设置”</li>
+<li>局域网用户设置方法<ul>
+<li>设置代理为 <code>127.0.0.1:8087</code> 全部使用 <code>goagent</code> 代理(不建议)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0030.png" alt=""></p>
+<ul>
+<li>使用 <code>PAC</code> 自动代理</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0031.png" alt=""></p>
+<ul>
+<li>宽带用户设置方法<ul>
+<li>选中自己正在使用的宽带连接之后单击”设置”</li>
+</ul>
+</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0032.jpg" alt=""></p>
+<ul>
+<li>设置代理为 127.0.0.1:8087，全部使用 goagent 代理(不建议)</li>
+</ul>
+<p><img src="/data/images/2013-09-05_01_0033.jpg" alt=""></p>
+<ul>
+<li>不使用时要将IE恢复无代理状态</li>
+</ul>
+<h2 id="适用环境"><a href="#适用环境" class="headerlink" title="适用环境"></a>适用环境</h2><ul>
+<li>适用：浏览器，支持 http 代理的下载软件等</li>
+<li>不适用：游戏客户端等需要稳定网络的程序，QQ，Tor(验证证书)。待添加。。。</li>
+</ul>
+<h2 id="关于软件更新"><a href="#关于软件更新" class="headerlink" title="关于软件更新"></a>关于软件更新</h2><ul>
+<li>更新历史中带有[是]则需要重新上传，否则不用重新上传。注意：是否需要重新上传是相对于前一版的，若你之前版本与当前版本之间某一版或多版带有[是]仍然需要重新上传</li>
+<li>appid 并不绑定任何客户端，如果本次更新无需重新上传，只需修改 proxy.ini 中的 appid 即可使用。同样，你也可以把 appid 共享给朋友，或者在自己其他机器上使用，一个 appid 可以多人多机器同时使用，在无需更新服务端的情况下，只需成功上传一次即可。在没有设定密码的情况下，只需要知道 appid 就可以使用你的 appid 的流量，为防止被盗用可以<a href="https://github.com/goagent/goagent/blob/wiki/SetPassword.md" target="_blank" rel="external">加上密码</a>。</li>
+<li>goagent 每一版下载的都是全部文件，你可以选择覆盖原文件或者将新版放另一个文件夹，旧版你可以选择留存或者删除，修改新版 proxy.ini 中相关设置即可运行。如果旧版添加了开机启动，需要将旧开机启动删除。如果旧版已经在运行，需先将旧版关闭。</li>
+<li>如果之前版本没有ssl错误，使用新版出现 ssl 错误可以把原来的 CA.crt 和 certs 文件夹内的文件覆盖当前的这些文件。或者将 CA.crt 和 certs 文件夹删除，同时删除浏览器中所有goagent ca 的证书，再重启 goagent，会生成新证书，重启浏览器再导入新证书即可。浏览器证书中只能有一个 goagent ca 的证书。</li>
+</ul>
+<hr>
+<p>原文：<a href="https://github.com/goagent/goagent/blob/wiki/InstallGuide.md" target="_blank" rel="external">https://github.com/goagent/goagent/blob/wiki/InstallGuide.md</a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2013/09/05/GoAgent-Config.html" data-id="cixw7frrg000w8ouu28xayh7v" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GoAgent/">GoAgent</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2014/03/16/USB-Flash-Install-Windows-7-System.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">U盘安装Windows 7系统</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2013/08/05/Hello-World-WordPress.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">世界，你好！</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

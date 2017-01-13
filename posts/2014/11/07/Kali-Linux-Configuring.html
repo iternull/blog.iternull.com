@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>Kali Linux 安装后配置优化 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Kali Linux 安装后配置优化
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2014/11/07/Kali-Linux-Configuring.html" class="article-date"><time datetime="2014-11-07T14:56:09.000Z" itemprop="datePublished">2014-11-07</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、安装好后先连接网络"><a href="#1、安装好后先连接网络" class="headerlink" title="1、安装好后先连接网络"></a>1、安装好后先连接网络</h2><p>可以插网线或无线连接</p>
+<h2 id="2、添加源（不用全部添加，中国用户建议选阿里云的源）"><a href="#2、添加源（不用全部添加，中国用户建议选阿里云的源）" class="headerlink" title="2、添加源（不用全部添加，中国用户建议选阿里云的源）"></a>2、添加源（不用全部添加，中国用户建议选阿里云的源）</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/apt/sources.list</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">## Official</div><div class="line">deb http://http.kali.org/kali kali main non-free contrib</div><div class="line">deb-src http://http.kali.org/kali kali main non-free contrib</div><div class="line">deb http://security.kali.org/kali-security kali/updates main contrib non-free</div><div class="line"></div><div class="line">## Radical</div><div class="line">deb http://repo.kali.org/kali kali-bleeding-edge main</div><div class="line">deb-src http://repo.kali.org/kali kali-bleeding-edge main</div><div class="line"></div><div class="line">## ustc.edu</div><div class="line">deb http://mirrors.ustc.edu.cn/kali kali main non-free contrib</div><div class="line">deb-src http://mirrors.ustc.edu.cn/kali kali main non-free contrib</div><div class="line">deb http://mirrors.ustc.edu.cn/kali-security kali/updates main contrib non-free</div><div class="line"></div><div class="line">## aliyun</div><div class="line">deb http://mirrors.aliyun.com/kali kali main non-free contrib</div><div class="line">deb-src http://mirrors.aliyun.com/kali kali main non-free contrib</div><div class="line">deb http://mirrors.aliyun.com/kali-security kali/updates main contrib non-free</div></pre></td></tr></table></figure>
+<h2 id="3、更新"><a href="#3、更新" class="headerlink" title="3、更新"></a>3、更新</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get update &amp;&amp; apt-get upgrade</div></pre></td></tr></table></figure>
+<h2 id="4、升级Linux内核"><a href="#4、升级Linux内核" class="headerlink" title="4、升级Linux内核"></a>4、升级Linux内核</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install linux-image-（按Tab键，选择最新的版本）</div><div class="line">reboot</div><div class="line">apt-get install linux-headers-$(uname -r)</div></pre></td></tr></table></figure>
+<h2 id="5、Gnome（自带的并不完整，安装后很多在面套件都会自动安装比如Office）"><a href="#5、Gnome（自带的并不完整，安装后很多在面套件都会自动安装比如Office）" class="headerlink" title="5、Gnome（自带的并不完整，安装后很多在面套件都会自动安装比如Office）"></a>5、Gnome（自带的并不完整，安装后很多在面套件都会自动安装比如Office）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install gnome</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.session session-name gnome			<span class="comment">#这个模式桌面效果比较好</span></div><div class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.session session-name gnome-fallback			<span class="comment">#还原默认模式（流畅 不卡）</span></div><div class="line">gnome-shell –replace			<span class="comment">#在默认模式临时开启</span></div></pre></td></tr></table></figure>
+<h2 id="6、图形化网络管理工具"><a href="#6、图形化网络管理工具" class="headerlink" title="6、图形化网络管理工具"></a>6、图形化网络管理工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install network-manager*</div></pre></td></tr></table></figure>
+<h2 id="7、硬件驱动配置"><a href="#7、硬件驱动配置" class="headerlink" title="7、硬件驱动配置"></a>7、硬件驱动配置</h2><p>这个我也不怎么会，就不写了，以免误导大家</p>
+<ul>
+<li>不过笔记本触摸板你不要用快捷键把它禁用了还一直以为时驱动的问题，本人深受其害</li>
+</ul>
+<h2 id="8、安装声卡管理"><a href="#8、安装声卡管理" class="headerlink" title="8、安装声卡管理"></a>8、安装声卡管理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install alsa-utils</div></pre></td></tr></table></figure>
+<h2 id="9、安装Flash"><a href="#9、安装Flash" class="headerlink" title="9、安装Flash"></a>9、安装Flash</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install flashplugin-nonfree </div><div class="line">update-flashplugin-nonfree --install</div></pre></td></tr></table></figure>
+<h2 id="10、安装输入法（Fcitx）"><a href="#10、安装输入法（Fcitx）" class="headerlink" title="10、安装输入法（Fcitx）"></a>10、安装输入法（Fcitx）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install fcitx fcitx-pinyin</div></pre></td></tr></table></figure>
+<p>Fcitx候选词排序设置</p>
+<p>第一次启动初始化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fcitx &amp;&amp; <span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<p>打开配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.config/fcitx/conf/fcitx-classic-ui.config</div></pre></td></tr></table></figure>
+<p>找到下面的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 竖排候选词列表</div><div class="line"># 可选值：</div><div class="line"># True False</div></pre></td></tr></table></figure>
+<p>将 VerticalList 设置为 False</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VerticalList=True</div></pre></td></tr></table></figure>
+<p>保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:x</div></pre></td></tr></table></figure>
+<p>K掉fcitx进程 重启进程并退出命令行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">killall fcitx &amp;&amp; fcitx &amp;&amp;  <span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<h2 id="11、安装归档管理器"><a href="#11、安装归档管理器" class="headerlink" title="11、安装归档管理器"></a>11、安装归档管理器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install zip unzip rar unrar unace p7zip p7zip-full p7zip-rar file-roller</div></pre></td></tr></table></figure>
+<h2 id="12、安装FTP图形化客户端"><a href="#12、安装FTP图形化客户端" class="headerlink" title="12、安装FTP图形化客户端"></a>12、安装FTP图形化客户端</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install filezilla filezilla-common</div></pre></td></tr></table></figure>
+<h2 id="13、安装桌面远程工具"><a href="#13、安装桌面远程工具" class="headerlink" title="13、安装桌面远程工具"></a>13、安装桌面远程工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install gtk-recordmydesktop recordmydesktop remmina</div></pre></td></tr></table></figure>
+<h2 id="14、安装其他工具"><a href="#14、安装其他工具" class="headerlink" title="14、安装其他工具"></a>14、安装其他工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install htop nethogs terminator vlock</div></pre></td></tr></table></figure>
+<h2 id="15、安装Firefox中文语言包"><a href="#15、安装Firefox中文语言包" class="headerlink" title="15、安装Firefox中文语言包"></a>15、安装Firefox中文语言包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install iceweasel<span class="_">-l</span>10n-zh-cn</div></pre></td></tr></table></figure>
+<h2 id="16、安装Chrome"><a href="#16、安装Chrome" class="headerlink" title="16、安装Chrome"></a>16、安装Chrome</h2><p>去<a href="https://www.google.com/chrome/" target="_blank" rel="external">Chrome</a>官网下载最新版本的（国内被墙，自己想办法用代理下载）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</div><div class="line">https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb</div><div class="line">https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm</div><div class="line">https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dpkg -i google-chrome-stable_current*</div><div class="line">apt-get install <span class="_">-f</span></div></pre></td></tr></table></figure>
+<p>安装好后打开[<strong>主菜单</strong>]应用 找到[<strong>Google-Chrome</strong>]修改启动器属性 在[<strong>命令</strong>]选项里添加一下参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--user-data-dir</div></pre></td></tr></table></figure>
+<h2 id="17、安装VirtualBox"><a href="#17、安装VirtualBox" class="headerlink" title="17、安装VirtualBox"></a>17、安装VirtualBox</h2><p>去<a href="https://www.virtualbox.org/" target="_blank" rel="external">VirtualBox</a>官网下载最新版本的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg -i virtualbox-*</div></pre></td></tr></table></figure>
+<h2 id="18、安装VMware"><a href="#18、安装VMware" class="headerlink" title="18、安装VMware"></a>18、安装VMware</h2><p>去<a href="http://www.vmware.com/" target="_blank" rel="external">VMware</a>官网下载最新版本的（需注册）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chmod +x VMware-Workstation-Full-*</div><div class="line">./VMware-Workstation-Full- (Tab)</div></pre></td></tr></table></figure>
+<p><strong>Key:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">5C4A7-6Q20J-6ZD58-K2C72-0AKPE</div></pre></td></tr></table></figure></p>
+<h2 id="19、安装GNS3"><a href="#19、安装GNS3" class="headerlink" title="19、安装GNS3"></a>19、安装GNS3</h2><p><s>写文章时我自己还没安装上，所以我不知道</s> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install gns3</div></pre></td></tr></table></figure>
+<p>官网最新版的我还是不会安装（目前官网下载需要登录）</p>
+<h2 id="20、GoAgent"><a href="#20、GoAgent" class="headerlink" title="20、GoAgent"></a>20、GoAgent</h2><p>去<a href="https://github.com/goagent/goagent" target="_blank" rel="external">GoAgent</a>官网下载最新版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">unzip goagent*.zip</div><div class="line"><span class="built_in">cd</span> goagent (Tab)</div></pre></td></tr></table></figure>
+<p>配置APPID 自己 参考<a href="https://github.com/goagent/goagent/blob/wiki/InstallGuide.md" target="_blank" rel="external">官方文档</a> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mkdir /usr/share/goagent</div><div class="line">cp -rv * /usr/share/goagent&lt;/pre&gt;</div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">'#!/bin/sh\n\npython /usr/share/goagent/local/proxy.py'</span> &gt; goagent</div><div class="line">chmod +x goagent</div><div class="line">cp goagent /usr/bin</div></pre></td></tr></table></figure>
+<p>以后直接执行goagent命令就可以使用GoAgent了，你也可以把他加到开机启动里</p>
+<p>关闭GoAgent</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Ctrl + Z</div><div class="line"><span class="built_in">kill</span> %1</div></pre></td></tr></table></figure>
+<p>浏览器证书导入<br>Firefox的导入GoAgent官方文档里有说明<br>Chrome 设置&gt;显示高级设置…&gt;HTTPS/SSL&gt;管理证书&gt;授权中心&gt;导入&gt;完成</p>
+<ul>
+<li>要是还提示https错误，关掉GoAgent，删除文件夹里的CA.crt，删除浏览器里的导入的证书，重新打开GoAgent，再次导入证书，注意路径不要弄错</li>
+</ul>
+<h2 id="21、Sublime-Text"><a href="#21、Sublime-Text" class="headerlink" title="21、Sublime Text"></a>21、Sublime Text</h2><p>去<a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a>官网下载最新版本的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar -xvf Sublime (Tab)</div><div class="line">mkdir /usr/<span class="built_in">local</span>/share/sublime-text</div><div class="line">cp -rv Sublime\ Text\ 2/* /usr/<span class="built_in">local</span>/share/sublime-text</div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">'[Desktop Entry]\nName=Sublime Text 2\nComment=Sublime Text 2\nExec=/usr/local/share/sublime-text/sublime_text\nIcon=/usr/local/share/sublime-text/Icon/48x48/sublime_text.png\nTerminal=false\nType=Application\nCategories=TextEditor;Development;\nStartupNotify=true\nNoDisplay=false'</span> &gt; /usr/<span class="built_in">local</span>/share/applications/Sublime\ Text\ 2.desktop</div><div class="line">ln -sf /usr/<span class="built_in">local</span>/share/sublime-text/sublime_text /usr/<span class="built_in">local</span>/bin/sublime-text</div></pre></td></tr></table></figure>
+<p>激活，在<strong>help</strong>选项里找到激活选项</p>
+<p><strong>Key:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">----- BEGIN LICENSE ----- </div><div class="line">Andrew Weber </div><div class="line">Single User License </div><div class="line">EA7E-855605 </div><div class="line">813A03DD 5E4AD9E6 6C0EEB94 BC99798F </div><div class="line">942194A6 02396E98 E62C9979 4BB979FE </div><div class="line">91424C9D A45400BF F6747D88 2FB88078 </div><div class="line">90F5CC94 1CDC92DC 8457107A F151657B </div><div class="line">1D22E383 A997F016 42397640 33F41CFC </div><div class="line">E1D0AE85 A0BBD039 0E9C8D55 E1B89D5D </div><div class="line">5CDB7036 E56DE1C0 EFCC0840 650CD3A6 </div><div class="line">B98FC99C 8FAC73EE D2B95564 DF450523 </div><div class="line">------ END LICENSE ------</div></pre></td></tr></table></figure></p>
+<p>汉化，替换文件<br>打开Sublime Text 2按以下快捷键打开目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Alt + N</div><div class="line">B</div></pre></td></tr></table></figure>
+<p>替换Default里的文件 汉化包 <a href="http://files.cnblogs.com/kingwell/Sublime-Text-2%E4%B8%AD%E6%96%87%E5%8C%85.zip" target="_blank" rel="external">下载</a> 记得解压<br>我的目录是<strong>～/.config/sublime-text-2/Packages/Default</strong><br>（如果下载失效了，你可以自己网上去搜索“Sublime Text 2 中文包”）</p>
+<h2 id="22、Wine"><a href="#22、Wine" class="headerlink" title="22、Wine"></a>22、Wine</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install wine</div><div class="line">wine</div></pre></td></tr></table></figure>
+<p>64位系统提示错误，只要照着他提示的命令执行就可以了</p>
+<hr>
+<p><strong> 参考： </strong></p>
+<ul>
+<li><a href="http://docs.kali.org/" target="_blank" rel="external">http://docs.kali.org/</a></li>
+<li><a href="https://help.gnome.org/" target="_blank" rel="external">https://help.gnome.org/</a></li>
+<li><a href="http://www.blackmoreops.com/category/linux/kali-linux/" target="_blank" rel="external">http://www.blackmoreops.com/category/linux/kali-linux/</a></li>
+<li><a href="http://xiao106347.blog.163.com/blog/static/215992078201342410347137/" target="_blank" rel="external">http://xiao106347.blog.163.com/blog/static/215992078201342410347137/</a></li>
+<li><a href="http://os.51cto.com/art/201405/439494.htm" target="_blank" rel="external">http://os.51cto.com/art/201405/439494.htm</a></li>
+<li><a href="https://github.com/yangyangwithgnu/the_new_world_linux" target="_blank" rel="external">https://github.com/yangyangwithgnu/the_new_world_linux</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2014/11/07/Kali-Linux-Configuring.html" data-id="cixw7frs4001i8ouusqfgcop9" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kali-Linux/">Kali Linux</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2014/12/24/Hello-World.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Hello World</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2014/10/22/USB-Rubber-Ducky-Description.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">USB Rubber Ducky 说明介绍</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

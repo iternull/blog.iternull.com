@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>Raspberry Pi ArchARM LNMP Web服务搭建与排错的烦恼 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Raspberry Pi ArchARM LNMP Web服务搭建与排错的烦恼
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2014/08/11/Raspberry-Pi-Arch-LNMP-Web-Server.html" class="article-date"><time datetime="2014-08-11T06:31:42.000Z" itemprop="datePublished">2014-08-11</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>新买了一个树莓派B+板 原来的系统不支持B+板<br>考虑之后选择Arch Linux ARM作为B+板的操作系统（Arch各种东西都比较新，对Linux新技术的学习挺好的）<br>在Arch上搭建一个Web服务，用<code>pacman</code>把LNMP的所有都装上了<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S nginx mysql php php-fpm php-apache php-apcu php-cgi php-composer php-embed php-enchant php-gd php-intl php-ldap php-mcrypt php-mssql php-odbc php-pear php-pgsql php-pspell php-snmp php-sqlite php-tidy php-xcache php-xsl php-geoip php-memcache php-memcached php-mongo</div></pre></td></tr></table></figure></p>
+<p>然后用<code>systemctl</code>把服务都启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl start nginx</div><div class="line">systemctl start mysqld</div><div class="line">systemctl start php-fpm</div></pre></td></tr></table></figure>
+<p>HTML静态页面访问正常，访问php页面就报404<br>查看nginx的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
+<p>修改以下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location / &#123;</div><div class="line">    root   /usr/share/nginx/html;</div><div class="line">    index  index.html index.htm index.php;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>原本是注释掉的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location ~ \.php$ &#123;</div><div class="line">            root           /usr/share/nginx/html;</div><div class="line">            fastcgi_pass   127.0.0.1:9000;</div><div class="line">            fastcgi_index  index.php;</div><div class="line">            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;</div><div class="line">            include        fastcgi_params;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>修改后访问php还是404，然后我就去网上查，网上普遍的反馈都是修改<code>php.ini</code>的以下参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cgi.fix_pathinfo=1</div><div class="line">doc_root=</div></pre></td></tr></table></figure>
+<p>还有说指定Nginx和php的用户和组 权限什么的，关键我查了自己的配置都是正常的，<br>在排查监听端口号的时候发现9000端口没有程序在监听但php-fpm已经启动了，我当时就不明白了<br>试了一下这条命令发现php访问正常了，但是MySQL的支持什么的都没有，而且运行一段时间后会自动结束进程（我不清楚怎么回事）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php-cgi -b 9000 -c /etc/php/php-fpm.conf &amp;</div></pre></td></tr></table></figure>
+<p>后来在某Linux论坛看到更改php-fpm.conf的一下参数就能自动监听9000端口了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">listen = 127.0.0.1:9000</div><div class="line">;listen = /run/php-fpm/php-fpm.sock</div></pre></td></tr></table></figure>
+<p>原来的配置是<strong>127.0.0.1:9000</strong>被注释掉的，使用的是<strong>php-fpm.sock</strong><br>重启php-fpm服务重新检测端口号，正常了，<br>但是访问php页面404变成了No input file specified，其实就是404只不过是php反馈的<br>好吧我没办法了，把<strong>nginx.conf</strong>,<strong>php-fpm.conf</strong>,<strong>php.ini</strong>这三个文件全部都看了一遍<br>注意到php.ini里有这么一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">open_basedir = /srv/http/:/home/:/tmp/:/usr/share/pear/:/usr/share/webapps/</div></pre></td></tr></table></figure>
+<p>这应该是指定php网站目录的把他注释掉就好了，<br>网站php页面可以访问了，但是发现并没有MySQL数据库支持<br>继续修改php.ini文件，修改以下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">extension=mysqli.so</div><div class="line">extension=mysql.so</div></pre></td></tr></table></figure>
+<p>原本是注释掉的，只要把注释去掉就好了</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2014/08/11/Raspberry-Pi-Arch-LNMP-Web-Server.html" data-id="cixw7frsp00258ouuw2i3yg1u" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2014/08/11/Linux-Swap-Partition-Creating-Mount-Delete.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Linux Swap 分区的创建&amp;挂载&amp;删除</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2014/07/29/CentOS-7-Try-out.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">CentOS 7试用记录</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>NetHunter 安装工具 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      NetHunter 安装工具
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2015/08/22/NetHunter-Install-Tools.html" class="article-date"><time datetime="2015-08-22T07:14:13.000Z" itemprop="datePublished">2015-08-22</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NetHunter Install Tools <a href="https://github.com/ZMOM1031/NetHunter-Install-Tools" target="_blank" rel="external">https://github.com/ZMOM1031/NetHunter-Install-Tools</a><br><a id="more"></a></p>
+<h2 id="1、说明"><a href="#1、说明" class="headerlink" title="1、说明"></a>1、说明</h2><p>写这脚本最初的原因是NetHunter官网的Windows版本工具刷入的系统导致Android没法自动更新。<br>此脚本没有使用修改版的内核(Modified_Boot)和关闭强制加密内核(NoForce_Encrypt_Kernel)，需要使用的话可以使用More里的ADB CMD手动刷。<br>Recovery使用的是官方的版本，TWRP版本的Recovery只是临时加载，并不写入。<br>使用此脚本刷的设备可以使用Android的自动更新(大概)我测试的时候更新到一半提示失败(我猜应该是Google的服务应用没更新导致的)<br>我只有一部设备，还是日常使用的，测试时已经刷了6-7次了，毕竟刷多了对设备不会有好处的，所以不是所有的功能都测试过。</p>
+<h2 id="2、使用"><a href="#2、使用" class="headerlink" title="2、使用"></a>2、使用</h2><p>此脚本使用ADB调试工具作为功能实现，所以系统必须支持adb运行。<br>64位系统可能需要安装 <code>lib32gcc1</code> <code>lib32stdc++6</code> <code>libc6-i386</code> 几个依赖包<br>如果使用的是Kali Linux直接使用 <code>apt-get install -y google-nexus-tools</code> 会自动安装依赖包<br>另外要确认系统已经安装 <code>wget</code> <code>tar</code></p>
+<p>打开开发者模式</p>
+<ol>
+<li>设置 &gt; 关于手机 &gt; 版本号(连续点5下再返回) &gt; 开发者选项 &gt; 打开USB调试</li>
+<li>用数据线连接电脑，执行脚本，勾选”始终允许从这台计算机”，点击确定</li>
+</ol>
+<p>然后按照脚本里的提升输入指定的编号开始操作，必须在脚本的所在目录执行，不能在其他目录里执行</p>
+<p>正常刷NetHunter的步骤<br>运行 ./nethunter-linux.sh<br>输入 1 解锁设备<br>输入 3 刷 Android 系统<br>输入 2 进行Root<br>输入 4 刷 NetHunter</p>
+<p>更多的功能在 5 More 里可以找到</p>
+<h2 id="3、错误"><a href="#3、错误" class="headerlink" title="3、错误"></a>3、错误</h2><p>如果文件不能自动下载，请手动下载，然后复制到 <code>images</code> 文件夹里，注释掉那一行代码<br>如果脚本执行不动，感觉卡住了，请不要终止运行，这可能是 <code>adb</code> 在 <code>push</code> 文件到SD卡里，刷NetHunter的时候会遇见<br>如果设备是 <code>32GB</code> 的，输入Android后系统显示只有 <code>16GB</code> 了，请在设备上恢复出厂设置<br>如果操作错误导致设备卡在某个界面，可以长按电源键。开机按住两颗音量键+电源键可以启动到 <code>Fastboot</code> 模式(Nexus 5)</p>
+<h2 id="4、其他"><a href="#4、其他" class="headerlink" title="4、其他"></a>4、其他</h2><p>代码有1000多行，没有使用精简的写法所以占的行数比较多，很多重复代码。<br>有些功能被我注释掉里，由于各种原因没有作为首选，但是保留了代码，比如Root里的，我注释掉了CF-Auto-Root的代码，因为有些镜像包我找不到。<br>对于已存在的文件没有检测，再次执行脚本时会重复已经完成的下载和解压缩步骤，或许以后会加一个 <code>if</code> 条件语句，进行检测，是否需要执行那条代码。<br>脚本其实就是一个菜单，调用命令自动执行，要想再方便好看一点可以用 <code>dialog</code> 套个CLI下的类图形界面，我并没有加。<br>NetHunter可以移植到其他设备上但是驱动和内核的自己自己修改编译，否则很多功能用不了，比如外置网卡，以及BadUSB，系统是chroot运行的。<br>我以前有想过要移植到小米平板上，但是我连设备都没有，驱动的问题我还不一定能解决，移个dan啊，还不如使用 <code>Linux Deploy</code> 或者 <code>Complete Linux Installer</code> 运行一个系统。<br>另外除了Kali的NetHunter外Pwnie Express也有一套Nexus设备的系统包 </p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2015/08/22/NetHunter-Install-Tools.html" data-id="cixw7frsd001q8ouu9fjbssp7" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kali/">Kali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NetHunter/">NetHunter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2015/08/31/How-to-Make-Lock-Picks-Tools.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">手工制作开锁单钩</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2015/07/12/Nightcore-Je-Vais-Vite.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">Nightcore - Je Vais Vite</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

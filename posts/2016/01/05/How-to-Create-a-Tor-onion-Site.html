@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>如何创建一个 Tor .onion 网站 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      如何创建一个 Tor .onion 网站
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2016/01/05/How-to-Create-a-Tor-onion-Site.html" class="article-date"><time datetime="2016-01-05T14:02:38.000Z" itemprop="datePublished">2016-01-05</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Tor 隐藏服务使用 .onion 域名。这里将向你演示如何创建一个安全配置以阻止信息泄露、隐藏服务的 .onion 网站。<br><a id="more"></a></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li>不要在这台服务器上运行或做其它事情。</li>
+<li>在新服务器或 VPS 上进行全新安装。</li>
+<li>不要保留或运行来自 VPS 提供商那儿的任何服务。</li>
+<li>用 Paypal 支付你的 VPS 服务，不过最好使用 Bitcoin。</li>
+<li>不要向 VPS 提供关于你的任何身份信息。</li>
+<li>不要在这台服务器上运行 Tor 中继，因为 Tor 中继在真实世界的公开 IP 是公开的。</li>
+<li>不要从这台服务器发送电子邮件。</li>
+<li>不要运行讨厌的或卑鄙的 Web 软件。如果你的 Web 软件有管理员登陆或管理员账号，把密码改成复杂的 26 个字符组成的密码。很多 Tor 网站被攻破只是某人猜到了管理员登陆密码。</li>
+<li>避免使用任何 JavaScript 之类脚本的 Web 软件。</li>
+<li>确保你的 Web 应用不会泄露任何错误信息或身份信息，比如在错误信息中的真实公开 IP。</li>
+<li>审查 Web 前端代码，确保它不会从 jquery.com、Google Fonts 或任何外部服务拉取资源。</li>
+<li>及时做好 VPS 的安全更新。</li>
+</ul>
+<p><strong>本文使用 Debian Wheezy , Nginx , Tor 提供 Web 服务。Nginx 将被配置为只监听 Tor，只可通过 Tor 访问。</strong></p>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>安装 Nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install nginx</div></pre></td></tr></table></figure>
+<p>关闭 Nginx 版本信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">        server_tokens off;</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>关闭 Nginx 日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/nginx.conf</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line"></div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">        ##</div><div class="line">        # Logging Settings</div><div class="line">        ##</div><div class="line"></div><div class="line">        #access_log /var/log/nginx/access.log;</div><div class="line">        #error_log /var/log/nginx/error.log;</div><div class="line"></div><div class="line">	error_log /dev/null crit;</div></pre></td></tr></table></figure>
+<h2 id="配置-Nginx-监听-localhost-8080-端口"><a href="#配置-Nginx-监听-localhost-8080-端口" class="headerlink" title="配置 Nginx 监听 localhost 8080 端口"></a>配置 Nginx 监听 localhost 8080 端口</h2><p>Nginx网站默认根目录位置在 <code>/usr/share/nginx/www</code> 可修改配置文件更改目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/sites-available/default</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen 127.0.0.1:8080 default_server;</div><div class="line">        server_name localhost;</div><div class="line"></div><div class="line">        root /usr/share/nginx/www;</div><div class="line">        index index.html index.htm;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">                allow 127.0.0.1;</div><div class="line">                deny all;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="重启-Nginx"><a href="#重启-Nginx" class="headerlink" title="重启 Nginx"></a>重启 Nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service nginx restart</div></pre></td></tr></table></figure>
+<p>关闭并移除 <code>rsyslog</code> 以关闭系统日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">service rsyslog stop</div><div class="line">apt-get remove --purge rsyslog</div></pre></td></tr></table></figure>
+<p>关闭并移除所有可被用来发送邮件的程序 (MTA)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">service exim stop</div><div class="line">service postfix stop</div><div class="line">service sendmail stop</div><div class="line">apt-get remove --purge exim</div><div class="line">apt-get remove --purge postfix</div><div class="line">apt-get remove --purge sendmail</div></pre></td></tr></table></figure>
+<p>移除 <code>wget</code> 防止受到恶意脚本攻击时不会受到损害</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get remove wget</div></pre></td></tr></table></figure>
+<p>禁用 SSH 连接时的 Debian 版本信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/ssh/sshd_config</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DebianBanner no</div></pre></td></tr></table></figure>
+<h2 id="安装-Tor"><a href="#安装-Tor" class="headerlink" title="安装 Tor"></a>安装 Tor</h2><p>按照 torproject.org 文档添加 <code>Debian repo</code> 在<a href="https://www.torproject.org/docs/debian.html.en" target="_blank" rel="external">这里</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install tor</div></pre></td></tr></table></figure>
+<h2 id="配置Tor服务"><a href="#配置Tor服务" class="headerlink" title="配置Tor服务"></a>配置Tor服务</h2><p>确保下面几行配置正确</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/tor/torrc</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">HiddenServiceDir /var/lib/tor/hidden_service/</div><div class="line">HiddenServicePort 80 127.0.0.1:8080</div></pre></td></tr></table></figure>
+<p>启动(或重启) Tor 服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service tor start</div></pre></td></tr></table></figure>
+<p>当 Tor 启动时，它会在你的 <code>HiddenServiceDir</code> 文件夹创建了私钥，和一个唯一的 <code>.onion</code> 域名。</p>
+<p>下面是这些文件的样子。当然，你应该永远不要暴露或显示你的私钥！保密。下面的密钥是供演示和学习之用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">root@debian:~# cd /var/lib/tor/hidden_service/</div><div class="line">root@debian:/var/lib/tor/hidden_service# ls</div><div class="line">hostname  private_key</div><div class="line">root@debian:/var/lib/tor/hidden_service# cat private_key </div><div class="line">-----BEGIN RSA PRIVATE KEY-----</div><div class="line">MIICXAIBAAKBgQC9ymfMgQk12AFT4PXWV+XfmZ1tVDaGajya/jIuwnwtjFdMWe7m</div><div class="line">VDWMjs8Z02GGJhH6tIIpoDUrWLi+YchNHlQBi2AnBFzAoSlfRcvobeBAaWuQn+aH</div><div class="line">Uzr+xVXOADSIcfgtT5Yd13RKmUEKFV8AO9u652zYP1ss0l+S2mY/J/t/3wIDAQAB</div><div class="line">AoGAMjQwcPBRN2UENOP1I9XsgNFpy1nTcor3rShArg3UO1g8X34Kq/Lql1vPfM1l</div><div class="line">ps67Qs4tAEXYyraVaAcFrSCwp6MyeKYwxZtT7ki7q3rbMycvbYquxquh0uGy4aed</div><div class="line">K8XWjPrUv3yzQSYslOehVWMTH7xTzaOvp5uhpAlHFRqN5MECQQDmpFkXmtfEGwqT</div><div class="line">bRbKegRs9siNY6McWBCGrYc/BrpXEiK0j2QcrjC/dMJ4P9O4A94aG4NSI/005fII</div><div class="line">vxrOmD9VAkEA0qhBVWeZD7amfvPYChQo0B4ACZZdJlcUd/x1JSOYbVKvRCvJLxjT</div><div class="line">5LMwg93jj2m386jXWx8n40Zcus6BTDr6YwJBAKH8E0ZszdVBWLAqEbOq9qjAuiHz</div><div class="line">NH+XqiOshCxTwVOdvRorCxjJjhspGdvyl/PJY5facuShuhgI13AlJ+KpMvECQHDJ</div><div class="line">l1lzw1bPc2uLgUM8MfHj7h8z+6G4hAQODmaZHVaDK8XzL59gyqqrajFgTyOM9emm</div><div class="line">n89w6flcxe9a+41mEoMCQBaM91yvrfp7N9BeDMCHlSDfAzX7sDqQn44ftHvZZI9V</div><div class="line">4IouuRuLlqN0iaw4V73v3MUeqXoasmdeZ89bVGhVrC8=</div><div class="line">-----END RSA PRIVATE KEY-----</div><div class="line">root@debian:/var/lib/tor/hidden_service# cat hostname </div><div class="line">juyy62wplbkk7gzy.onion</div><div class="line">root@debian:/var/lib/tor/hidden_service#</div></pre></td></tr></table></figure>
+<h2 id="配置并使用防火墙"><a href="#配置并使用防火墙" class="headerlink" title="配置并使用防火墙"></a>配置并使用防火墙</h2><p>启用防火墙，有选择地允许 22 端口。如果稍微偏执些，根本不要允许 22 端口，仅仅从提供商的控制面板控制台来管理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install ufw</div><div class="line">ufw allow ssh</div><div class="line">ufw <span class="built_in">enable</span></div></pre></td></tr></table></figure>
+<p>运气好的话，你现在应该可以访问你 <code>.onion</code> 的网址了，默认是 <code>Nginx</code> 页面。</p>
+<p><img src="/data/images/2016-01-05_01-0001.png" alt=""></p>
+<hr>
+<ul>
+<li>注：长城防火墙内的主机用此方法搭建的服务可能无法连接到 Tor 网络。</li>
+<li>原文：<a href="https://scottlinux.com/2013/10/11/how-to-create-a-tor-onion-site/" target="_blank" rel="external">https://scottlinux.com/2013/10/11/how-to-create-a-tor-onion-site/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2016/01/05/How-to-Create-a-Tor-onion-Site.html" data-id="cixw7frru00198ouuqig8735j" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tor/">Tor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/onion/">onion</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2016/01/06/How-to-Access-the-Dark-Web.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">如何访问暗网</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2015/12/21/WinSetupFromUSB-Introduction.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">WinSetupFromUSB 使用介绍</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

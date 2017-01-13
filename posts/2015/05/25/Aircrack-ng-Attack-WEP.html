@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>Aircrack-ng 攻击WEP网络 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Aircrack-ng 攻击WEP网络
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" class="article-date"><time datetime="2015-05-25T01:31:53.000Z" itemprop="datePublished">2015-05-25</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Aircrack-ng 是一套用于 WiFi 安全测试的工具套件。<br><a id="more"></a></p>
+<h2 id="1、关闭网络和受影响进程"><a href="#1、关闭网络和受影响进程" class="headerlink" title="1、关闭网络和受影响进程"></a>1、关闭网络和受影响进程</h2><p>关闭网络管理器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service network-manager stop</div></pre></td></tr></table></figure>
+<p>结束影响进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng check <span class="built_in">kill</span></div></pre></td></tr></table></figure>
+<h2 id="2、开启无线网卡到监听模式"><a href="#2、开启无线网卡到监听模式" class="headerlink" title="2、开启无线网卡到监听模式"></a>2、开启无线网卡到监听模式</h2><p>查看无线网卡信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iwconfig</div></pre></td></tr></table></figure>
+<p>激活无线网卡至monitor即监听模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0</div></pre></td></tr></table></figure>
+<h2 id="3、监听无线网络并获取信息"><a href="#3、监听无线网络并获取信息" class="headerlink" title="3、监听无线网络并获取信息"></a>3、监听无线网络并获取信息</h2><p>探测无线网络</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng mon0</div></pre></td></tr></table></figure>
+<p>执行后可以看到如下图</p>
+<p><img src="/data/images/2015-05-25_01-0001.png" alt=""></p>
+<p>目标为”FAST_22E242”</p>
+<ul>
+<li>(BSSID) MAC为”40:16:9F:22:E2:42”</li>
+<li>(CH) 工作频道为”1”</li>
+<li>(ENC) 加密方式为”WEP”</li>
+<li>(ESSID) 无线网络名称为”FAST_22E242”</li>
+<li>(STATION) 连接的客户端MAC为”8C:3A:E3:94:7E:E4”</li>
+</ul>
+<p>抓取无线数据包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng --ivs -w output -c 1 mon0</div></pre></td></tr></table></figure>
+<p>参数解释：</p>
+<ul>
+<li>–ivs 这里的设置是通过设置过滤，不再将所有无线数据保存，而只是保存可用于破解的IVS数据报文，这样可以有效地缩减保存的数据包大小；</li>
+<li>-c 这里我们设置目标AP的工作频道，通过刚才的观察，我们要进行攻击测试的无线路由器工作频道为1；</li>
+<li>-w 后跟要保存的文件名，这里w就是”write”写的意思，所以输入自己希望保持的文件名；</li>
+</ul>
+<p><img src="/data/images/2015-05-25_01-0002.png" alt=""></p>
+<p>可以看到这里有3个ESSID，这是因为他们都处在同一工作频道</p>
+<p>注意：<br>这里我们虽然设置保存的文件名是”output”，<br>但是生成的文件却不是”output.ivs”，而是”output-01.ivs”。<br>这是为了方便后续破解时候的调用，所以自动对保存文件按顺序编了号。<br>在进行第二次攻击时，若使用同一文件名，就会生成名为”output-02.ivs”的文件,以此类推。<br>需要一起使用这些捕获的数据包时只要在载入文件时使用”output*.cap”即可</p>
+<h2 id="4、攻击并获取密码"><a href="#4、攻击并获取密码" class="headerlink" title="4、攻击并获取密码"></a>4、攻击并获取密码</h2><p>对目标AP使用ArpRequest注入攻击</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aireplay-ng -3 -b 40:16:9F:22:E2:42 -h 8C:3A:E3:94:7E:E4 mon0</div></pre></td></tr></table></figure>
+<p>参数解释：</p>
+<ul>
+<li>-3 指采用ARPRequesr注入攻击模式；</li>
+<li>-b 后跟AP的MAC地址(BSSID);</li>
+<li>-h 后跟客户端的MAC地址(STATION)；</li>
+</ul>
+<p>执行后会看到一下信息，读取无线数据报文，从中获取ARP报文的情况出现</p>
+<p><img src="/data/images/2015-05-25_01-0003.png" alt=""></p>
+<p>在等待片刻之后，一旦成功截获到ARP请求报文，我们将会看到大量ARP报文快速交互的情况出现。<br>此时回到airodump-ng的界面查看，在下图中我们可以看到，作为”FAST_22E242”的”#Data”和”Frames”栏的数字在飞速递增。<br>使用aircrack-ng，开始破解WEP密码。<br>在抓取的无线数据报文达到了一定数量后，一般都是指ivs值达到2万以上时，就可以开始破解，<br>若不能成功就等待数据报文的继续抓取然后多试几次。</p>
+<p>注意:<br>此处不需要将进行注入攻击的Shell关闭，而是另外开一个Shell进行同步破解。</p>
+<p>分析捕获内容破解密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng output*.ivs</div></pre></td></tr></table></figure>
+<p>由于是对指定无线频道的数据包捕获，所以有的时候大家会看到如下图中一样的情景，<br>在破解的时候出现了3个AP的数据报文，这是由于这些AP都工作在一个频道所致，很常见的。<br>此时，选择我们的目标，ESSID为”FAST_22E242”的，序号为2的那个数据包即可，输入2，回车后即可开始破解。</p>
+<p><img src="/data/images/2015-05-25_01-0004.png" alt=""></p>
+<p>那么经过很短时间的破解后，就可以看到如下图中出现”KEY FOUND!”的提示，<br>紧跟后面的是16进制形式，再后面的ASCII部分就是密码啦，此时便可以使用该密码来连接目标AP了。<br>WEP密码分为两种16进制类型和ASCII类型,以及密码的加密长度，16进制的密码破解后不会有ASCII提示。<br>一般来说，破解64位的WEP至少需要1万ivs以上，但若是要确保破解的成功，应捕获尽可能多的ivs数据。</p>
+<p><img src="/data/images/2015-05-25_01-0005.png" alt=""></p>
+<ul>
+<li>这里的密码是”1234567890”</li>
+</ul>
+<h2 id="5、停止监听"><a href="#5、停止监听" class="headerlink" title="5、停止监听"></a>5、停止监听</h2><p>关闭监听接口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng stop mon0</div></pre></td></tr></table></figure>
+<p>监听网络时误把”mon0”写成”wlan0”使用以下命令关闭</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng stop wlan0</div></pre></td></tr></table></figure>
+<p>启动网络</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service network-manager start</div></pre></td></tr></table></figure>
+<h2 id="6、Others"><a href="#6、Others" class="headerlink" title="6、Others"></a>6、Others</h2><p>若希望捕获数据包时，能够不但是捕获包括ivs的内容，而是捕获所有的无线数据包，也可以在事后分析，<br>那么可以使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng –w output -c 1 mon0</div></pre></td></tr></table></figure>
+<p>就是说，不再是”–ivs”过滤，而是全部捕获，这样的话，捕获的数据包将不再是output-01.ivs，而是output-01.cap，请大家注意。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng output*.cap</div></pre></td></tr></table></figure>
+<p>ivs和cap直接的区别到底在哪儿呢？其实很简单，若只是为了破解的话，建议保存为ivs，优点是生成文件小且效率高。<br>若是为了破解后同时来对捕获的无线数据包分析的话，就选为cap，这样就能及时作出分析，比如内网IP地址、密码等，<br>当然，缺点就是文件会比较大，若是在一个复杂无线网络环境的话，短短20分钟，也有可能使得捕获的数据包大小超过200MB。</p>
+<hr>
+<p><strong> 参考： </strong></p>
+<ul>
+<li>《BT4 Linux 黑客手册》</li>
+<li><a href="http://blog.csdn.net/kibaamor/article/details/42979863" target="_blank" rel="external">利用aircrack-ng工具获取附近wifi的密码</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" data-id="cixw7frqt000e8ouut6m0pj13" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Aircrack-ng/">Aircrack-ng</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEP/">WEP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WiFi/">WiFi</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2015/05/25/Aircrack-ng-Attack-WPA.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Aircrack-ng 攻击WPA网络</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2015/05/21/EMP-Attack-Device.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">利用 EMP 攻击电子设备</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

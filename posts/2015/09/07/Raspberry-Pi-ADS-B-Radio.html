@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>在树莓派上用电视棒搜索飞机无线电信号 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      在树莓派上用电视棒搜索飞机无线电信号
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2015/09/07/Raspberry-Pi-ADS-B-Radio.html" class="article-date"><time datetime="2015-09-06T17:44:03.000Z" itemprop="datePublished">2015-09-07</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在树莓派使用DVB-T电视棒调试ADS-B信号，做一个虚拟雷达服务。<br>这里主要介绍如何用<code>dump1090</code>查看附近的飞机信息。<br><a id="more"></a><br>树莓派型号：B+<br>运行的系统：Raspbian<br>电视棒型号：RTL2832U</p>
+<h2 id="配置运行环境"><a href="#配置运行环境" class="headerlink" title="配置运行环境"></a>配置运行环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get update</div><div class="line">apt-get upgrade</div><div class="line">apt-get install vim git git-core cmake libusb-1.0-0-dev build-essential</div></pre></td></tr></table></figure>
+<h2 id="安装rtl-sdr"><a href="#安装rtl-sdr" class="headerlink" title="安装rtl-sdr"></a>安装<code>rtl-sdr</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> git://git.osmocom.org/rtl-sdr.git</div><div class="line"><span class="built_in">cd</span> rtl-sdr</div><div class="line">mkdir build</div><div class="line"><span class="built_in">cd</span> build</div><div class="line">../ -DINSTALL_UDEV_RULES=ON</div><div class="line">make</div><div class="line">make install</div><div class="line">ldconfig</div><div class="line">cp ./rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/</div></pre></td></tr></table></figure>
+<h2 id="添加驱动黑名单"><a href="#添加驱动黑名单" class="headerlink" title="添加驱动黑名单"></a>添加驱动黑名单</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/modprobe.d/raspi-blacklist.conf</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">blacklist dvb_usb_rtl28xxu</div><div class="line">blacklist rtl2832</div><div class="line">blacklist rtl2830</div></pre></td></tr></table></figure>
+<h2 id="重启系统"><a href="#重启系统" class="headerlink" title="重启系统"></a>重启系统</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reboot</div></pre></td></tr></table></figure>
+<h2 id="安装dump1090"><a href="#安装dump1090" class="headerlink" title="安装dump1090"></a>安装<code>dump1090</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> git://github.com/MalcolmRobb/dump1090.git</div><div class="line"><span class="built_in">cd</span> dump1090</div><div class="line">make</div></pre></td></tr></table></figure>
+<h2 id="查看附件的飞机信息"><a href="#查看附件的飞机信息" class="headerlink" title="查看附件的飞机信息"></a>查看附件的飞机信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./dump1090 --interactive</div></pre></td></tr></table></figure>
+<p>你可以看到飞机的：<br>飞行模式(Mode)、应答号(Sqwk)、航班号(Flight)、高度(Alt)、速度(Spd)、航向(Hdg)、纬度(Lat)、经度(Long)、识别标志(Sig)、、、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Hex     Mode  Sqwk  Flight   Alt    Spd  Hdg    Lat      Long   Sig  Msgs   Ti\</div><div class="line">-------------------------------------------------------------------------------</div><div class="line">40601f  S     0315  BAW165   33000  550  100   50.203    8.720    8   228    0</div><div class="line">400804  S     3475            4675  157  251                      4    16    0</div><div class="line">3cebf0  S                     2925                                5     4   21</div><div class="line">3c666b  S           DLH25N   10000  265  069                      5    21   33</div><div class="line">aa64ba  S     1000  UAL952   34975  596  137   49.995    8.887   18  1291    0</div><div class="line">4008b3  S     0510  BAW48G   34975  542  121   49.640    8.714    5    93   12</div><div class="line">4ca75e  S     0675  RYR369D  37000  513  091   49.806    9.030    5   487    0</div><div class="line">738071  S     3454  ELY006   37000  589  138   50.036    8.939    5   291    2</div><div class="line">4b16ba  S     1000  SWR815   33000  449  182   49.869    8.997    5   262   24</div><div class="line">4692ca  S     3123  AEE2BR   32000  336  297   50.189    8.619    5   280    5</div></pre></td></tr></table></figure></p>
+<h2 id="局域网内共享数据"><a href="#局域网内共享数据" class="headerlink" title="局域网内共享数据"></a>局域网内共享数据</h2><p>使用<code>dump1090</code>的<code>-net</code>选项在主机上开放某个端口为其他主机提供服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">--net-http-port    HTTP server port (default: 8080)</div><div class="line">--net-ri-port      TCP raw input listen port  (default: 30001)</div><div class="line">--net-ro-port      TCP raw output listen port (default: 30002)</div><div class="line">--net-sbs-port     TCP BaseStation output listen port (default: 30003)</div><div class="line">--net-bi-port      TCP Beast input listen port  (default: 30004)</div><div class="line">--net-bo-port      TCP Beast output listen port (default: 30005)</div></pre></td></tr></table></figure></p>
+<p>用<code>netstat</code>可以看到开放的端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">root@null:~/dump1090# netstat -l -p | grep dump1090</div><div class="line">tcp        0      0 *:30002                 *:*                     LISTEN      2293/dump1090</div><div class="line">tcp        0      0 *:30003                 *:*                     LISTEN      2293/dump1090</div><div class="line">tcp        0      0 *:30004                 *:*                     LISTEN      2293/dump1090</div><div class="line">tcp        0      0 *:30005                 *:*                     LISTEN      2293/dump1090</div><div class="line">tcp        0      0 *:http-alt              *:*                     LISTEN      2293/dump1090</div><div class="line">tcp        0      0 *:30001                 *:*                     LISTEN      2293/dump1090</div></pre></td></tr></table></figure></p>
+<p>如果你运行了HTTP服务，可以到浏览器上打开这个网站访问dump1090的Web服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://&lt;address-or-name-of-Raspberry-Pi&gt;:8080</div></pre></td></tr></table></figure></p>
+<p>你还可以用<code>NetCat</code>或<code>PuTTY</code>去测试 接收某个端口的数据</p>
+<p>以下是一些产生数据的示例：<br>30002端口(RAW)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">*5D4CC26FD38DE2;</div><div class="line">*5D44D2635DBF97;</div><div class="line">*20000F9766CE80;</div><div class="line">*5F3C6664964D5B;</div><div class="line">*5D3C49C8A3305E;</div><div class="line">*02E18F976016CA;</div><div class="line">*8D4CA7419941C886A0042413DDE4;</div><div class="line">*20000ABD132A08;</div><div class="line">*903C1FBDC1A4A594766D30C7BCDE;</div><div class="line">*903C1FBDC2A4000047B5C9237512;</div><div class="line">*5D3C4AD34E5E5F;</div><div class="line">*5D44D2635DBF97;</div></pre></td></tr></table></figure></p>
+<p>30003端口(基站)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">MSG,7,111,11111,89617E,111111,2014/07/04,22:44:06.728,2014/07/04,22:44:06.734,,15875,,,,,,,,,,0</div><div class="line">MSG,8,111,11111,400150,111111,2014/07/04,22:44:06.729,2014/07/04,22:44:06.735,,,,,,,,,,,,0</div><div class="line">MSG,7,111,11111,89617E,111111,2014/07/04,22:44:06.730,2014/07/04,22:44:06.735,,15875,,,,,,,,,,0</div><div class="line">MSG,7,111,11111,3C6664,111111,2014/07/04,22:44:06.732,2014/07/04,22:44:06.735,,14875,,,,,,,,,,0</div><div class="line">MSG,6,111,11111,3C544F,111111,2014/07/04,22:44:06.733,2014/07/04,22:44:06.736,,,,,,,,1000,0,0,0,0</div><div class="line">MSG,7,111,11111,3C544F,111111,2014/07/04,22:44:06.734,2014/07/04,22:44:06.737,,20800,,,,,,,,,,0</div><div class="line">MSG,5,111,11111,40643D,111111,2014/07/04,22:44:06.737,2014/07/04,22:44:06.737,EZY5497 ,37050,,,,,,,0,,0,0</div><div class="line">MSG,7,111,11111,3C4AD3,111111,2014/07/04,22:44:06.740,2014/07/04,22:44:06.738,,5200,,,,,,,,,,0</div><div class="line">MSG,8,111,11111,40643D,111111,2014/07/04,22:44:06.741,2014/07/04,22:44:06.738,,,,,,,,,,,,0</div><div class="line">MSG,5,111,11111,89617E,111111,2014/07/04,22:44:06.746,2014/07/04,22:44:06.739,,15875,,,,,,,0,,0,0</div><div class="line">MSG,8,111,11111,40643D,111111,2014/07/04,22:44:06.747,2014/07/04,22:44:06.739,,,,,,,,,,,,0</div><div class="line">MSG,5,111,11111,40643D,111111,2014/07/04,22:44:06.747,2014/07/04,22:44:06.740,,37050,,,,,,,0,,0,0</div><div class="line">MSG,8,111,11111,484163,111111,2014/07/04,22:44:06.747,2014/07/04,22:44:06.740,,,,,,,,,,,,0</div><div class="line">MSG,7,111,11111,3C666B,111111,2014/07/04,22:44:06.750,2014/07/04,22:44:06.741,,26025,,,,,,,,,,0</div></pre></td></tr></table></figure></p>
+<h2 id="自动启动"><a href="#自动启动" class="headerlink" title="自动启动"></a>自动启动</h2><p>如果想要让程序在树莓派开机的时候自动启动，你需要创建一个脚本。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/init.d/dump1090</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="comment">### BEGIN INIT INFO</span></div><div class="line"><span class="comment"># Provides:          Start dump1090 in --net mode</span></div><div class="line"><span class="comment"># Required-Start:</span></div><div class="line"><span class="comment"># Required-Stop:</span></div><div class="line"><span class="comment"># Default-Start:     2 3 4 5</span></div><div class="line"><span class="comment"># Default-Stop:      0 1 6</span></div><div class="line"><span class="comment">### END INIT INFO</span></div><div class="line"><span class="comment"># Author: Johannes Weber (johannes@webernetz.net)</span></div><div class="line"></div><div class="line"><span class="comment"># Aktionen</span></div><div class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">    start)</div><div class="line">        /home/pi/dump1090/dump1090 --net --quiet &amp;</div><div class="line">        ;;</div><div class="line">    stop)</div><div class="line">        killall dump1090</div><div class="line">        ;;</div><div class="line">    restart)</div><div class="line">        killall dump1090</div><div class="line">        /home/pi/dump1090/dump1090 --net --quiet &amp;</div><div class="line">        ;;</div><div class="line"><span class="keyword">esac</span></div><div class="line"></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
+<p>请注意dump1090文件的目录，改成你对应的目录</p>
+<p>赋予执行权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 755 /etc/init.d/dump1090</div></pre></td></tr></table></figure></p>
+<p>添加开机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update-rc.d dump1090 defaults</div></pre></td></tr></table></figure></p>
+<p>还可以使用<code>service</code>命令手动启动和停止服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">service dump1090 start</div><div class="line">service dump1090 stop</div></pre></td></tr></table></figure></p>
+<p>这里有一个我自己编译打包的<code>.deb</code>安装包，不保证树莓派的全型号都能运行。<br><a href="/data/dump1090_2015-09-07_armhf.deb">dump1090_2015-09-07_armhf.deb</a><br><code>rtl-sdr</code>还是需要自己手动编译安装的</p>
+<h2 id="可能碰到的问题"><a href="#可能碰到的问题" class="headerlink" title="可能碰到的问题"></a>可能碰到的问题</h2><p>如果你选择自己编译，在编译是报错，请根据提示解决问题。缺什么装什么。<br>如果你运行<code>dump1090 --interactive</code>后，等了好一会都不见有飞机数据的返回，可能是你附件根本就没飞机，或者天线位置不好没接收到信号，或者你的电视棒硬件有问题，或者你妹配置好程序</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>更多玩法，比如把输给共享给其他主机，在地图上显示飞机的飞行轨迹，以及去抓取其他协议的数据，比如GSM<br>PC上一样可以使用，会GNU Radio更佳</p>
+<hr>
+<ul>
+<li>注：本文所有命令均使用<code>root</code>执行，如使用<code>pi</code>用户请在某些命令前加上<code>sudo</code></li>
+<li>原文：(<a href="http://blog.webernetz.net/2014/08/02/weiterer-vrs-feed-ads-b-stick-am-raspberry-pi/" target="_blank" rel="external">http://blog.webernetz.net/2014/08/02/weiterer-vrs-feed-ads-b-stick-am-raspberry-pi/</a>)</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2015/09/07/Raspberry-Pi-ADS-B-Radio.html" data-id="cixw7frso00228ouujb2ssnbl" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ADS-B/">ADS-B</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Radio/">Radio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Raspberry-Pi/">Raspberry Pi</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2015/09/09/DOS-Virus-Samples.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">DOS病毒样本</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2015/08/31/How-to-Make-Lock-Picks-Tools.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">手工制作开锁单钩</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

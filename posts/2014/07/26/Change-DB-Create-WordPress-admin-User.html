@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>通过修改数据库创建WordPress管理员用户 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      通过修改数据库创建WordPress管理员用户
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2014/07/26/Change-DB-Create-WordPress-admin-User.html" class="article-date"><time datetime="2014-07-26T04:17:32.000Z" itemprop="datePublished">2014-07-26</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>操作系统：CentOS 6.5</li>
+<li>Web架构：LAMP</li>
+<li>WordPress：wordpress-3.6-zh_CN.tar.gz<a id="more"></a>
+登录数据库后查看MySQL里有哪些数据库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SHOW DATABASES;</div><div class="line">+--------------------+</div><div class="line">| Database           |</div><div class="line">+--------------------+</div><div class="line">| information_schema |</div><div class="line">| discuz_x           |</div><div class="line">| mysql              |</div><div class="line">| <span class="built_in">test</span>               |</div><div class="line">| wordpress          |</div><div class="line">+--------------------+</div><div class="line">6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>进入 WordPress 所在的数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt; USE wordpress;</div><div class="line">Database changed</div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>查看数据库里有哪些表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SHOW TABLES;</div><div class="line">+-----------------------+</div><div class="line">| Tables_in_wordpress   |</div><div class="line">+-----------------------+</div><div class="line">| wp_commentmeta        |</div><div class="line">| wp_comments           |</div><div class="line">| wp_links              |</div><div class="line">| wp_options            |</div><div class="line">| wp_postmeta           |</div><div class="line">| wp_posts              |</div><div class="line">| wp_term_relationships |</div><div class="line">| wp_term_taxonomy      |</div><div class="line">| wp_terms              |</div><div class="line">| wp_usermeta           |</div><div class="line">| wp_users              |</div><div class="line">+-----------------------+</div><div class="line">11 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>在这里可以看到<code>wp_users</code>和<code>wp_usermeta</code>这两个表<br><code>wp_users</code>表是保存用户名和密码的<br><code>wp_usermeta</code>表是保存权限设置的<br>查看<code>wp_users</code>表结构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mysql&gt; DESC wp_users;</div><div class="line">+---------------------+---------------------+------+-----+---------------------+----------------+</div><div class="line">| Field               | Type                | Null | Key | Default             | Extra          |</div><div class="line">+---------------------+---------------------+------+-----+---------------------+----------------+</div><div class="line">| ID                  | bigint(20) unsigned | NO   | PRI | NULL                | auto_increment |</div><div class="line">| user_login          | varchar(60)         | NO   | MUL |                     |                |</div><div class="line">| user_pass           | varchar(64)         | NO   |     |                     |                |</div><div class="line">| user_nicename       | varchar(50)         | NO   | MUL |                     |                |</div><div class="line">| user_email          | varchar(100)        | NO   |     |                     |                |</div><div class="line">| user_url            | varchar(100)        | NO   |     |                     |                |</div><div class="line">| user_registered     | datetime            | NO   |     | 0000-00-00 00:00:00 |                |</div><div class="line">| user_activation_key | varchar(60)         | NO   |     |                     |                |</div><div class="line">| user_status         | int(11)             | NO   |     | 0                   |                |</div><div class="line">| display_name        | varchar(250)        | NO   |     |                     |                |</div><div class="line">+---------------------+---------------------+------+-----+---------------------+----------------+</div><div class="line">10 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>查看<code>wp_users</code>表数据内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM wp_users;</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">| ID | user_login | user_pass                          | user_nicename | user_email      | user_url | user_registered     | user_activation_key | user_status | display_name |</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">|  1 | admin      | <span class="variable">$P</span><span class="variable">$BIDmBGwDp4XAnjcz</span>.wBL7PhZbYBoo50 | admin         | admin@admin.com |          | 2014-07-24 12:57:08 |                     |           0 | admin        |</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>在这里可以看到<code>wp_users</code>表里只有一条记录（某些可开放注册的网站可能会有N多条记录）<br><strong>ID为 1 用户名为 admin 密码加密后的字符串（加密前的是的字符是password）</strong><br>现在创建另一个用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; INSERT INTO wp_users VALUES(2,<span class="string">'test'</span>,<span class="string">'$P$BIDmBGwDp4XAnjcz.wBL7PhZbYBoo50'</span>,<span class="string">'test'</span>,<span class="string">'test@admin.com'</span>,<span class="string">''</span>,<span class="string">'2014-07-25 00:00:00'</span>,<span class="string">''</span>,0,<span class="string">'test'</span>);</div><div class="line">Query OK, 1 row affected (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>再次查看<code>wp_users</code>表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM wp_users;</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">| ID | user_login | user_pass                          | user_nicename | user_email      | user_url | user_registered     | user_activation_key | user_status | display_name |</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">|  1 | admin      | <span class="variable">$P</span><span class="variable">$BIDmBGwDp4XAnjcz</span>.wBL7PhZbYBoo50 | admin         | admin@admin.com |          | 2014-07-24 12:57:08 |                     |           0 | admin        |</div><div class="line">|  2 | <span class="built_in">test</span>       | <span class="variable">$P</span><span class="variable">$BIDmBGwDp4XAnjcz</span>.wBL7PhZbYBoo50 | <span class="built_in">test</span>          | <span class="built_in">test</span>@admin.com  |          | 2014-07-25 00:00:00 |                     |           0 | <span class="built_in">test</span>         |</div><div class="line">+----+------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+--------------+</div><div class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p><strong>多了一个用户，ID为 2 用户名为 test 密码为 password</strong><br>到这里只是创建了一个用户，可以登录但是没有后台，登录会报错<br>接着给 <strong>test</strong> 用户赋予后台和权限设置<br>切换到<code>wp_usermeta</code>表查看数据内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT * FROM wp_usermeta;</div><div class="line">+----------+---------+---------------------------------------+-------------------------------------------------------+</div><div class="line">| umeta_id | user_id | meta_key                              | meta_value                                            |</div><div class="line">+----------+---------+---------------------------------------+-------------------------------------------------------+</div><div class="line">|        1 |       1 | first_name                            |                                                       |</div><div class="line">|        2 |       1 | last_name                             |                                                       |</div><div class="line">|        3 |       1 | nickname                              | admin                                                 |</div><div class="line">|        4 |       1 | description                           |                                                       |</div><div class="line">|        5 |       1 | rich_editing                          | <span class="literal">true</span>                                                  |</div><div class="line">|        6 |       1 | comment_shortcuts                     | <span class="literal">false</span>                                                 |</div><div class="line">|        7 |       1 | admin_color                           | fresh                                                 |</div><div class="line">|        8 |       1 | use_ssl                               | 0                                                     |</div><div class="line">|        9 |       1 | show_admin_bar_front                  | <span class="literal">true</span>                                                  |</div><div class="line">|       10 |       1 | wp_capabilities                       | a:1:&#123;s:13:<span class="string">"administrator"</span>;b:1;&#125;                       |</div><div class="line">|       11 |       1 | wp_user_level                         | 10                                                    |</div><div class="line">|       12 |       1 | dismissed_wp_pointers                 | wp350_media,wp360_revisions,wp360_locks,wp390_widgets |</div><div class="line">|       13 |       1 | show_welcome_panel                    | 1                                                     |</div><div class="line">|       14 |       1 | wp_dashboard_quick_press_last_post_id | 3                                                     |</div><div class="line">|       15 |       1 | wp_user-settings                      | mfold=f                                               |</div><div class="line">|       16 |       1 | wp_user-settings-time                 | 1406206784                                            |</div><div class="line">+----------+---------+---------------------------------------+-------------------------------------------------------+</div><div class="line">31 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</div><div class="line"></div><div class="line">mysql&gt;</div></pre></td></tr></table></figure>
+<p>在这里可以看出WordPress用<code>user_id</code>来分类每个用户<br>用<code>wp_user_level</code>来标识用户的权限，<strong>10表示管理员</strong>，<strong>0表示订阅者</strong>，<strong>1表示投稿者</strong>，<strong>2表示作者</strong>，<strong>7表示编辑</strong><br>现在创建 <strong>test</strong> 用户的数据记录<code>umeta_id</code>从最后一位数接下去<code>user_id</code>是你所创建的用户的ID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">INSERT INTO wp_usermeta VALUES (17,2,<span class="string">'first_name'</span>,<span class="string">''</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (18,2,<span class="string">'last_name'</span>,<span class="string">''</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (19,2,<span class="string">'nickname'</span>,<span class="string">'test'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (20,2,<span class="string">'description'</span>,<span class="string">''</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (21,2,<span class="string">'rich_editing'</span>,<span class="string">'true'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (22,2,<span class="string">'comment_shortcuts'</span>,<span class="string">'false'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (23,2,<span class="string">'admin_color'</span>,<span class="string">'fresh'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (24,2,<span class="string">'use_ssl'</span>,<span class="string">'0'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (25,2,<span class="string">'show_admin_bar_front'</span>,<span class="string">'true'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (26,2,<span class="string">'wp_capabilities'</span>,<span class="string">'a:1:&#123;s:10:"subscriber";b:1;&#125;'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (27,2,<span class="string">'wp_user_level'</span>,<span class="string">'10'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (28,2,<span class="string">'default_password_nag'</span>,<span class="string">''</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (29,2,<span class="string">'wp_dashboard_quick_press_last_post_id'</span>,<span class="string">'4'</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (30,2,<span class="string">'wp_user-settings'</span>,<span class="string">''</span>);</div><div class="line">INSERT INTO wp_usermeta VALUES (31,2,<span class="string">'wp_user-settings-time'</span>,<span class="string">'1406280046'</span>);</div></pre></td></tr></table></figure>
+<p>当你创建好这些数据后就可以登录了，并且权限是管理员<br>你要是想通过这种方法获取网站的后台权限先要获取所在服务器的root权限</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2014/07/26/Change-DB-Create-WordPress-admin-User.html" data-id="cixw7frr4000m8ouuzv71lq1z" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/posts/2014/07/29/CentOS-7-Try-out.html" id="article-nav-newer" class="btn btn-default">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">CentOS 7试用记录</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/posts/2014/07/16/Linux-Clean-History.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">Linux清除登录记录和历史命令</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/433-MHz/" style="font-size: 10px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
