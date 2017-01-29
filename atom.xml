@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.iternull.com/"/>
-  <updated>2017-01-13T18:54:09.663Z</updated>
+  <updated>2017-01-29T18:56:27.369Z</updated>
   <id>https://blog.iternull.com/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 Arduino 和 RC Switch 逆向遥控器</title>
+    <link href="https://blog.iternull.com/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html"/>
+    <id>https://blog.iternull.com/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html</id>
+    <published>2017-01-29T09:07:41.000Z</published>
+    <updated>2017-01-29T18:56:27.369Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们平常对遥控器信号的截取、分析、重放，一般用得都是 SDR 设备，常见的有 R820T2+RTL2832U, CC1111EMK, Yardstick One, HackRF One ……<br>其中 R820T2+RTL2832U 电视棒是最廉价的 SDR 设备，35 人民币左右就能得到，其余的都是比较昂贵的设备。不过使用电视棒你只能接收信号，不能发送信号。</p>
+<p>这里我们使用更廉价的设备（Arduino + 315 or 433 MHz 超再生模块）来实现对常见固定码遥控器信号的分析与重放。<br><a id="more"></a><br>常见型号的 Arduino 开发板都可以支持，无线模块建议不同频段的多买几对，价格也不贵。</p>
+<h2 id="1、接收-解码信号"><a href="#1、接收-解码信号" class="headerlink" title="1、接收/解码信号"></a>1、接收/解码信号</h2><p>这里我们使用 RC Switch 库接收和解码信号。</p>
+<h3 id="1-安装-RC-Switch-库"><a href="#1-安装-RC-Switch-库" class="headerlink" title="1. 安装 RC Switch 库"></a>1. 安装 RC Switch 库</h3><p>打开 Arduino IDE ，在选项栏 项目 &gt; 加载库 &gt; 管理库 里打开库管理器，搜索 <code>rc switch</code> 并安装它。</p>
+<p><img src="/data/images/2017-01-29_01-0001.png" alt=""></p>
+<h3 id="2-连接-Arduino-和接收模块"><a href="#2-连接-Arduino-和接收模块" class="headerlink" title="2. 连接 Arduino 和接收模块"></a>2. 连接 Arduino 和接收模块</h3><p><img src="/data/images/2017-01-29_01-0002.png" alt=""></p>
+<p>使用数据线连接 Arduino 到电脑，并在 Arduino IDE 里选择对应的板和端口号。</p>
+<p><img src="/data/images/2017-01-29_01-0003.png" alt=""></p>
+<h3 id="3-上传代码"><a href="#3-上传代码" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p>打开信号接收的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; ReceiveDemo_Simple</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Simple example for receiving</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (mySwitch.available()) &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> value = mySwitch.getReceivedValue();</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</div><div class="line">      Serial.print(<span class="string">"Unknown encoding"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      Serial.print(<span class="string">"Received "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedValue() );</div><div class="line">      Serial.print(<span class="string">" / "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedBitlength() );</div><div class="line">      Serial.print(<span class="string">"bit "</span>);</div><div class="line">      Serial.print(<span class="string">"Protocol: "</span>);</div><div class="line">      Serial.println( mySwitch.getReceivedProtocol() );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    mySwitch.resetAvailable();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>点击上传，上传代码到 Arduino</p>
+<p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
+<p>想要注意的一点，在 <code>void setup()</code> 里有一行代码是定义数据接收的针脚的，不同的 Arduino 版本针脚不一样，如果接错线会导致 Arduino 没法正常工作，具体可以参考 Arduino 的文档。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div></pre></td></tr></table></figure>
+<h3 id="4-查看信号解码"><a href="#4-查看信号解码" class="headerlink" title="4. 查看信号解码"></a>4. 查看信号解码</h3><p>打开串口监视器。在选项栏 工具 &gt; 串口监视器 或者按快捷键 <code>Ctrl + Shift + M</code></p>
+<p>然后你可以按下遥控器，Arduino 会解码它，并在串口监视器上显示出你按下的按键所发送的代码。</p>
+<p><img src="/data/images/2017-01-29_01-0005.png" alt=""></p>
+<h2 id="2、重放信号"><a href="#2、重放信号" class="headerlink" title="2、重放信号"></a>2、重放信号</h2><p>当你知道了信号的代码后你就可以对它进行信号的重放。</p>
+<h3 id="1-连接-Arduino-和发送模块"><a href="#1-连接-Arduino-和发送模块" class="headerlink" title="1. 连接 Arduino 和发送模块"></a>1. 连接 Arduino 和发送模块</h3><p><img src="/data/images/2017-01-29_01-0006.png" alt=""></p>
+<h3 id="2-修改示例代码"><a href="#2-修改示例代码" class="headerlink" title="2. 修改示例代码"></a>2. 修改示例代码</h3><p>打开信号发送的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; SendDemo</p>
+<p>示例代码里有好几种发送选项，和好几个被注释的发送参数。</p>
+<p>这里我们使用十进制的发送方式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Example for different sending methods</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  <span class="comment">// Transmitter is connected to Arduino Pin #10  </span></div><div class="line">  mySwitch.enableTransmit(<span class="number">10</span>);</div><div class="line"></div><div class="line">  <span class="comment">// Optional set pulse length.</span></div><div class="line">  <span class="comment">// mySwitch.setPulseLength(320);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set protocol (default is 1, will work for most outlets)</span></div><div class="line">  <span class="comment">// mySwitch.setProtocol(2);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set number of transmission repetitions.</span></div><div class="line">  <span class="comment">// mySwitch.setRepeatTransmit(15);</span></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">/* See Example: TypeA_WithDIPSwitches */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.switchOn("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  mySwitch.switchOff("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using decimal code */</span></div><div class="line">  mySwitch.send(<span class="number">5393</span>, <span class="number">24</span>);  <span class="comment">// 5393 表示发送的信号代码， 24 表示数据长度。</span></div><div class="line">  delay(<span class="number">1000</span>);              <span class="comment">// 暂停 1000 毫秒后再执行下一行代码。</span></div><div class="line">  mySwitch.send(<span class="number">5396</span>, <span class="number">24</span>);</div><div class="line">  delay(<span class="number">1000</span>);  </div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using binary code */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.send("000000000001010100010001");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.send("000000000001010100010100");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but tri-state code */</span> </div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.sendTriState("00000FFF0F0F");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.sendTriState("00000FFF0FF0");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  delay(<span class="number">20000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-上传代码-1"><a href="#3-上传代码-1" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
+<p>代码上传完成后会一直向外发送信号。</p>
+<h2 id="3、可能遇到的问题"><a href="#3、可能遇到的问题" class="headerlink" title="3、可能遇到的问题"></a>3、可能遇到的问题</h2><p>1、串口监视器没有显示，不能正常接收信号。</p>
+<p>导致出现正在错误的情况有很多，比如打开的端口错误、接收模块与 Arduino 的连接错误、遥控器和接收模块不是同一个频段的……</p>
+<p>2、发送的信号正常但被遥控的设备没响应。</p>
+<p>遇到这种情况你需要使用 RC Switch 库的 ReceiveDemo_Advanced 示例代码进行接收和解码信号，其中有一个 <code>PulseLength</code> 字段，RC Switch 库默认的值是 <code>320</code>，而常见的遥控器是 <code>185</code> 你需要修改发送代码的 <code>mySwitch.setPulseLength(185);</code> 参数。</p>
+<hr>
+<ul>
+<li>RC Switch: <a href="https://github.com/sui77/rc-switch" target="_blank" rel="external">https://github.com/sui77/rc-switch</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们平常对遥控器信号的截取、分析、重放，一般用得都是 SDR 设备，常见的有 R820T2+RTL2832U, CC1111EMK, Yardstick One, HackRF One ……&lt;br&gt;其中 R820T2+RTL2832U 电视棒是最廉价的 SDR 设备，35 人民币左右就能得到，其余的都是比较昂贵的设备。不过使用电视棒你只能接收信号，不能发送信号。&lt;/p&gt;
+&lt;p&gt;这里我们使用更廉价的设备（Arduino + 315 or 433 MHz 超再生模块）来实现对常见固定码遥控器信号的分析与重放。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="433 MHz" scheme="https://blog.iternull.com/tags/433-MHz/"/>
+    
+      <category term="315 MHz" scheme="https://blog.iternull.com/tags/315-MHz/"/>
+    
+      <category term="Arduino" scheme="https://blog.iternull.com/tags/Arduino/"/>
+    
+      <category term="RC Switch" scheme="https://blog.iternull.com/tags/RC-Switch/"/>
+    
+  </entry>
   
   <entry>
     <title>对码与拨码遥控器的拷贝方法</title>
@@ -882,48 +942,6 @@
       <category term="Hexo" scheme="https://blog.iternull.com/tags/Hexo/"/>
     
       <category term="Links" scheme="https://blog.iternull.com/tags/Links/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo 添加返回顶部功能</title>
-    <link href="https://blog.iternull.com/posts/2015/05/26/Hexo-ToTop.html"/>
-    <id>https://blog.iternull.com/posts/2015/05/26/Hexo-ToTop.html</id>
-    <published>2015-05-26T00:02:05.000Z</published>
-    <updated>2016-08-30T09:04:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>有些文章较长用滚动条不是特别方便，所以加了个返回顶部的功能。</p>
-<h2 id="1、添加一个功能模块"><a href="#1、添加一个功能模块" class="headerlink" title="1、添加一个功能模块"></a>1、添加一个功能模块</h2><p>新建文件 <code>themes/你的模版/layout/_partial/totop.ejs</code> 在文件中添加以下代码<br><a id="more"></a><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"totop"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">title</span>=<span class="string">"&lt;%= __('totop')%&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"&lt;%- url_for("</span>/<span class="attr">img</span>/<span class="attr">scrollup.png</span>") %&gt;</span>"/&gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h2 id="2、添加一个JS模块"><a href="#2、添加一个JS模块" class="headerlink" title="2、添加一个JS模块"></a>2、添加一个JS模块</h2><p>新建文件 <code>themes/你的模版/source/js/totop.js</code> 在文件中添加以下代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>) </span>&#123;</div><div class="line">	<span class="comment">// When to show the scroll link</span></div><div class="line">	<span class="comment">// higher number = scroll link appears further down the page</span></div><div class="line">	<span class="keyword">var</span> upperLimit = <span class="number">1000</span>;</div><div class="line"></div><div class="line">	<span class="comment">// Our scroll link element</span></div><div class="line">	<span class="keyword">var</span> scrollElem = $(<span class="string">'#totop'</span>);</div><div class="line"></div><div class="line">	<span class="comment">// Scroll to top speed</span></div><div class="line">	<span class="keyword">var</span> scrollSpeed = <span class="number">500</span>;</div><div class="line"></div><div class="line">	<span class="comment">// Show and hide the scroll to top link based on scroll position</span></div><div class="line">	scrollElem.hide();</div><div class="line">	$(<span class="built_in">window</span>).scroll(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">var</span> scrollTop = $(<span class="built_in">document</span>).scrollTop();</div><div class="line">		<span class="keyword">if</span> ( scrollTop &gt; upperLimit ) &#123;</div><div class="line">			$(scrollElem).stop().fadeTo(<span class="number">300</span>, <span class="number">1</span>); <span class="comment">// fade back in</span></div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			$(scrollElem).stop().fadeTo(<span class="number">300</span>, <span class="number">0</span>); <span class="comment">// fade out</span></div><div class="line">		&#125;</div><div class="line">	&#125;);</div><div class="line"></div><div class="line">	<span class="comment">// Scroll to top animation on click</span></div><div class="line">	$(scrollElem).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		$(<span class="string">'html, body'</span>).animate(&#123;scrollTop:<span class="number">0</span>&#125;, scrollSpeed); <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;);</div><div class="line">&#125;)(jQuery);</div></pre></td></tr></table></figure>
-<p>如果对显示位置和回滚速度不太满意，可以修改以上代码的 <strong>upperLimit</strong> 和 <strong>scrollSpeed</strong> 参数即可。</p>
-<h2 id="3、添加对文件的引用"><a href="#3、添加对文件的引用" class="headerlink" title="3、添加对文件的引用"></a>3、添加对文件的引用</h2><p>修改 <code>themes/你的模版/layout/_partial/after_footer.ejs</code> 文件，在文件末尾添加以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;%- partial(&apos;totop&apos;) %&gt;</div><div class="line">&lt;script src=&quot;&lt;%- config.root %&gt;js/totop.js&quot;&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
-<h2 id="4、添加样式"><a href="#4、添加样式" class="headerlink" title="4、添加样式"></a>4、添加样式</h2><p>新建文件 <code>themes/你的模版/source/css/_partial/totop.syl</code> 在文件中添加以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#totop</div><div class="line">  position fixed</div><div class="line">  display none</div><div class="line">  z-index 9999</div><div class="line">  bottom 5em</div><div class="line">  right 4em</div><div class="line">  cursor pointer</div><div class="line">  @media tabletmax</div><div class="line">    display none !important</div></pre></td></tr></table></figure>
-<h2 id="5、添加对样式的引用"><a href="#5、添加对样式的引用" class="headerlink" title="5、添加对样式的引用"></a>5、添加对样式的引用</h2><p>修改 <code>themes/你的模版/source/css/style.syl</code> 文件，在文件中添加以下代码（位于尾部非底部位置）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@import &quot;_partial/totop&quot;</div></pre></td></tr></table></figure>
-<h2 id="6、添加按钮图片"><a href="#6、添加按钮图片" class="headerlink" title="6、添加按钮图片"></a>6、添加按钮图片</h2><p>将下图复制到 <code>themes/你的模版/source/img</code> 目录下，文件名为 <code>scrollup.png</code> （图片盗自人人网）</p>
-<p><img src="/data/images/2015-05-26_01-0001.png" alt=""></p>
-<p>大功告成！ 赶快 hexo s 看看效果吧。 如果一切顺利的话，看到的效果应该与本页面一样（保证页面够长），在页面右侧就有一个返回顶部的按钮了！</p>
-<hr>
-<ul>
-<li>注：本人基于原文修改</li>
-<li>原文：<a href="http://wuchong.me/blog/2014/01/08/hexo-scrollup/" target="_blank" rel="external">Hexo博客优化：添加返回顶部功能</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;有些文章较长用滚动条不是特别方便，所以加了个返回顶部的功能。&lt;/p&gt;
-&lt;h2 id=&quot;1、添加一个功能模块&quot;&gt;&lt;a href=&quot;#1、添加一个功能模块&quot; class=&quot;headerlink&quot; title=&quot;1、添加一个功能模块&quot;&gt;&lt;/a&gt;1、添加一个功能模块&lt;/h2&gt;&lt;p&gt;新建文件 &lt;code&gt;themes/你的模版/layout/_partial/totop.ejs&lt;/code&gt; 在文件中添加以下代码&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Hexo" scheme="https://blog.iternull.com/tags/Hexo/"/>
-    
-      <category term="ToTop" scheme="https://blog.iternull.com/tags/ToTop/"/>
     
   </entry>
   

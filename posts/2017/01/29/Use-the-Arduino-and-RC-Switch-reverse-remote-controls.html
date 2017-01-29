@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>使用 Arduino 和 RC Switch 逆向遥控器 | IterNull - Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull - Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull - Blog</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="//www.irernull.com/">Home</a></li>
+        
+        <li><a href="/about">About</a></li>
+        
+        <li><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li><a href="//buy.iternull.com/">Buy</a></li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="blog-header">
+    <h1 class="blog-title">IterNull - Blog</h1>
+    
+    <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+    
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      使用 Arduino 和 RC Switch 逆向遥控器
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html" class="article-date"><time datetime="2017-01-29T09:07:41.000Z" itemprop="datePublished">2017-01-29</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们平常对遥控器信号的截取、分析、重放，一般用得都是 SDR 设备，常见的有 R820T2+RTL2832U, CC1111EMK, Yardstick One, HackRF One ……<br>其中 R820T2+RTL2832U 电视棒是最廉价的 SDR 设备，35 人民币左右就能得到，其余的都是比较昂贵的设备。不过使用电视棒你只能接收信号，不能发送信号。</p>
+<p>这里我们使用更廉价的设备（Arduino + 315 or 433 MHz 超再生模块）来实现对常见固定码遥控器信号的分析与重放。<br><a id="more"></a><br>常见型号的 Arduino 开发板都可以支持，无线模块建议不同频段的多买几对，价格也不贵。</p>
+<h2 id="1、接收-解码信号"><a href="#1、接收-解码信号" class="headerlink" title="1、接收/解码信号"></a>1、接收/解码信号</h2><p>这里我们使用 RC Switch 库接收和解码信号。</p>
+<h3 id="1-安装-RC-Switch-库"><a href="#1-安装-RC-Switch-库" class="headerlink" title="1. 安装 RC Switch 库"></a>1. 安装 RC Switch 库</h3><p>打开 Arduino IDE ，在选项栏 项目 &gt; 加载库 &gt; 管理库 里打开库管理器，搜索 <code>rc switch</code> 并安装它。</p>
+<p><img src="/data/images/2017-01-29_01-0001.png" alt=""></p>
+<h3 id="2-连接-Arduino-和接收模块"><a href="#2-连接-Arduino-和接收模块" class="headerlink" title="2. 连接 Arduino 和接收模块"></a>2. 连接 Arduino 和接收模块</h3><p><img src="/data/images/2017-01-29_01-0002.png" alt=""></p>
+<p>使用数据线连接 Arduino 到电脑，并在 Arduino IDE 里选择对应的板和端口号。</p>
+<p><img src="/data/images/2017-01-29_01-0003.png" alt=""></p>
+<h3 id="3-上传代码"><a href="#3-上传代码" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p>打开信号接收的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; ReceiveDemo_Simple</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Simple example for receiving</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (mySwitch.available()) &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> value = mySwitch.getReceivedValue();</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</div><div class="line">      Serial.print(<span class="string">"Unknown encoding"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      Serial.print(<span class="string">"Received "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedValue() );</div><div class="line">      Serial.print(<span class="string">" / "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedBitlength() );</div><div class="line">      Serial.print(<span class="string">"bit "</span>);</div><div class="line">      Serial.print(<span class="string">"Protocol: "</span>);</div><div class="line">      Serial.println( mySwitch.getReceivedProtocol() );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    mySwitch.resetAvailable();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>点击上传，上传代码到 Arduino</p>
+<p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
+<p>想要注意的一点，在 <code>void setup()</code> 里有一行代码是定义数据接收的针脚的，不同的 Arduino 版本针脚不一样，如果接错线会导致 Arduino 没法正常工作，具体可以参考 Arduino 的文档。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div></pre></td></tr></table></figure>
+<h3 id="4-查看信号解码"><a href="#4-查看信号解码" class="headerlink" title="4. 查看信号解码"></a>4. 查看信号解码</h3><p>打开串口监视器。在选项栏 工具 &gt; 串口监视器 或者按快捷键 <code>Ctrl + Shift + M</code></p>
+<p>然后你可以按下遥控器，Arduino 会解码它，并在串口监视器上显示出你按下的按键所发送的代码。</p>
+<p><img src="/data/images/2017-01-29_01-0005.png" alt=""></p>
+<h2 id="2、重放信号"><a href="#2、重放信号" class="headerlink" title="2、重放信号"></a>2、重放信号</h2><p>当你知道了信号的代码后你就可以对它进行信号的重放。</p>
+<h3 id="1-连接-Arduino-和发送模块"><a href="#1-连接-Arduino-和发送模块" class="headerlink" title="1. 连接 Arduino 和发送模块"></a>1. 连接 Arduino 和发送模块</h3><p><img src="/data/images/2017-01-29_01-0006.png" alt=""></p>
+<h3 id="2-修改示例代码"><a href="#2-修改示例代码" class="headerlink" title="2. 修改示例代码"></a>2. 修改示例代码</h3><p>打开信号发送的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; SendDemo</p>
+<p>示例代码里有好几种发送选项，和好几个被注释的发送参数。</p>
+<p>这里我们使用十进制的发送方式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Example for different sending methods</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  <span class="comment">// Transmitter is connected to Arduino Pin #10  </span></div><div class="line">  mySwitch.enableTransmit(<span class="number">10</span>);</div><div class="line"></div><div class="line">  <span class="comment">// Optional set pulse length.</span></div><div class="line">  <span class="comment">// mySwitch.setPulseLength(320);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set protocol (default is 1, will work for most outlets)</span></div><div class="line">  <span class="comment">// mySwitch.setProtocol(2);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set number of transmission repetitions.</span></div><div class="line">  <span class="comment">// mySwitch.setRepeatTransmit(15);</span></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">/* See Example: TypeA_WithDIPSwitches */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.switchOn("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  mySwitch.switchOff("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using decimal code */</span></div><div class="line">  mySwitch.send(<span class="number">5393</span>, <span class="number">24</span>);  <span class="comment">// 5393 表示发送的信号代码， 24 表示数据长度。</span></div><div class="line">  delay(<span class="number">1000</span>);              <span class="comment">// 暂停 1000 毫秒后再执行下一行代码。</span></div><div class="line">  mySwitch.send(<span class="number">5396</span>, <span class="number">24</span>);</div><div class="line">  delay(<span class="number">1000</span>);  </div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using binary code */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.send("000000000001010100010001");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.send("000000000001010100010100");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but tri-state code */</span> </div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.sendTriState("00000FFF0F0F");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.sendTriState("00000FFF0FF0");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  delay(<span class="number">20000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-上传代码-1"><a href="#3-上传代码-1" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
+<p>代码上传完成后会一直向外发送信号。</p>
+<h2 id="3、可能遇到的问题"><a href="#3、可能遇到的问题" class="headerlink" title="3、可能遇到的问题"></a>3、可能遇到的问题</h2><p>1、串口监视器没有显示，不能正常接收信号。</p>
+<p>导致出现正在错误的情况有很多，比如打开的端口错误、接收模块与 Arduino 的连接错误、遥控器和接收模块不是同一个频段的……</p>
+<p>2、发送的信号正常但被遥控的设备没响应。</p>
+<p>遇到这种情况你需要使用 RC Switch 库的 ReceiveDemo_Advanced 示例代码进行接收和解码信号，其中有一个 <code>PulseLength</code> 字段，RC Switch 库默认的值是 <code>320</code>，而常见的遥控器是 <code>185</code> 你需要修改发送代码的 <code>mySwitch.setPulseLength(185);</code> 参数。</p>
+<hr>
+<ul>
+<li>RC Switch: <a href="https://github.com/sui77/rc-switch" target="_blank" rel="external">https://github.com/sui77/rc-switch</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html" data-id="ciyj17uih002vfguu4mqoyroi" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/315-MHz/">315 MHz</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/433-MHz/">433 MHz</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RC-Switch/">RC Switch</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  
+  <li role="presentation">
+    <a href="/posts/2017/01/11/Onthe-code-amd-dial-code-remote-control.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">对码与拨码遥控器的拷贝方法</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 12.5px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12.5px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Arduino/" style="font-size: 10px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 10px;">Attack</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12.5px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12.5px;">OpenVAS</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 10px;">RFID</a> <a href="/tags/Radio/" style="font-size: 10px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 17.5px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12.5px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 15px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12.5px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 17.5px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="http://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://www.lynx.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2017 ZMOM1031</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/ZMOM1031/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
