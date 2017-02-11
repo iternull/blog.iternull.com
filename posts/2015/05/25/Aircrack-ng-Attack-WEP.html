@@ -118,7 +118,7 @@
 <h2 id="3、监听无线网络并获取信息"><a href="#3、监听无线网络并获取信息" class="headerlink" title="3、监听无线网络并获取信息"></a>3、监听无线网络并获取信息</h2><p>探测无线网络</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng mon0</div></pre></td></tr></table></figure>
 <p>执行后可以看到如下图</p>
-<p><img src="/data/images/2015-05-25_01-0001.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_01-0001.png" alt=""></p>
 <p>目标为”FAST_22E242”</p>
 <ul>
 <li>(BSSID) MAC为”40:16:9F:22:E2:42”</li>
@@ -135,7 +135,7 @@
 <li>-c 这里我们设置目标AP的工作频道，通过刚才的观察，我们要进行攻击测试的无线路由器工作频道为1；</li>
 <li>-w 后跟要保存的文件名，这里w就是”write”写的意思，所以输入自己希望保持的文件名；</li>
 </ul>
-<p><img src="/data/images/2015-05-25_01-0002.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_01-0002.png" alt=""></p>
 <p>可以看到这里有3个ESSID，这是因为他们都处在同一工作频道</p>
 <p>注意：<br>这里我们虽然设置保存的文件名是”output”，<br>但是生成的文件却不是”output.ivs”，而是”output-01.ivs”。<br>这是为了方便后续破解时候的调用，所以自动对保存文件按顺序编了号。<br>在进行第二次攻击时，若使用同一文件名，就会生成名为”output-02.ivs”的文件,以此类推。<br>需要一起使用这些捕获的数据包时只要在载入文件时使用”output*.cap”即可</p>
 <h2 id="4、攻击并获取密码"><a href="#4、攻击并获取密码" class="headerlink" title="4、攻击并获取密码"></a>4、攻击并获取密码</h2><p>对目标AP使用ArpRequest注入攻击</p>
@@ -147,15 +147,15 @@
 <li>-h 后跟客户端的MAC地址(STATION)；</li>
 </ul>
 <p>执行后会看到一下信息，读取无线数据报文，从中获取ARP报文的情况出现</p>
-<p><img src="/data/images/2015-05-25_01-0003.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_01-0003.png" alt=""></p>
 <p>在等待片刻之后，一旦成功截获到ARP请求报文，我们将会看到大量ARP报文快速交互的情况出现。<br>此时回到airodump-ng的界面查看，在下图中我们可以看到，作为”FAST_22E242”的”#Data”和”Frames”栏的数字在飞速递增。<br>使用aircrack-ng，开始破解WEP密码。<br>在抓取的无线数据报文达到了一定数量后，一般都是指ivs值达到2万以上时，就可以开始破解，<br>若不能成功就等待数据报文的继续抓取然后多试几次。</p>
 <p>注意:<br>此处不需要将进行注入攻击的Shell关闭，而是另外开一个Shell进行同步破解。</p>
 <p>分析捕获内容破解密码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng output*.ivs</div></pre></td></tr></table></figure>
 <p>由于是对指定无线频道的数据包捕获，所以有的时候大家会看到如下图中一样的情景，<br>在破解的时候出现了3个AP的数据报文，这是由于这些AP都工作在一个频道所致，很常见的。<br>此时，选择我们的目标，ESSID为”FAST_22E242”的，序号为2的那个数据包即可，输入2，回车后即可开始破解。</p>
-<p><img src="/data/images/2015-05-25_01-0004.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_01-0004.png" alt=""></p>
 <p>那么经过很短时间的破解后，就可以看到如下图中出现”KEY FOUND!”的提示，<br>紧跟后面的是16进制形式，再后面的ASCII部分就是密码啦，此时便可以使用该密码来连接目标AP了。<br>WEP密码分为两种16进制类型和ASCII类型,以及密码的加密长度，16进制的密码破解后不会有ASCII提示。<br>一般来说，破解64位的WEP至少需要1万ivs以上，但若是要确保破解的成功，应捕获尽可能多的ivs数据。</p>
-<p><img src="/data/images/2015-05-25_01-0005.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_01-0005.png" alt=""></p>
 <ul>
 <li>这里的密码是”1234567890”</li>
 </ul>
@@ -186,7 +186,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" data-id="ciz0eji83000fl8uulnvqoar5" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" data-id="ciz0ttopr00096guuo4y2srk3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
