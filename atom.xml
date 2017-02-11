@@ -502,9 +502,9 @@
     </summary>
     
     
-      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
-    
       <category term="Tor" scheme="https://blog.iternull.com/tags/Tor/"/>
+    
+      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
     
       <category term="Tor Browser" scheme="https://blog.iternull.com/tags/Tor-Browser/"/>
     
@@ -582,11 +582,11 @@
     </summary>
     
     
-      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
-    
       <category term="Tor" scheme="https://blog.iternull.com/tags/Tor/"/>
     
       <category term="onion" scheme="https://blog.iternull.com/tags/onion/"/>
+    
+      <category term="Web" scheme="https://blog.iternull.com/tags/Web/"/>
     
   </entry>
   
