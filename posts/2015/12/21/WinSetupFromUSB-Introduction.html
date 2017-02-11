@@ -106,18 +106,18 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>WinSetupFromUSB 是一款制作多系统镜像启动U盘的工具，使用Grub4Dos做引导。<br>本人以前试过使用Grub制作多系统安装盘，效果不好，加载慢、花屏、崩溃，只能引导小的PE系统镜像。<br><a id="more"></a><br><img src="/data/images/2015-12-21_01-0001.png" alt=""></p>
+        <p>WinSetupFromUSB 是一款制作多系统镜像启动U盘的工具，使用Grub4Dos做引导。<br>本人以前试过使用Grub制作多系统安装盘，效果不好，加载慢、花屏、崩溃，只能引导小的PE系统镜像。<br><a id="more"></a><br><img src="//files.iternull.com/images/2015-12-21_01-0001.png" alt=""></p>
 <h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>去 <a href="http://www.winsetupfromusb.com/" target="_blank" rel="external">WinSetupFromUSB</a> 官网下载 <a href="http://downloads.winsetupfromusb.com/WinSetupFromUSB-1-6.exe" target="_blank" rel="external">WinSetupFromUSB 1.6</a><br>下载时可能没法下载，这是网站的问题，开发者没加上网页的某个功能，需要手动使用浏览器调试工具提取下载链接。<br>下载下来的是一个自解压的压缩包，运行它，解压到当前目录，打开文件夹，运行你系统位数对应的版本。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>第一次使用建议先备份U盘原有的文件后再格式化。WinSetupFromUSB 会自动检测到U盘。<br>第一次创建启动盘记得勾选上 <code>Auto format it with FBInst</code> 有一堆选项，默认不用改。</p>
-<p><img src="/data/images/2015-12-21_01-0002.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-12-21_01-0002.png" alt=""></p>
 <p>在下面的 <code>Add to USB disk</code> 的选项里选择对应系统镜像的选项，添加系统镜像，一个选项框一次只能添加一个镜像。</p>
-<p><img src="/data/images/2015-12-21_01-0003.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-12-21_01-0003.png" alt=""></p>
 <p>最下面一排选项：<br>(Advanced options) 高级设置(不知道自己在干什么的不要乱点)<br>(Test in QEMU) 使用QEMU虚拟机测试<br>(Show Log) 查看软件运行日志</p>
 <p>最后点击 <code>GO</code> 开始制作<br>完成后弹出 <code>job done</code> 的窗口</p>
 <p>添加系统镜像，制作过一次启动U盘后已经把Grub4Dos写入U盘了，下次再添加就行不要再勾选 <code>Auto format it with FBInst</code> 直接在对应的选项框里添加镜像文件，点击 <code>GO</code> 写入U盘</p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>FAT32 文件系统默认最大单文件大小是 <code>4GB</code> 遇到大于4GB的系统镜像不用担心，WinSetupFromUSB 默认会对文件进行分卷。</p>
 <p>在创建 Linux 系统镜像的时候可以在高级选项里，设置创建一个持久性的文件，默认 <code>300MB</code>，其实就是创建一个指定大小的文件 <code>ext2</code> 格式，在加载这个镜像的时候自动挂载，你可以在里面存文件，从起不会丢失。如果使用的是FAT32格式的制作的启动盘可以不用考虑使用这个</p>
-<p><img src="/data/images/2015-12-21_01-0004.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-12-21_01-0004.png" alt=""></p>
 <hr>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
 <li>教程：<a href="http://www.winsetupfromusb.com/tutorials/" target="_blank" rel="external">http://www.winsetupfromusb.com/tutorials/</a></li>
@@ -133,7 +133,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2015/12/21/WinSetupFromUSB-Introduction.html" data-id="ciz0ttowm006c6guuzzqqgd1a" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2015/12/21/WinSetupFromUSB-Introduction.html" data-id="ciz0u4sbk002tekuuwypfg1z2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

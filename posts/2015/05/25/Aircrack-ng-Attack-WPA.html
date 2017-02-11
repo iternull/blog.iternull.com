@@ -117,7 +117,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0</div></pre></td></tr></table></figure>
 <p>探测无线网络</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng mon0</div></pre></td></tr></table></figure>
-<p><img src="/data/images/2015-05-25_02-0001.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0001.png" alt=""></p>
 <p>抓取无线数据包</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng -c 6 –w output mon0</div></pre></td></tr></table></figure>
 <p>参数解释：</p>
@@ -125,7 +125,7 @@
 <li>-c 这里我们设置目标AP的工作频道，通过观察，我们要进行攻击测试的无线路由器工作频道为6；</li>
 <li>-w 后跟要保存的文件名，这里w就是”Write”写的意思，所以输入自己希望的文件名就行；</li>
 </ul>
-<p><img src="/data/images/2015-05-25_02-0002.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0002.png" alt=""></p>
 <p>注意：<br>设置保存的文件名是output，但是生成的文件却不是output.cap，而是output-01.cap，以此类推。</p>
 <p>执行后，就可以看到如下图所示的界面，这表示着无线数据包抓取的开始。<br>接下来保持这个窗口不动，注意，不要把它关闭了，另外打开一个Shell。</p>
 <h2 id="3、执行攻击"><a href="#3、执行攻击" class="headerlink" title="3、执行攻击"></a>3、执行攻击</h2><p>进行Deauth攻击加速破解过程。<br>和破解WEP时不同，这里为了获得破解所需的WPA-PSK握手验证的整个完整数据包，<br>无线黑客们将会发送一种称之为”Deauth”的数据包来将已经连接至无线路由器的合法无线客户端强制断开，<br>此时，客户端就会自动重新连接无线路由器，黑客们也就有机会捕获到包含WPA-PSK握手验证的完整数据包了。<br>此处具体输入命令如下：</p>
@@ -137,7 +137,7 @@
 <li>-c 后跟客户端的MAC地址(STATION)；</li>
 </ul>
 <p>此时回到airodump-ng的界面查看，在下图中我们可以看到在右上角出现了”WPA handshake”的提示，</p>
-<p><img src="/data/images/2015-05-25_02-0003.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0003.png" alt=""></p>
 <p>若我们没有在airodump-ng工作的界面上看到上面的提示，那么可以增加Deauth的发送数量，再一次对目标AP进行攻击。<br>比如将 <code>-0</code> 参数后的数值改为 <code>10</code><br>我建议改成 <code>0</code> 无限发送，简单、暴力、快捷</p>
 <h2 id="4、开始破解"><a href="#4、开始破解" class="headerlink" title="4、开始破解"></a>4、开始破解</h2><p>在成功获取到无线WPA-PSK验证数据报文后，就可以开始破解<br>可边捕获边破解，不过不是很有必要</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng -w wordlist.txt output.cap</div></pre></td></tr></table></figure>
@@ -146,11 +146,11 @@
 <li>-w 字典文件的路径；</li>
 </ul>
 <p>在回车后，若捕获数据中包含了多个无线网络的数据，也就是能看到多个SSID出现的情况。<br>这就意味着其它AP的无线数据皆因为工作在同一频道而被同时截获到，由于数量很少所以对于破解来说没有意义。<br>此处输入正确的选项即对应目标AP的MAC值，回车后即可开始破解。我们这里输入 <code>4</code></p>
-<p><img src="/data/images/2015-05-25_02-0004.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0004.png" alt=""></p>
 <p>由下图可以看到，密码没有破解出来，应为字典里没有那个密码。我用的是sqlmap的字典，跑完最后一个字符串后并没有找到对应的。</p>
-<p><img src="/data/images/2015-05-25_02-0005.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0005.png" alt=""></p>
 <p>下图可见，我们成功破解出了密码。在”KEY FOUND”提示的右侧，可以看到密码已被破解出。密码明文为”1234567890”<br>破解速度约跟硬件性能相关。</p>
-<p><img src="/data/images/2015-05-25_02-0006.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2015-05-25_02-0006.png" alt=""></p>
 <p>由此可见密码能否破解，得有你使用字典决定。<br>对于启用WPA2-PSK加密的无线网络，其攻击和破解步骤及工具是完全一样的。</p>
 
       
@@ -162,7 +162,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WPA.html" data-id="ciz0ttopr000h6guupg7414h9" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WPA.html" data-id="ciz0u4s6l000bekuu4jq0lv9r" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
