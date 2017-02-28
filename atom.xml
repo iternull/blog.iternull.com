@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.iternull.com/"/>
-  <updated>2017-02-11T06:01:24.970Z</updated>
+  <updated>2017-02-28T08:04:28.150Z</updated>
   <id>https://blog.iternull.com/</id>
   
   <author>
@@ -16,11 +16,56 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>硬件安全分析日志-小米智能插座基础版</title>
+    <link href="https://blog.iternull.com/posts/2017/02/28/Reverse-Xiaomi-Smart-Socket-WiFi-Log.html"/>
+    <id>https://blog.iternull.com/posts/2017/02/28/Reverse-Xiaomi-Smart-Socket-WiFi-Log.html</id>
+    <published>2017-02-27T19:46:01.000Z</published>
+    <updated>2017-02-28T08:04:28.150Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一篇对小米智能插座基础版做硬件安全逆向工程的日志，不定期更新逆向工程的操作记录。<br><a id="more"></a></p>
+<h2 id="2017-02-28"><a href="#2017-02-28" class="headerlink" title="2017/02/28"></a>2017/02/28</h2><blockquote>
+<ul>
+<li>对“米家APP”进行流量抓包。</li>
+</ul>
+</blockquote>
+<p>在中国版大菠萝 (WiFi Pineapple) 上挂载外接 U 盘，让安装了“米家APP” 的手机连接到 WiFi Pineapple 的 WiFi，SSH 登陆到 WiFi Pineapple 上使用 <code>tcpdump</code> 对无线网卡上所有的流量进行抓包并保存到 U 盘上。<br>通过 <code>scp</code> 复制到 PC 机上使用 <code>Wireshark</code> 打开 <code>.cap</code> 包进行初略查看。</p>
+<blockquote>
+<ul>
+<li>对“小米智能插座基础版”进行流量抓包</li>
+</ul>
+</blockquote>
+<p>硬件定位服务端用得是域名而非固定 IP，硬件与服务端的全部通信用得都是 UDP 协议，找到了控制电源开或关时候的通信数据包（4 次传输），用得好像不是我之前猜测的 MQTT 协议，目前还没法确定这是什么协议或服务的数据，也没法解码。</p>
+<blockquote>
+<ul>
+<li>对设备进行本地局域网使用测试</li>
+</ul>
+</blockquote>
+<p>在未连接互联网的情况下依旧可以在局域网中使用，而无需服务端。再从新接入互联网后“米家APP”会把通过 APP 操作的设备操作日志同步到服务端上，而直接再硬件上操作的记录并不会做记录或保存记录。<br>连接互联网后最后一条操作记录以设备当时的运行状态决定，时间戳为成功连接互联网时的时间，其之前手动在硬件上得所有操作都不会被记录。<br>当硬件在电源开启的情况下连接不上第一次配置时所设置的 WiFi 的时候，指示灯会不停的闪。</p>
+<hr>
+<p>由于硬件还要使用所以不能拆机调试。还缺少对硬件调试所需的很多工具，暂时无法进行下一步操作。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是一篇对小米智能插座基础版做硬件安全逆向工程的日志，不定期更新逆向工程的操作记录。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Hardware" scheme="https://blog.iternull.com/tags/Hardware/"/>
+    
+      <category term="Reverse Engineering" scheme="https://blog.iternull.com/tags/Reverse-Engineering/"/>
+    
+      <category term="Xiaomi" scheme="https://blog.iternull.com/tags/Xiaomi/"/>
+    
+  </entry>
+  
+  <entry>
     <title>分析无线遥控器信号并制作 Hack 硬件进行攻击</title>
     <link href="https://blog.iternull.com/posts/2017/02/04/Use-Arduino-brute-force-to-attack-remote-control.html"/>
     <id>https://blog.iternull.com/posts/2017/02/04/Use-Arduino-brute-force-to-attack-remote-control.html</id>
     <published>2017-02-04T14:32:46.000Z</published>
-    <updated>2017-02-11T06:01:24.970Z</updated>
+    <updated>2017-02-26T13:51:10.024Z</updated>
     
     <content type="html"><![CDATA[<p>无线遥控器（无线电遥控器）在我们生活中非常常见，应用于各种场景，方便着用户的使用。不过大多数还是用于安防方面的，比如: 遥控报警器、电动卷帘门、电动伸缩门、遥控电开关、无线遥控门铃……<br>不过国内关注和研究这类硬件安全的人比较少，我知道你们大多都是 Web 安全狗，我挖洞挖不过你们所以做了一只硬件安全狗。<br><a id="more"></a></p>
 <h2 id="1、无线遥控器简介"><a href="#1、无线遥控器简介" class="headerlink" title="1、无线遥控器简介"></a>1、无线遥控器简介</h2><p>无线遥控器从安全角度看大致分为两类，一类是最普遍的固定码遥控器，特点是廉价、应用广泛、市场大、用户多；另一类是滚动码遥控器，特点是价格较贵、相对比较安全、用于汽车安全防盗等安全要求较高的地方。</p>
@@ -51,13 +96,13 @@
 <li>面包板跳线</li>
 </ol>
 <h3 id="4-2-硬件连接方式"><a href="#4-2-硬件连接方式" class="headerlink" title="4.2 硬件连接方式"></a>4.2 硬件连接方式</h3><p><img src="//files.iternull.com/images/2017-02-04_01-0003.png" alt=""><br><img src="//files.iternull.com/images/2017-02-04_01-0004.jpg" alt=""></p>
-<h3 id="4-3-功能代码"><a href="#4-3-功能代码" class="headerlink" title="4.3 功能代码"></a>4.3 功能代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Brute Force Attack 4 ^ 8 Remote Control</div><div class="line">  </div><div class="line">  https://github.com/ZMOM1031/bruteforce3-8remote</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="comment">// 定义 4 个按键针脚</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_a = <span class="number">10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_b = <span class="number">16</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_c = <span class="number">14</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_d = <span class="number">15</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> butStatA = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatB = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatC = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatD = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> dfa = <span class="number">256</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  mySwitch.enableTransmit(<span class="number">9</span>);    <span class="comment">// 定义发送模块的数据传输针脚</span></div><div class="line">  mySwitch.setPulseLength(<span class="number">170</span>);   <span class="comment">// 定义脉冲长度，这个值具体看你使用的遥控器而定</span></div><div class="line">  pinMode(button_a, INPUT);</div><div class="line">  pinMode(button_b, INPUT);</div><div class="line">  pinMode(button_c, INPUT);</div><div class="line">  pinMode(button_d, INPUT);</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// read the state of the pushbutton value:</span></div><div class="line">  butStatA = digitalRead(button_a);</div><div class="line">  butStatB = digitalRead(button_b);</div><div class="line">  butStatC = digitalRead(button_c);</div><div class="line">  butStatD = digitalRead(button_d);</div><div class="line"></div><div class="line">  <span class="comment">// Button A</span></div><div class="line">  <span class="keyword">if</span> (butStatA == HIGH) &#123;    <span class="comment">// check if the pushbutton is pressed.</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">192</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button B</span></div><div class="line">  <span class="keyword">if</span> (butStatB == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">48</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button C</span></div><div class="line">  <span class="keyword">if</span> (butStatC == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">12</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button D</span></div><div class="line">  <span class="keyword">if</span> (butStatD == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">3</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-3-功能代码"><a href="#4-3-功能代码" class="headerlink" title="4.3 功能代码"></a>4.3 功能代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">  Brute Force Attack 4 ^ 8 Remote Control</div><div class="line">  </div><div class="line">  https://github.com/iternull/bruteforce3-8remote</div><div class="line">  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;RCSwitch.h&gt;</span></span></div><div class="line"></div><div class="line">RCSwitch mySwitch = RCSwitch();</div><div class="line"></div><div class="line"><span class="comment">// 定义 4 个按键针脚</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_a = <span class="number">10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_b = <span class="number">16</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_c = <span class="number">14</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> button_d = <span class="number">15</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> butStatA = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatB = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatC = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> butStatD = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> dfa = <span class="number">256</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  Serial.begin(<span class="number">9600</span>);</div><div class="line">  </div><div class="line">  mySwitch.enableTransmit(<span class="number">9</span>);    <span class="comment">// 定义发送模块的数据传输针脚</span></div><div class="line">  mySwitch.setPulseLength(<span class="number">170</span>);   <span class="comment">// 定义脉冲长度，这个值具体看你使用的遥控器而定</span></div><div class="line">  pinMode(button_a, INPUT);</div><div class="line">  pinMode(button_b, INPUT);</div><div class="line">  pinMode(button_c, INPUT);</div><div class="line">  pinMode(button_d, INPUT);</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// read the state of the pushbutton value:</span></div><div class="line">  butStatA = digitalRead(button_a);</div><div class="line">  butStatB = digitalRead(button_b);</div><div class="line">  butStatC = digitalRead(button_c);</div><div class="line">  butStatD = digitalRead(button_d);</div><div class="line"></div><div class="line">  <span class="comment">// Button A</span></div><div class="line">  <span class="keyword">if</span> (butStatA == HIGH) &#123;    <span class="comment">// check if the pushbutton is pressed.</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">192</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button B</span></div><div class="line">  <span class="keyword">if</span> (butStatB == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">48</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button C</span></div><div class="line">  <span class="keyword">if</span> (butStatC == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">12</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// Button D</span></div><div class="line">  <span class="keyword">if</span> (butStatD == HIGH) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">long</span> i = <span class="number">0</span>; i &lt; <span class="number">65535</span>; i++ )&#123;</div><div class="line">      <span class="keyword">long</span> key = <span class="keyword">long</span>(i * dfa) + <span class="keyword">int</span>(<span class="number">3</span>);</div><div class="line">      mySwitch.send(key, <span class="number">24</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>注：这段代码实现的是发送 <code>4 ^ 8</code> 的所有可能性。</li>
 </ul>
 <p>生成 <code>3 ^ 8</code> 的所有可能性的算法我还没实现，暂时也没时间去继续研究如何实现了，<strong>过完年得去找工作了</strong>。</p>
 <h2 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h2><p>在实际测试中暴力穷举攻击确实是有效的，但由于时间匆忙，硬件设计和代码都不是最优化的，所攻击的速度还是差了点。如果你使用的是这种类型的遥控设备也不用担心会这么样。</p>
-<p><a href="https://github.com/ZMOM1031/bruteforce3-8remote" target="_blank" rel="external">bruteforce3-8remote</a> 这个项目后续还会更新，争取达到最高的可用度，还会再加一些功能。<br>目前我得先去忙着找工作，才是正事。未来还会研究一些其他的硬件安全的破解/逆向项目的。</p>
+<p><a href="https://github.com/iternull/bruteforce3-8remote" target="_blank" rel="external">bruteforce3-8remote</a> 这个项目后续还会更新，争取达到最高的可用度，还会再加一些功能。<br>目前我得先去忙着找工作，才是正事。未来还会研究一些其他的硬件安全的破解/逆向项目的。</p>
 <p>最后感谢一下我的一位小伙伴（匿名）给的一些帮助。</p>
 ]]></content>
     
@@ -172,9 +217,9 @@
     
       <category term="433 MHz" scheme="https://blog.iternull.com/tags/433-MHz/"/>
     
-      <category term="315 MHz" scheme="https://blog.iternull.com/tags/315-MHz/"/>
-    
       <category term="Arduino" scheme="https://blog.iternull.com/tags/Arduino/"/>
+    
+      <category term="315 MHz" scheme="https://blog.iternull.com/tags/315-MHz/"/>
     
       <category term="RC Switch" scheme="https://blog.iternull.com/tags/RC-Switch/"/>
     
@@ -965,37 +1010,6 @@
     
     
       <category term="Nightcore" scheme="https://blog.iternull.com/tags/Nightcore/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用文本处理命令获取链接批量下载</title>
-    <link href="https://blog.iternull.com/posts/2015/06/13/Text-Extract-Links.html"/>
-    <id>https://blog.iternull.com/posts/2015/06/13/Text-Extract-Links.html</id>
-    <published>2015-06-13T08:03:43.000Z</published>
-    <updated>2017-02-11T06:01:14.196Z</updated>
-    
-    <content type="html"><![CDATA[<p>比如我看到Nmap的资源很想把他全部下载到本地怎么办呐？右键一个个点？用工具镜像整个站点？<br>以前我用的方法是左边打开浏览器，右边打开Notepad++ 一个个链接拖到Notepad++里，最后就有了一个完整的下载列表<br>现在有更好的方法，利用Linux的文本处理工具提取完整的下载链接，文本处理工具我很早就学过了，但是平常不用，学了就忘<br><a id="more"></a><br>打开你要处理网站的页面 <code>https://nmap.org/dist/</code> 右键保存网页</p>
-<p><img src="//files.iternull.com/images/2015-06-13_01-0001.png" alt=""></p>
-<p>用编辑器打开删除HTML文件顶部的代码和底部代码留下链接部分</p>
-<p><img src="//files.iternull.com/images/2015-06-13_01-0002.png" alt=""></p>
-<p>使用文本处理命令剔除多余文本，留下完整链接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk <span class="string">'&#123;print $7&#125;'</span> index-of.html | cut <span class="_">-d</span> <span class="string">'"'</span> <span class="_">-f</span>2 &gt; output.txt</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">awk &apos;&#123;print $7&#125;&apos;	// 打印出第7列文本，按空格或者制表符(Tab)</div><div class="line">index-of.html		// 要处理的文件</div><div class="line">| cut -d &apos;&quot;&apos; -f2	// 通过管道传递给 cut -d 指定分隔符为&quot; -f2 指定输出地2列文本</div><div class="line">&gt; output.txt		// 重定向标准输出到output.txt</div></pre></td></tr></table></figure>
-<p><img src="//files.iternull.com/images/2015-06-13_01-0003.png" alt=""></p>
-<p>然后就可以使用获取到的链接列表自动批量下载了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget -i output.txt</div></pre></td></tr></table></figure>
-<p>估算了一下，使用这个方法给我节约了5倍的时间可以干其他事情</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;比如我看到Nmap的资源很想把他全部下载到本地怎么办呐？右键一个个点？用工具镜像整个站点？&lt;br&gt;以前我用的方法是左边打开浏览器，右边打开Notepad++ 一个个链接拖到Notepad++里，最后就有了一个完整的下载列表&lt;br&gt;现在有更好的方法，利用Linux的文本处理工具提取完整的下载链接，文本处理工具我很早就学过了，但是平常不用，学了就忘&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Text" scheme="https://blog.iternull.com/tags/Text/"/>
     
   </entry>
   
