@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.iternull.com/"/>
-  <updated>2017-03-01T09:07:45.763Z</updated>
+  <updated>2017-03-01T09:43:44.662Z</updated>
   <id>https://blog.iternull.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Itead WiFi 遥控墙壁智能插座</title>
+    <title>Itead WiFi 遥控墙壁智能插座拆解</title>
     <link href="https://blog.iternull.com/posts/2017/03/01/Itead-Wall-WiFi-Smart-Socket.html"/>
     <id>https://blog.iternull.com/posts/2017/03/01/Itead-Wall-WiFi-Smart-Socket.html</id>
     <published>2017-03-01T07:30:20.000Z</published>
-    <updated>2017-03-01T09:07:45.763Z</updated>
+    <updated>2017-03-01T09:43:44.662Z</updated>
     
     <content type="html"><![CDATA[<p>在淘宝上发现了一款我非常想要的产品，还是 Itead 生产的。在这款产品之前已经有一些智能家居的产品了，比如小米家就有很多款智能家居产品。但都有一个共同点，不能兼容其它厂商的产品，你也没法自定义它。<br>但 Itead 的产品有一个特点，就是会留一个串口给用户，在不损坏产品的情况下能刷其它固件，给了用户更多的控制权。另一点 Itead 的 WiFi 智能家居产品使用的芯片基本上都是 <a href="http://www.esp8266.com/wiki/doku.php?id=start" target="_blank" rel="external">ESP8266</a> 这也是非常好的一点， ESP8266 是一款很好的 WiFi 芯片，易于开发，有很多活跃的开发社区和用户。<br><a id="more"></a></p>
 <h3 id="购买链接-Buy"><a href="#购买链接-Buy" class="headerlink" title="购买链接 (Buy)"></a>购买链接 (Buy)</h3><blockquote>
