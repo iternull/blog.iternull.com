@@ -1,0 +1,20 @@
+<%- partial('_partial/head') %>
+<body>
+  <%- partial('_partial/header') %>
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <%- body %>
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <%- partial('_partial/sidebar') %>
+        </div>
+    </div>
+    <hr>
+  </div>
+  <%- partial('_partial/footer') %>
+  <%- partial('_partial/after-footer') %>
+</body>
+</html>

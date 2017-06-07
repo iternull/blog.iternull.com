@@ -1,0 +1,50 @@
+# Header
+menu:
+  Home: //www.iternull.com/
+  About: /about
+  Blog: //blog.iternull.com/
+  Docs: //docs.iternull.com/
+  Buy: //buy.iternull.com/
+rss: /atom.xml
+
+# Content
+excerpt_link: Read More
+fancybox: true
+switch_banner: false
+
+# Sidebar
+widgets:
+#- social
+- recent_posts
+- tagcloud
+- category
+#- tag
+- blogroll
+
+# Social Links
+social:
+  Github: https://github.com/iternull
+  Weibo: http://weibo.com/u/2655123364
+  Twitter: https://twitter.com/ZMOM1031
+  Facebook: 
+  Google-plus: 
+  Instagram: 
+
+# Miscellaneous
+google_analytics:
+favicon:
+twitter:
+google_plus:
+fb_admins:
+fb_app_id:
+
+# Blogroll
+blogroll:
+  ZnHoCn's Blog: https://znhocn.github.io/
+  #TYPCN Tech: http://blog.eqoe.cn/
+  #Anotherhome: https://www.anotherhome.net/
+  音符の新世界: https://freedom.moe/
+  YsiCing's Blog: https://ysicing.net/
+  往前方: http://www.wangqianfang.com/
+  #Yay Ka-Boom-Boom: https://www.lynx.im/
+  Yay Ka-Boom-Boom: https://blog.nyan.im/
