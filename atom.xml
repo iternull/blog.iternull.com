@@ -508,11 +508,11 @@
   </entry>
   
   <entry>
-    <title>GPG 入门教程</title>
+    <title>GnuPG 入门教程</title>
     <link href="https://blog.iternull.com/posts/2016/07/16/GPG-Getting-Started-Tutorial.html"/>
     <id>https://blog.iternull.com/posts/2016/07/16/GPG-Getting-Started-Tutorial.html</id>
     <published>2016-07-16T02:26:33.000Z</published>
-    <updated>2017-01-02T17:15:46.886Z</updated>
+    <updated>2017-06-09T21:03:13.757Z</updated>
     
     <content type="html"><![CDATA[<p>GnuPG (GNU Privacy Guard，GPG) 是一种加密软件，它是 PGP 加密软件的满足 GPL 协议的替代物。GnuPG 依照由 IETF 制定的 OpenPGP 技术标准设计。GnuPG 是用于加密、数字签章及产生非对称匙对的软件。GPG 兼容 PGP (Pretty Good Privacy) 的功能。<br><a id="more"></a></p>
 <h2 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h2><ul>
@@ -593,11 +593,10 @@
 <p><code>--local-user</code> 表示发送者ID，也就是自己的私钥ID用于签名，<code>--recipient</code> 表示接收者的公钥ID。</p>
 <h3 id="4-5、验证签名"><a href="#4-5、验证签名" class="headerlink" title="4.5、验证签名"></a>4.5、验证签名</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gpg --verify msg.txt.sig</div></pre></td></tr></table></figure>
 <hr>
-<p>参考：</p>
-<ul>
-<li><a href="http://www.ruanyifeng.com/blog/2013/07/gpg.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2013/07/gpg.html</a></li>
-<li><a href="http://wiki.ubuntu.org.cn/GPG/PGP" target="_blank" rel="external">http://wiki.ubuntu.org.cn/GPG/PGP</a></li>
-<li><a href="http://www.alexgao.com/2009/01/24/gpg/" target="_blank" rel="external">http://www.alexgao.com/2009/01/24/gpg/</a></li>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://www.gnupg.org/gph/en/manual.html" target="_blank" rel="external">The GNU Privacy Handbook</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/GPG/PGP" target="_blank" rel="external">GPG/PGP - Ubuntu中文</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/07/gpg.html" target="_blank" rel="external">GPG入门教程</a></li>
 </ul>
 ]]></content>
     
