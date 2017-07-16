@@ -101,6 +101,161 @@
   </entry>
   
   <entry>
+    <title>ChameleonMini 使用教程</title>
+    <link href="https://blog.iternull.com/posts/2017/05/22/ChameleonMini-Tutorial.html"/>
+    <id>https://blog.iternull.com/posts/2017/05/22/ChameleonMini-Tutorial.html</id>
+    <published>2017-05-22T15:58:47.000Z</published>
+    <updated>2017-07-16T17:28:39.264Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/emsec/ChameleonMini" target="_blank" rel="external">ChameleonMini</a> 是一款可编程的 NFC 安全分析工具的开源硬件项目，可以用于嗅探、模拟和克隆非接触式智能卡 (RFID Card)。<br>ChameleonMini 常见的有两个版本 <strong>ChameleonMini Rev.E</strong> 与 <strong>ChameleonMini Rev.G</strong> 其中 Rev.G 是最新升级的版本，自带电池供电。</p>
+<a id="more"></a>
+<h4 id="Rev-G-版本特点"><a href="#Rev-G-版本特点" class="headerlink" title="Rev.G 版本特点"></a>Rev.G 版本特点</h4><ul>
+<li>固件支持 ISO14443A 编解码器（仿真和读卡器）</li>
+<li>固件支持 Mifare Classic 1K 和 4K 仿真（ 4 和 7 字节 UID）</li>
+<li>固件支持 Mifare Ultralight 仿真</li>
+<li>硬件支持 ASK 调制（均为 10％ 和 100％ ），可覆盖几乎所有可用的卡标准</li>
+<li>使用子载波的 ASK 和 BPSK 负载调制的硬件支持</li>
+<li>模块化固件结构允许其他卡和标准的易扩展性</li>
+<li>支持通过 Atmel DFU 引导加载程序，快速可靠的固件更新，因此只需要一次编程硬件</li>
+<li>可以使用 <a href="http://www.fourwalledcubicle.com/LUFA.php" target="_blank" rel="external">LUFA USB stack</a> 通过 CDC 使用完全记录的 AT 类命令进行控制</li>
+<li>可以存储最多 8 个虚拟化卡，每个卡大小最多可达 8 KB，存储在 ChameleonMini 的非易失性存储器中</li>
+<li>卡数据可以通过命令行和 X-MODEM 轻松上传和下载</li>
+<li>符合 ISO14443A 标准的卡 UID 可以在阅读器模式下轻松获得</li>
+<li>识别 ISO14443A 卡的类型 (Mifare Ultralight, Mifare Classic 1k, …) 也可以在阅读器模式</li>
+<li>透明/手动 ISO14443A 阅读器：通过发送自定义数据位从而获取卡片内的数据应答</li>
+<li>从而允许 ChameleonMini 与标准串口终端软件以及用户编写的脚本和应用程序连接</li>
+</ul>
+<h3 id="安装客户端"><a href="#安装客户端" class="headerlink" title="安装客户端"></a>安装客户端</h3><p>ChameleonMini 常见的支持两种跨平台的方式来进行硬件的操控，一种是使用命令行终端软件用命令进行操控，另一种是使用官方自带的一个用 Python 编写的工具实现操控。在 Windows 平台上还有第三方编写的 GUI 客户端软件。</p>
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><p>在 Windows 上使用需要先安装驱动，安装方法参考 <a href="http://wiki.radiowar.org/Proxmark3#Proxmark3.E9.A9.B1.E5.8A.A8.E5.AE.89.E8.A3.85" target="_blank" rel="external">Proxmark3 驱动安装</a>，驱动文件在 <a href="https://github.com/emsec/ChameleonMini" target="_blank" rel="external">ChameleonMini</a> 项目文件的 ChameleonMini/Drivers/ 文件夹里（RevE 版本在 RevE/ 文件夹里）。<br>Windows 上也能通过诸如 <a href="https://osdn.net/projects/ttssh2/releases/" target="_blank" rel="external">TeraTerm</a>, <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="external">PuTTY</a> 之类的支持 COM 串口通信的命令行软件进行操作。这里不重复讲解，可以参考 Linux 部分的使用方法。</p>
+<p>ChameleonMini GUI 客户端：<a href="http://bronken.de/chameleonminigui/" target="_blank" rel="external">http://bronken.de/chameleonminigui/</a></p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p>在 Linux 上可以使用 <code>cu, minicom, socat</code> 等客户端对硬件进行控制，这里我们使用 <code>socat</code> 工具。</p>
+<p>安装 socat</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install socat</div></pre></td></tr></table></figure>
+<p>连接 ChameleonMini 到电脑，并通过命令行控制设备。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">socat - /dev/ttyACM0,crnl</div></pre></td></tr></table></figure>
+<p>获取固件版本信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VERSION?    // 你输入的命令（这里并不会有命令行提示符显示）</div><div class="line">101:OK WITH TEXT    // 设备返回的确认信息</div><div class="line">Chameleon-Mini 150304 using LUFA 130901 compiled with AVR-GCC 4.8.1    // 设备返回的数据信息</div></pre></td></tr></table></figure>
+<p>获取配置与设置配置信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">config?                 // 你输入的命令（查看当前配置的卡信息）</div><div class="line">101:OK WITH TEXT        // 设备返回的确认信息</div><div class="line">MF_UL TRALIGHT          // 设备返回的数据信息</div><div class="line">config                  // 你输入的命令（查看所有可配置的卡）</div><div class="line">101:OK WITH TEXT        // 设备返回的确认信息</div><div class="line">NONE,MF_ULTRALIGHT,MF_CLASSIC_1K,MF_PLUS1K_7B,MF_CLASSIC_4K,ISO14443A_SNIFF    // 设备返回的数据信息</div><div class="line">config=MF_CLASSIC_1K    // 你输入的命令（配置当前卡为 Mifare Classic 1K 卡）</div><div class="line">100:OK                  // 设备返回的确认信息</div><div class="line">config?                 // 你输入的命令（查看当前配置的卡信息）</div><div class="line">101:OK WITH TEXT        // 设备返回的确认信息</div><div class="line">MF_CLASSIC_1K           // 设备返回的数据信息（当前配置为 Mifare Classic 1K 卡）</div></pre></td></tr></table></figure>
+<p>设置模拟 Mifare Classic 1K 卡的 UID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">uid?                // 你输入的命令（查看当前的 UID）</div><div class="line">101:OK WITH TEXT    // 设备返回的确认信息</div><div class="line">00000000            // 设备返回的数据信息（当前 UID 为 00000000）</div><div class="line">uid=ABCD1234        // 你输入的命令（设置 UID 为 ABCD1234）</div><div class="line">100:OK              // 设备返回的确认信息</div><div class="line">uid?                // 你输入的命令（查看当前的 UID）</div><div class="line">101:OK WITH TEXT    // 设备返回的确认信息</div><div class="line">ABCD1234            // 设备返回的数据信息（当前 UID 为 ABCD1234）</div></pre></td></tr></table></figure>
+<h4 id="ChamTool-py"><a href="#ChamTool-py" class="headerlink" title="ChamTool.py"></a>ChamTool.py</h4><p>ChamTool.py 是 ChameleonMini 项目官方自带的一个用 Python 编写的客户端工具，可跨平台使用。</p>
+<p>安装 Python 和依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install python3</div><div class="line"><span class="built_in">cd</span> ChameleonMini/Software/</div><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">$ ./chamtool.py -h</div><div class="line">usage: chamtool.py [-h] [-v] [-p COMPORT] [-u DUMPFILE] [<span class="_">-d</span> DUMPFILE]</div><div class="line">                   [<span class="_">-l</span> LOGFILE] [-i] [<span class="_">-s</span> [&#123;1,2,3,4,5,6,7,8&#125;]] [-U [UID]]</div><div class="line">                   [-c [CFGNAME]] [-lb [ACTION]] [-rb [ACTION]]</div><div class="line">                   [-gl [FUNCTION]] [-rl [FUNCTION]]</div><div class="line"></div><div class="line">Controls the Chameleon through the <span class="built_in">command</span> line</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></div><div class="line">  -v, --verbose         output verbose</div><div class="line">  -p COMPORT, --port COMPORT</div><div class="line">                        specify device<span class="string">'s comport</span></div><div class="line"></div><div class="line">Chameleon commands:</div><div class="line">  These arguments can appear multiple times and are executed in the order</div><div class="line">  they are given on the command line. Some of these arguments can be used</div><div class="line">  with '?<span class="string">' as parameter to get a list of suggestions.</span></div><div class="line"></div><div class="line">  -u DUMPFILE, --upload DUMPFILE</div><div class="line">                        upload a card dump</div><div class="line">  -d DUMPFILE, --download DUMPFILE</div><div class="line">                        download a card dump</div><div class="line">  -l LOGFILE, --log LOGFILE</div><div class="line">                        download the device log</div><div class="line">  -i, --info            retrieve the version information</div><div class="line">  -s [&#123;1,2,3,4,5,6,7,8&#125;], --setting [&#123;1,2,3,4,5,6,7,8&#125;]</div><div class="line">                        retrieve or set the current setting</div><div class="line">  -U [UID], --uid [UID]</div><div class="line">                        retrieve or set the current UID</div><div class="line">  -c [CFGNAME], --config [CFGNAME]</div><div class="line">                        retrieve or set the current configuration</div><div class="line">  -lb [ACTION], --lbutton [ACTION]</div><div class="line">                        retrieve or set the current left button action</div><div class="line">  -rb [ACTION], --rbutton [ACTION]</div><div class="line">                        retrieve or set the current right button action</div><div class="line">  -gl [FUNCTION], --gled [FUNCTION]</div><div class="line">                        retrieve or set the current green led function</div><div class="line">  -rl [FUNCTION], --rled [FUNCTION]</div><div class="line">                        retrieve or set the current red led function</div></pre></td></tr></table></figure>
+<h3 id="读取-RFID-卡"><a href="#读取-RFID-卡" class="headerlink" title="读取 RFID 卡"></a>读取 RFID 卡</h3><p>打开终端输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CONFIG=ISO14443A READER    // 你输入的命令</div><div class="line">_G@ISO14443A READER_100:OK    // 设备返回的确认信息</div><div class="line"></div><div class="line">IDENTIFY    // 你输入的命令</div><div class="line">101:OK WITH TEXT    // 设备返回的确认信息</div><div class="line">MIFARE Cڱ__ 1▒ .A.▒s.A@.▒t▒6u/=<span class="variable">$A</span>    // 设备返回的数据信息（下同）</div><div class="line">ATQA: 0400</div><div class="line">UID: ABCD1234</div><div class="line">SAK: 08</div></pre></td></tr></table></figure>
+<h3 id="嗅探-RFID-卡"><a href="#嗅探-RFID-卡" class="headerlink" title="嗅探 RFID 卡"></a>嗅探 RFID 卡</h3><p>进行嗅探 RFID 卡你还需要有一个 ACR122U 读卡器和一张符合 ISO14443A 的被嗅探 RFID 卡。</p>
+<p>首先将 ACR122U 和 ChameleonMini 连接到电脑，再将 ChameleonMini 放置于 ACR122U 上，被嗅探的卡放在与 ChameleonMini 上。</p>
+<p>在终端程序上输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LOGMODE=TERMINAL    // 你输入的命令</div><div class="line">100:OKE=TERMINAL    // 设备返回的确认信息</div></pre></td></tr></table></figure>
+<p>开始嗅探</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CONFIG=ISO14443A_SNIFF    // 你输入的命令</div><div class="line">100:OK=ISO14443A_SNIFF    // 设备返回的确认信息</div><div class="line">...</div><div class="line">...                       // 返回类似乱码的嗅探信息（此处省略）</div><div class="line">...</div></pre></td></tr></table></figure>
+<p><img src="//files.iternull.com/images/2017-05-22_01-0001.png" alt=""></p>
+<p>停止嗅探</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CONFIG=NONE</div></pre></td></tr></table></figure>
+<p>使用 ChamTool.py 工具嗅探</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./chamtool.py -v -p /dev/ttyACM0 -c ISO14443A_SNIFF</div></pre></td></tr></table></figure>
+<h3 id="模拟-RFID-卡"><a href="#模拟-RFID-卡" class="headerlink" title="模拟 RFID 卡"></a>模拟 RFID 卡</h3><p>使用 ChameleonMini 模拟另一张 RFID 卡，需要你先获得那张卡的完整扇区数据再将数据上传到 ChameleonMini 硬件存储内开始模拟，文件格式为 <code>.mfd</code> 的十六进制文件。<br>获取原始 RFID 的完整扇区数据你可以使用 Proxmark3 或者 ACR122U or PN532 + mfoc 破解获得 RFID 卡所有扇区的 Key 并 Dump 所有扇区的数据。<br>Dump 下来的数据可能会是 ASCII 的存文本格式或者是与卡内格式一样的十六进制，ChameleonMini 只支持导入十六进制格式的，如果是其他格式数据你先需要将它转换为十六进制的文件。<br>Proxmark3 客户端内自带转换工具 <code>pm3_eml2mfd.py</code> ，你也可以手动使用 <code>HxD Hex Editor</code>, <code>WinHex</code> 等 十六进制编辑器创建编辑一张卡的数据。<br>当有了 Dump 文件后你可以使用 SecureCRT 或其他终端连接到 ChameleonMini 串口把文件上传上去。<br>在终端输入 <code>UPLOAD</code> 命令，打开 传输 &gt; 发送 Xmodem &gt; 找到你要上传的文件。<br>上传完成后再在终端设置你的卡片类型，如：<code>CONFIG=MF_CLASSIC_1K</code> 设置卡片为 Mifare Classic 1K 卡</p>
+<p>使用 ChamTool.py 工具上传卡数据文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./chamtool.py -p /dev/ttyACM0 -u card.mfd</div></pre></td></tr></table></figure>
+<h3 id="模拟多张-RFID-卡"><a href="#模拟多张-RFID-卡" class="headerlink" title="模拟多张 RFID 卡"></a>模拟多张 RFID 卡</h3><p>模拟多张卡需要用到 ChameleonMini 的按钮功能用以切换不同的卡片，并可把不同的卡片数据上传上去，按钮功能是可自定义配置，最多支持 8 张卡的存储和切换。</p>
+<p>在终端输入 <code>button</code> 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">button    // 查看按钮的配置选项</div><div class="line">101:OK WITH TEXT</div><div class="line">NONE,UID_RANDOM,UID_LEFT_INCREMENT,UID_RIGHT_INCREMENT,UID_LEFT_DECREMENT,UID_RIGHT_DECREMENT,CYCLE_SETTINGS,STORE_MEM,RECALL_MEM</div></pre></td></tr></table></figure>
+<p>配置按钮功能为切换卡片</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">button=CYCLE_SETTINGS    // 开启按钮的卡片切换功能</div><div class="line">100:OK</div><div class="line">setting?    // 查看当前的卡片编号</div><div class="line">101:OK WITH TEXT</div><div class="line">1</div><div class="line">config?    // 查看当前卡片类型的配置信息</div><div class="line">101:OK WITH TEXT</div><div class="line">MF_CLASSIC_1K</div><div class="line">uid?    // 查看当前的 UID</div><div class="line">101:OK WITH TEXT</div><div class="line">ABCD1234</div><div class="line">setting=2    // 设置卡片编号</div><div class="line">100:OK</div><div class="line">setting?    // 查看当前的卡片编号</div><div class="line">101:OK WITH TEXT</div><div class="line">2</div><div class="line">config=MF_ULTRALIGHT    // 设置卡片类型</div><div class="line">100:OK</div><div class="line">config?    // 查看当前卡片类型的配置信息</div><div class="line">101:OK WITH TEXT</div><div class="line">MF_ULTRALIGHT</div><div class="line">uid=AABBCCDDEEFF11    // 设置 UID</div><div class="line">100:OK</div><div class="line">uid?    // 查看当前的 UID</div><div class="line">101:OK WITH TEXT</div><div class="line">AABBCCDDEEFF11</div></pre></td></tr></table></figure>
+<p>按钮的功能配置和说明</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">按钮配置</th>
+<th style="text-align:left">功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">NONE</td>
+<td style="text-align:left">什么都不做</td>
+</tr>
+<tr>
+<td style="text-align:left">UID_RANDOM</td>
+<td style="text-align:left">生成随机 UID</td>
+</tr>
+<tr>
+<td style="text-align:left">UID_LEFT_INCREMENT</td>
+<td style="text-align:left">将 UID 的最左十六进制值增加 1</td>
+</tr>
+<tr>
+<td style="text-align:left">UID_RIGHT_INCREMENT</td>
+<td style="text-align:left">将 UID 的最右边的十六进制值增加 1</td>
+</tr>
+<tr>
+<td style="text-align:left">UID_LEFT_DECREMENT</td>
+<td style="text-align:left">将 UID 的最左边十六进制值减少 1</td>
+</tr>
+<tr>
+<td style="text-align:left">UID_RIGHT_DECREMENT</td>
+<td style="text-align:left">将 UID 的最右边的十六进制值减少 1</td>
+</tr>
+<tr>
+<td style="text-align:left">CYCLE_SETTINGS</td>
+<td style="text-align:left">允许按钮在多张卡之间切换</td>
+</tr>
+<tr>
+<td style="text-align:left">STORE_MEM</td>
+<td style="text-align:left">存储内存</td>
+</tr>
+<tr>
+<td style="text-align:left">RECALL_MEM</td>
+<td style="text-align:left">记忆输出（还原存储的内存）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="烧录固件"><a href="#烧录固件" class="headerlink" title="烧录固件"></a>烧录固件</h3><p>ChameleonMini 的 MCU 使用的是 Atmel 的 AVR ATxmega 系列的处理器，烧录固件的方法与烧录其他 AVR 单片机固件的方法一样。<br>可以使用 AVRISP mkII, USBasp 等编程硬件工具加上 Atmel Studio, AVRDUDE 等编程软件客户端，烧录 Bootloader 和固件。<br>接线针脚，Chameleon-Mini 底部一排未焊接的焊盘是标准的 ATxmega 编程引脚，以有贴片元件的一面为正面，正面 3 个引脚分别是 <code>VCC</code>, <code>NC</code>, <code>GND</code> 正对的背面 3 个分别是 <code>PDI_DATA</code>, <code>NC</code>, <code>PDI_CLK/RST</code> 。</p>
+<p><img src="//files.iternull.com/images/2017-05-22_01-0002.jpg" alt=""></p>
+<h3 id="升级固件"><a href="#升级固件" class="headerlink" title="升级固件"></a>升级固件</h3><p>Chameleon Mini 使用了 USB DFU Bootloader，可直接使用 USB 连接硬件升级固件。(只有烧录了 Bootloader 的才支持，自己制作的裸板需要先烧录 Bootloader。)</p>
+<p>Linux 用户升级固件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install avra avrdude</div><div class="line">avrdude -c flip2 -p ATXMega128A4U -B 60 -P usb -U application:w:Chameleon-Mini.hex:i -U eeprom:w:Chameleon-Mini.eep:i</div></pre></td></tr></table></figure>
+<p>Windows 用户升级固件</p>
+<ol>
+<li>下载 <a href="https://sourceforge.net/projects/dfu-programmer/files/dfu-programmer/0.7.2/dfu-programmer-win-0.7.2.zip/download" target="_blank" rel="external">dfu-programmer 0.7.2</a></li>
+<li>解压到目录，然后打开文件夹 dfu-prog-usb-1.2.2 ，安装 <code>atmel_usb_dfu.inf</code> 驱动程序。（右键单击 &gt; 安装）</li>
+<li>将 dfu-programmer.exe 复制到 hex 和 eep 文件的同一目录里。</li>
+<li>将 ChameleonFirmwareUpgrade.bat 复制在与 hex 和 eep 文件相同的目录里。</li>
+<li>以管理员身份运行 ChameleonFirmwareUpgrade.bat 等待固件升级终止。（成功后 ChameleonMini 的绿色 LED 应该亮起来）</li>
+</ol>
+<hr>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li><a href="https://github.com/emsec/ChameleonMini/wiki" target="_blank" rel="external">ChameleonMini Wiki</a></li>
+<li><a href="https://rawgit.com/emsec/ChameleonMini/master/Doc/Doxygen/html/index.html" target="_blank" rel="external">Chameleon-Mini Documentation</a></li>
+<li><a href="https://www.kickstarter.com/projects/1980078555/chameleonmini-a-versatile-nfc-card-emulator-and-mo" target="_blank" rel="external">Kickstarter - ChameleonMini</a></li>
+<li><a href="https://store.ryscc.com/products/chameleonmini" target="_blank" rel="external">ChameleonMini - Rysc Corp</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/54097857-getting-started-with-the-chameleonmini" target="_blank" rel="external">Getting Started with the ChameleonMini RevE-2</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/34542273-unleash-the-chameleons" target="_blank" rel="external">Unleash the Chameleons!</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/86357121-installing-driver-for-chameleonmini-on-windows-7" target="_blank" rel="external">Installing Driver for ChameleonMini on Windows 7</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/77102465-sniffing-tags-with-the-chameleonmini" target="_blank" rel="external">Sniffing Tags with the ChameleonMini</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/39859649-emulating-mifare-4k-tags-with-the-chameleonmini" target="_blank" rel="external">Emulating Mifare 4K Tags with the ChameleonMini RevE-2</a></li>
+<li><a href="https://store.ryscc.com/blogs/news/37733761-how-to-emulate-multiple-smart-cards-at-once-using-the-chameleonmini" target="_blank" rel="external">How to Emulate Multiple Smart Cards at once using the ChameleonMini</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://github.com/emsec/ChameleonMini&quot;&gt;ChameleonMini&lt;/a&gt; 是一款可编程的 NFC 安全分析工具的开源硬件项目，可以用于嗅探、模拟和克隆非接触式智能卡 (RFID Card)。&lt;br&gt;ChameleonMini 常见的有两个版本 &lt;strong&gt;ChameleonMini Rev.E&lt;/strong&gt; 与 &lt;strong&gt;ChameleonMini Rev.G&lt;/strong&gt; 其中 Rev.G 是最新升级的版本，自带电池供电。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Hardware" scheme="https://blog.iternull.com/tags/Hardware/"/>
+    
+      <category term="RFID" scheme="https://blog.iternull.com/tags/RFID/"/>
+    
+      <category term="ChameleonMini" scheme="https://blog.iternull.com/tags/ChameleonMini/"/>
+    
+  </entry>
+  
+  <entry>
     <title>YARD Stick One 使用教程</title>
     <link href="https://blog.iternull.com/posts/2017/05/17/YARD-Stick-One-Tutorial.html"/>
     <id>https://blog.iternull.com/posts/2017/05/17/YARD-Stick-One-Tutorial.html</id>
@@ -985,9 +1140,9 @@
     </summary>
     
     
-      <category term="Raspberry Pi" scheme="https://blog.iternull.com/tags/Raspberry-Pi/"/>
-    
       <category term="RFID" scheme="https://blog.iternull.com/tags/RFID/"/>
+    
+      <category term="Raspberry Pi" scheme="https://blog.iternull.com/tags/Raspberry-Pi/"/>
     
       <category term="RC522" scheme="https://blog.iternull.com/tags/RC522/"/>
     
@@ -1083,44 +1238,6 @@
       <category term="ADS-B" scheme="https://blog.iternull.com/tags/ADS-B/"/>
     
       <category term="Radio" scheme="https://blog.iternull.com/tags/Radio/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>手工制作开锁单钩</title>
-    <link href="https://blog.iternull.com/posts/2015/08/31/How-to-Make-Lock-Picks-Tools.html"/>
-    <id>https://blog.iternull.com/posts/2015/08/31/How-to-Make-Lock-Picks-Tools.html</id>
-    <published>2015-08-31T14:25:45.000Z</published>
-    <updated>2017-02-11T05:59:33.111Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近看到几篇文章提到开锁工具，网络安全界的几位<code>大叔</code>也有提到，正好自己对开锁也有一定的了解<br>国内开锁工具的买卖是受政府限制的，当然你脑子转的快，眼睛亮也能找到卖家<br><a id="more"></a><br><img src="//files.iternull.com/images/2015-08-31_01-0001.jpg" alt=""></p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>工具：<br>锉刀、剪刀、纸、笔、雕刻刀、直尺、口罩</p>
-<p>材料：<br>塞尺片、不锈钢金属发箍</p>
-<p>塞尺片的尺寸为：<code>0.50mm</code>发箍的尺寸为：<code>0.30mm</code></p>
-<h2 id="构图"><a href="#构图" class="headerlink" title="构图"></a>构图</h2><p>首先把纸贴到塞尺片上，用胶水或双面胶都可以，用胶水的话等纸风干，或者用吹风机吹干。<br>然后裁去多余的部分，用铅笔在纸上画出轮廓。<br>钩 长：4-5cm; 宽：2.0mm;<br><img src="//files.iternull.com/images/2015-08-31_01-0002.jpg" alt=""></p>
-<h2 id="打磨"><a href="#打磨" class="headerlink" title="打磨"></a>打磨</h2><p>用雕刻刀延画出来的轮廓切割，要用力确保在钢片上留下刻刀的划痕，注意不要切到手。<br>去掉纸，用锉刀打磨掉多余的边缘，当然要是有小型的电动打磨工具会非常好，因为手工打磨非常痛苦。<br>打磨的时候记得带上口罩，以免吸入金属粉尘<br>(这个还需要再打磨的细一点，没完全成型，太宽插不进锁孔)<br><img src="//files.iternull.com/images/2015-08-31_01-0003.jpg" alt=""></p>
-<h2 id="撬杆"><a href="#撬杆" class="headerlink" title="撬杆"></a>撬杆</h2><p>把发箍弄直，用尖嘴钳剪断 长度：12cm<br>用尖嘴钳折弯一头，折成直角 1.7-2.0cm 处弯折<br><img src="//files.iternull.com/images/2015-08-31_01-0004.jpg" alt=""></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>这里简单的说一下：<br>一般的弹子锁有6个弹槽，钥匙上有5对应的弹槽，因为弹子B的长度不一，<br>要使弹子A与弹子B在锁筒与锁栓间保持一条直线才能转动使之打开门锁，<br>钥匙上的锯齿形凹槽在对应的锁上可以使弹子A与B在锁筒与锁栓间保持直线。<br><img src="//files.iternull.com/images/2015-08-31_01-0005.png" alt=""><br>使用开锁工具需要的就使用撬杆对着钥匙开锁的方向稍稍用力，用单钩把弹子一颗颗拨起来，<br>应为撬杆的力量所以弹子会卡在锁筒与锁栓间，当你把所有的弹子都拨上去后就可以转动锁栓了。<br>这是方法是技术开锁的一种，需要一定的手感，否则你在那拨了半天在干什么都不知道。<br><img src="//files.iternull.com/images/2015-08-31_01-0006.png" alt=""><br>波形单钩的使用：使用撬杆对着钥匙开锁的方向稍稍用力，插入波形单钩，在锁孔向着弹子来回抽插。<br>这种方法靠的运气成分多一点，不过如果能开的话，一般几秒就打开了。</p>
-<p>或许你看着觉得很简单，实际操作没有手感不一定会顺利，我一般开一把普通的弹子门锁也要好几分钟<br><img src="//files.iternull.com/images/2015-08-31_01-0007.jpg" alt=""></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>我对比了一下国外和国内卖的开锁工具，国外明显偏贵，国外一套单钩开锁工具的价格为<code>40 USD</code>国内为<code>150 RMB</code><br>国内的开锁工具种类的复杂程度远超国外，基本上机械锁的开锁工具种类齐全，<br>从挂锁、门锁、车锁、保险柜，只有你不知道的和想不到的，没有他们生产部出来的。<br>成本方面，一支单钩的成本应该<code>1 RMB</code>的样子但是能卖到7-8倍的价格，如果有销路的话还是挺赚的，当然的政府同意。<br>国外有些出售的，其实是国内制造的。<br>以上内容只适用于普通的弹子锁，十字锁孔、月牙锁、密码锁、保险箱、汽车锁、磁感锁、等、这里不做介绍。<br>另外还有一种制作方法，可以批量生产。用CAD画出工件的尺寸图纸，在淘宝上找一家来料加工的店铺，让他帮你加工，<br>加工前一定要说清楚，厚度为<code>0.50mm</code>,钢板的强度要够，不能是软塌塌的铁片<br>如何解锁，最好的方法就是拆开观察内部结构。<br><img src="//files.iternull.com/images/2015-08-31_01-0008.jpg" alt=""><br>(这货国外卖<code>$39.95</code>)</p>
-<hr>
-<ul>
-<li>注：此文意旨为技术讨论，请勿用于违法行为，本人不承担任何责任！</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近看到几篇文章提到开锁工具，网络安全界的几位&lt;code&gt;大叔&lt;/code&gt;也有提到，正好自己对开锁也有一定的了解&lt;br&gt;国内开锁工具的买卖是受政府限制的，当然你脑子转的快，眼睛亮也能找到卖家&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Lock" scheme="https://blog.iternull.com/tags/Lock/"/>
-    
-      <category term="Tools" scheme="https://blog.iternull.com/tags/Tools/"/>
-    
-      <category term="Make" scheme="https://blog.iternull.com/tags/Make/"/>
     
   </entry>
   
