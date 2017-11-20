@@ -7,16 +7,6 @@ body {
   font-family: Microsoft YaHei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
 }
 
-/*
- * Override Bootstrap's default container.
- */
-
-@media (min-width: 1200px) {
-  .container {
-    width: 1100px;
-  }
-}
-
 /* Title */
 
 h1, .h1,
@@ -28,6 +18,10 @@ h6, .h6 {
   margin-top: 0;
   /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
   /*font-weight: normal;*/
+}
+
+.navbar-inverse .navbar-brand {
+  color: #df2d2d;
 }
 
 /* Blog name and description */
