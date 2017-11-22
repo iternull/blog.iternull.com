@@ -84,7 +84,7 @@ h6, .h6 {
 /* Blog posts */
 
 .blog-post {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   background-color: #222;
   border-radius: 4px;
 }
@@ -118,7 +118,7 @@ h6, .h6 {
 /* Blog posts */
 
 .article {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
 }
 .article-header {
   padding: 20px 20px 0;
