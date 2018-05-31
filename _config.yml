@@ -6,7 +6,7 @@
 title: IterNull Blog
 subtitle: 万物即联网，万物皆可黑；
 description:
-author: ZnHoCn
+author: IterNull
 language: zh-CN
 timezone: Asia/Shanghai
 
@@ -72,6 +72,9 @@ theme: cyborg-blog
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+#deploy:
+#  type: git
+#  repo: https://github.com/iternull/blog.iternull.com.git
 deploy:
   type: git
-  repo: https://github.com/iternull/blog.iternull.com.git
+  repo: git@github.com:iternull/blog.iternull.com.git

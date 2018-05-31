@@ -4,7 +4,11 @@ menu:
   About: /about
   Blog: //blog.iternull.com/
   Docs: //docs.iternull.com/
-  Buy: //buy.iternull.com/
+  #Shop: //shop.iternull.com/
+  Projects: //www.iternull.com/projects/
+dropdown:
+  Product: //shop.iternull.com/
+  Store: //store.iternull.com/
 rss: /atom.xml
 
 # Content
@@ -24,8 +28,8 @@ widgets:
 # Social Links
 social:
   Github: https://github.com/iternull
-  Weibo: http://weibo.com/u/2655123364
-  Twitter: https://twitter.com/ZMOM1031
+  Weibo: 
+  Twitter: https://twitter.com/iternull_
   Facebook: 
   Google-plus: 
   Instagram: 
@@ -40,11 +44,11 @@ fb_app_id:
 
 # Blogroll
 blogroll:
-  ZnHoCn's Blog: https://znhocn.github.io/
+  ZnHoCn's Blog: https://blog.hakr.xyz/
   #TYPCN Tech: http://blog.eqoe.cn/
   #Anotherhome: https://www.anotherhome.net/
   音符の新世界: https://freedom.moe/
   YsiCing's Blog: https://ysicing.net/
   往前方: http://www.wangqianfang.com/
-  #Yay Ka-Boom-Boom: https://www.lynx.im/
   Yay Ka-Boom-Boom: https://blog.nyan.im/
+  K1two2's Geek Hub: http://k1two2.cnblogs.com/

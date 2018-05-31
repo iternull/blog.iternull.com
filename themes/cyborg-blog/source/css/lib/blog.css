@@ -7,16 +7,6 @@ body {
   font-family: Microsoft YaHei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
 }
 
-/*
- * Override Bootstrap's default container.
- */
-
-@media (min-width: 1200px) {
-  .container {
-    width: 1100px;
-  }
-}
-
 /* Title */
 
 h1, .h1,
@@ -30,22 +20,27 @@ h6, .h6 {
   /*font-weight: normal;*/
 }
 
+.navbar-inverse .navbar-brand {
+  color: #df2d2d;
+}
+
 /* Blog name and description */
 
 .blog-header {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  /* padding-top: 20px;
+  padding-bottom: 40px; */
+  color: #fff;
 }
 .blog-title {
-  margin-top: 30px;
-  margin-bottom: 0;
-  font-size: 65px;
-  font-weight: normal;
+  /* margin-top: 30px; */
+  /* margin-bottom: 0; */
+  /* font-size: 65px; */
+  /* font-weight: normal; */
 }
 .blog-description {
-  font-size: 20px;
+  /* font-size: 20px; */
   color: #999;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 
@@ -89,7 +84,7 @@ h6, .h6 {
 /* Blog posts */
 
 .blog-post {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   background-color: #222;
   border-radius: 4px;
 }
@@ -123,10 +118,10 @@ h6, .h6 {
 /* Blog posts */
 
 .article {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
 }
 .article-header {
-    padding: 20px 20px 0;
+  padding: 20px 20px 0;
 }
 .article-header h1 {
   margin-top: 0;

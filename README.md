@@ -1,6 +1,6 @@
 # blog.iternull.com
 
-Blog: https://blog.iternull.com/
+IterNull Blog: https://blog.iternull.com/
 
 ```bash
 git clone https://github.com/iternull/blog.iternull.com.git
