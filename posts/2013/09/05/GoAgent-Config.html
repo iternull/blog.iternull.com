@@ -123,13 +123,13 @@
         <ul>
 <li>2015/05/30 (补)</li>
 </ul>
-<h2 id="一、申请-Google-App-Engine-并创建-appid"><a href="#一、申请-Google-App-Engine-并创建-appid" class="headerlink" title="一、申请 Google App Engine 并创建 appid"></a>一、申请 Google App Engine 并创建 appid</h2><p>1、申请注册一个 <a href="https://appengine.google.com/" target="_blank" rel="external">Google App Engine</a> 账号。没有 Gmail 账号先注册一个， 用你的 Gmail 账号登录。<br><a id="more"></a><br><img src="//files.iternull.com/images/2013-09-05_01_0001.jpg" alt=""></p>
+<h2 id="一、申请-Google-App-Engine-并创建-appid"><a href="#一、申请-Google-App-Engine-并创建-appid" class="headerlink" title="一、申请 Google App Engine 并创建 appid"></a>一、申请 Google App Engine 并创建 appid</h2><p>1、申请注册一个 <a href="https://appengine.google.com/" target="_blank" rel="noopener">Google App Engine</a> 账号。没有 Gmail 账号先注册一个， 用你的 Gmail 账号登录。<br><a id="more"></a><br><img src="//files.iternull.com/images/2013-09-05_01_0001.jpg" alt=""></p>
 <p>2、登录之后，自动转向 <code>Application</code> 注册页面，如下图：</p>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0002.jpg" alt=""></p>
 <p>3、接下来的页面，输入你的手机号码，需要注意的是，手机号码前面要+86(中国区号) 格式如：+86 13888888888</p>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0003.jpg" alt=""></p>
 <ul>
-<li>然后等待收取手机短信，收到短信后(一串数字号码)填入下图表单，点 send 提交.(有的手机收不到信息，到 <a href="https://appengine.google.com/waitlist/sms_issues" target="_blank" rel="external">https://appengine.google.com/waitlist/sms_issues</a> 提交该情况，一个工作日就能收到谷歌提示Google App Engine成功开通)。</li>
+<li>然后等待收取手机短信，收到短信后(一串数字号码)填入下图表单，点 send 提交.(有的手机收不到信息，到 <a href="https://appengine.google.com/waitlist/sms_issues" target="_blank" rel="noopener">https://appengine.google.com/waitlist/sms_issues</a> 提交该情况，一个工作日就能收到谷歌提示Google App Engine成功开通)。</li>
 </ul>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0004.jpg" alt=""></p>
 <p>4、提交完成之后，GAE 账号即被激活，然后就可以创建新的应用程序了。转入 “My Applications” 页面，点击 “Create an Application” 新建应用</p>
@@ -142,16 +142,16 @@
 <li>提交之后，就能看到下图这个页面，就说明你已经成功创建了一个新的应用,你也可以点击应用名称，进入控制面板进行管理。</li>
 </ul>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0007.jpg" alt=""></p>
-<h2 id="二、下载-goagent-并上传至-Google-App-Engine"><a href="#二、下载-goagent-并上传至-Google-App-Engine" class="headerlink" title="二、下载 goagent 并上传至 Google App Engine"></a>二、下载 goagent 并上传至 Google App Engine</h2><p>1、下载 goagent 并解压 <a href="https://github.com/goagent/goagent" target="_blank" rel="external">https://github.com/goagent/goagent</a></p>
+<h2 id="二、下载-goagent-并上传至-Google-App-Engine"><a href="#二、下载-goagent-并上传至-Google-App-Engine" class="headerlink" title="二、下载 goagent 并上传至 Google App Engine"></a>二、下载 goagent 并上传至 Google App Engine</h2><p>1、下载 goagent 并解压 <a href="https://github.com/goagent/goagent" target="_blank" rel="noopener">https://github.com/goagent/goagent</a></p>
 <p>2、编辑 <code>local\proxy.ini</code> 把其中 <code>appid = goagent</code> 中的 <code>goagent</code> 改成你之前申请的应用的 <code>appid</code> (用 Windows 的记事本也可以)</p>
 <ul>
-<li>如果要使用多个 appid，appid 之间用|隔开，如：<code>appid1|appid2|appid3</code> 每个 <code>appid</code> 必须确认上传成功才能使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[gae]</div><div class="line">appid = appid1|appid2|appid3</div></pre></td></tr></table></figure>
+<li>如果要使用多个 appid，appid 之间用|隔开，如：<code>appid1|appid2|appid3</code> 每个 <code>appid</code> 必须确认上传成功才能使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[gae]</span><br><span class="line">appid = appid1|appid2|appid3</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>3、运行 <code>goagent.exe</code> (Linux 用python运行XXX/local文件下的 <code>goagent-gtk.py</code> 来启动goagent)</p>
 <p>4、上传</p>
 <ul>
-<li>Windows 用户：双击 <code>server</code> 文件夹下的 <code>uploader.bat</code> 输入你上步创建的 <code>appid</code> (同时上传多 appid 在 appid 之间用 | 隔开,一次只能上传同一个谷歌帐户下的 appid )填完按回车。根据提示填你的谷歌帐户邮箱地址，填完按回车。根据提示填你的谷歌帐户密码(注意：如果开启了两步验证，密码应为<a href="https://accounts.google.com/b/0/IssuedAuthSubTokens" target="_blank" rel="external">16位的应用程序专用密码</a>而非谷歌帐户密码，否则会出现 AttributeError: can’t set attribute 错误)，填完按回车。</li>
+<li>Windows 用户：双击 <code>server</code> 文件夹下的 <code>uploader.bat</code> 输入你上步创建的 <code>appid</code> (同时上传多 appid 在 appid 之间用 | 隔开,一次只能上传同一个谷歌帐户下的 appid )填完按回车。根据提示填你的谷歌帐户邮箱地址，填完按回车。根据提示填你的谷歌帐户密码(注意：如果开启了两步验证，密码应为<a href="https://accounts.google.com/b/0/IssuedAuthSubTokens" target="_blank" rel="noopener">16位的应用程序专用密码</a>而非谷歌帐户密码，否则会出现 AttributeError: can’t set attribute 错误)，填完按回车。</li>
 <li>Linux/Mac OSX用户上传方法：在server目录下执行：<code>python uploader.py</code></li>
 </ul>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0008.jpg" alt=""></p>
@@ -164,7 +164,7 @@
 <ul>
 <li>设置浏览器或其他需要代理的程序代理地址为 <code>127.0.0.1:8087</code></li>
 <li>注意：使用过程中要一直运行 <code>goagent.exe/proxy.py</code></li>
-<li>代理地址 <code>127.0.0.1:8087</code> 如需使用 PAC，设置pac地址为 <a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="external">http://127.0.0.1:8086/proxy.pac</a></li>
+<li>代理地址 <code>127.0.0.1:8087</code> 如需使用 PAC，设置pac地址为 <a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="noopener">http://127.0.0.1:8086/proxy.pac</a></li>
 <li>也可以配合 <code>SwitchyOmega/FoxyProxy</code> 等浏览器扩展 (SwitchyOmega 用户可从 local 文件夹中的 SwitchyOptions.bak 文件导入配置)</li>
 </ul>
 <p>2、导入证书</p>
@@ -182,13 +182,13 @@
 <li>该功能可以为 IE 内核浏览器和未安装代理类扩展的 Chrome/Opera 等默认使用 IE 代理的浏览器和软件设置代理，但不能给 FireFox 设置代理</li>
 <li>右击 GoAgent 托盘图标，在 “设置IE代理” 菜单中选择要使用的模式。</li>
 <li>禁用代理 什么也不做，需要用户自己手动为软件设置代理</li>
-<li><a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="external">http://127.0.0.1:8086/proxy.pac</a> 使用自带的PAC自动判断是否使用代理</li>
+<li><a href="http://127.0.0.1:8086/proxy.pac" target="_blank" rel="noopener">http://127.0.0.1:8086/proxy.pac</a> 使用自带的PAC自动判断是否使用代理</li>
 <li>127.0.0.1:8087 全部使用 GoAgent 代理</li>
 </ul>
 <p>2、谷歌 Chrome 配合 SwitchyOmega 扩展</p>
 <ul>
 <li>安装扩展</li>
-<li>下载 <a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="external">SwitchyOmega.crx</a> 地址栏输入 Chrome://extensions/ 后按回车，打开扩展管理页，拖拽 <code>SwitchyOmega.crx</code> 到该页面之后点击确定即可安装，扩展也可以从 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="external">Chrome 应用商店</a> 获得</li>
+<li>下载 <a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">SwitchyOmega.crx</a> 地址栏输入 Chrome://extensions/ 后按回车，打开扩展管理页，拖拽 <code>SwitchyOmega.crx</code> 到该页面之后点击确定即可安装，扩展也可以从 <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="noopener">Chrome 应用商店</a> 获得</li>
 </ul>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0012.png" alt=""></p>
 <ul>
@@ -219,7 +219,7 @@
 </ul>
 <p>3、Firefox 配合 FoxyProxy 扩展</p>
 <ul>
-<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/" target="_blank" rel="external">https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/</a></li>
+<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/" target="_blank" rel="noopener">https://addons.mozilla.org/zh-cn/firefox/addon/foxyproxy-standard/</a></li>
 <li>设置</li>
 </ul>
 <p><img src="//files.iternull.com/images/2013-09-05_01_0016.png" alt=""></p>
@@ -229,7 +229,7 @@
 <p><img src="//files.iternull.com/images/2013-09-05_01_0017.png" alt=""></p>
 <ul>
 <li>添加代理规则订阅(可选)<ul>
-<li>这里以添加 <a href="http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt" target="_blank" rel="external">gfwlist</a> 为例，你也可以自行添加其他规则订阅</li>
+<li>这里以添加 <a href="http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt" target="_blank" rel="noopener">gfwlist</a> 为例，你也可以自行添加其他规则订阅</li>
 </ul>
 </li>
 </ul>
@@ -237,7 +237,7 @@
 <p>更多设置请自行探究</p>
 <p>4、Firefox 配合 AutoProxy 扩展(新版Firefox请将此扩展升级至最新版)</p>
 <ul>
-<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/" target="_blank" rel="external">https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/</a></li>
+<li>安装扩展 <a href="https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/" target="_blank" rel="noopener">https://addons.mozilla.org/zh-cn/firefox/addon/autoproxy/</a></li>
 <li>设置<ul>
 <li>添加代理服务器 注意:新版 autoproxy 已内置GoAgent配置，可直接进行下一步</li>
 </ul>
@@ -303,12 +303,12 @@
 </ul>
 <h2 id="关于软件更新"><a href="#关于软件更新" class="headerlink" title="关于软件更新"></a>关于软件更新</h2><ul>
 <li>更新历史中带有[是]则需要重新上传，否则不用重新上传。注意：是否需要重新上传是相对于前一版的，若你之前版本与当前版本之间某一版或多版带有[是]仍然需要重新上传</li>
-<li>appid 并不绑定任何客户端，如果本次更新无需重新上传，只需修改 proxy.ini 中的 appid 即可使用。同样，你也可以把 appid 共享给朋友，或者在自己其他机器上使用，一个 appid 可以多人多机器同时使用，在无需更新服务端的情况下，只需成功上传一次即可。在没有设定密码的情况下，只需要知道 appid 就可以使用你的 appid 的流量，为防止被盗用可以<a href="https://github.com/goagent/goagent/blob/wiki/SetPassword.md" target="_blank" rel="external">加上密码</a>。</li>
+<li>appid 并不绑定任何客户端，如果本次更新无需重新上传，只需修改 proxy.ini 中的 appid 即可使用。同样，你也可以把 appid 共享给朋友，或者在自己其他机器上使用，一个 appid 可以多人多机器同时使用，在无需更新服务端的情况下，只需成功上传一次即可。在没有设定密码的情况下，只需要知道 appid 就可以使用你的 appid 的流量，为防止被盗用可以<a href="https://github.com/goagent/goagent/blob/wiki/SetPassword.md" target="_blank" rel="noopener">加上密码</a>。</li>
 <li>goagent 每一版下载的都是全部文件，你可以选择覆盖原文件或者将新版放另一个文件夹，旧版你可以选择留存或者删除，修改新版 proxy.ini 中相关设置即可运行。如果旧版添加了开机启动，需要将旧开机启动删除。如果旧版已经在运行，需先将旧版关闭。</li>
 <li>如果之前版本没有ssl错误，使用新版出现 ssl 错误可以把原来的 CA.crt 和 certs 文件夹内的文件覆盖当前的这些文件。或者将 CA.crt 和 certs 文件夹删除，同时删除浏览器中所有goagent ca 的证书，再重启 goagent，会生成新证书，重启浏览器再导入新证书即可。浏览器证书中只能有一个 goagent ca 的证书。</li>
 </ul>
 <hr>
-<p>原文：<a href="https://github.com/goagent/goagent/blob/wiki/InstallGuide.md" target="_blank" rel="external">https://github.com/goagent/goagent/blob/wiki/InstallGuide.md</a></p>
+<p>原文：<a href="https://github.com/goagent/goagent/blob/wiki/InstallGuide.md" target="_blank" rel="noopener">https://github.com/goagent/goagent/blob/wiki/InstallGuide.md</a></p>
 
       
     </div>
@@ -319,7 +319,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2013/09/05/GoAgent-Config.html" data-id="cjhucxo740016s8u8f2pfqpkm" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2013/09/05/GoAgent-Config.html" data-id="cjpxq5hl9006r9ktxznpdzq8u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -367,6 +367,8 @@
   <div class="list-group">
     <h4 class="list-group-item active">最新文章</h4>
     
+    <a href="/posts/2018/12/19/Android-eMMC-Data-Recovery.html" class="list-group-item">Android eMMC Data Recovery</a>
+    
     <a href="/posts/2017/12/26/Hacking-IP-Camera-Hehuiyan-C08.html" class="list-group-item">Hacking IP Camera (和慧眼-C08)</a>
     
     <a href="/posts/2017/06/03/YubiKey-4-GPG-Tutorial.html" class="list-group-item">YubiKey 4 PGP 功能使用教程</a>
@@ -374,8 +376,6 @@
     <a href="/posts/2017/05/22/ChameleonMini-Tutorial.html" class="list-group-item">ChameleonMini 使用教程</a>
     
     <a href="/posts/2017/05/17/YARD-Stick-One-Tutorial.html" class="list-group-item">YARD Stick One 使用教程</a>
-    
-    <a href="/posts/2017/03/01/Itead-Wall-WiFi-Smart-Socket.html" class="list-group-item">ITEAD 86式WiFi智能插座拆解</a>
     
   </div>
 </div>
@@ -388,7 +388,7 @@
     <h4 class="list-group-item active">标签云</h4>
       <div class="panel panel-default">
         <div class="panel-body">
-          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Data-Recovery/" style="font-size: 10px;">Data Recovery</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/eMMC/" style="font-size: 10px;">eMMC</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
         </div>
       </div>
   </div>

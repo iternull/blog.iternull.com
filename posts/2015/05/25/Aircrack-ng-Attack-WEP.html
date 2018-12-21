@@ -122,15 +122,15 @@
       
         <p>Aircrack-ng 是一套用于 WiFi 安全测试的工具套件。<br><a id="more"></a></p>
 <h2 id="1、关闭网络和受影响进程"><a href="#1、关闭网络和受影响进程" class="headerlink" title="1、关闭网络和受影响进程"></a>1、关闭网络和受影响进程</h2><p>关闭网络管理器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service network-manager stop</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network-manager stop</span><br></pre></td></tr></table></figure>
 <p>结束影响进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng check <span class="built_in">kill</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng check <span class="built_in">kill</span></span><br></pre></td></tr></table></figure>
 <h2 id="2、开启无线网卡到监听模式"><a href="#2、开启无线网卡到监听模式" class="headerlink" title="2、开启无线网卡到监听模式"></a>2、开启无线网卡到监听模式</h2><p>查看无线网卡信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iwconfig</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig</span><br></pre></td></tr></table></figure>
 <p>激活无线网卡至monitor即监听模式</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
 <h2 id="3、监听无线网络并获取信息"><a href="#3、监听无线网络并获取信息" class="headerlink" title="3、监听无线网络并获取信息"></a>3、监听无线网络并获取信息</h2><p>探测无线网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng mon0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng mon0</span><br></pre></td></tr></table></figure>
 <p>执行后可以看到如下图</p>
 <p><img src="//files.iternull.com/images/2015-05-25_01-0001.png" alt=""></p>
 <p>目标为”FAST_22E242”</p>
@@ -142,7 +142,7 @@
 <li>(STATION) 连接的客户端MAC为”8C:3A:E3:94:7E:E4”</li>
 </ul>
 <p>抓取无线数据包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng --ivs -w output -c 1 mon0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng --ivs -w output -c 1 mon0</span><br></pre></td></tr></table></figure>
 <p>参数解释：</p>
 <ul>
 <li>–ivs 这里的设置是通过设置过滤，不再将所有无线数据保存，而只是保存可用于破解的IVS数据报文，这样可以有效地缩减保存的数据包大小；</li>
@@ -153,7 +153,7 @@
 <p>可以看到这里有3个ESSID，这是因为他们都处在同一工作频道</p>
 <p>注意：<br>这里我们虽然设置保存的文件名是”output”，<br>但是生成的文件却不是”output.ivs”，而是”output-01.ivs”。<br>这是为了方便后续破解时候的调用，所以自动对保存文件按顺序编了号。<br>在进行第二次攻击时，若使用同一文件名，就会生成名为”output-02.ivs”的文件,以此类推。<br>需要一起使用这些捕获的数据包时只要在载入文件时使用”output*.cap”即可</p>
 <h2 id="4、攻击并获取密码"><a href="#4、攻击并获取密码" class="headerlink" title="4、攻击并获取密码"></a>4、攻击并获取密码</h2><p>对目标AP使用ArpRequest注入攻击</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aireplay-ng -3 -b 40:16:9F:22:E2:42 -h 8C:3A:E3:94:7E:E4 mon0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -3 -b 40:16:9F:22:E2:42 -h 8C:3A:E3:94:7E:E4 mon0</span><br></pre></td></tr></table></figure>
 <p>参数解释：</p>
 <ul>
 <li>-3 指采用ARPRequesr注入攻击模式；</li>
@@ -165,7 +165,7 @@
 <p>在等待片刻之后，一旦成功截获到ARP请求报文，我们将会看到大量ARP报文快速交互的情况出现。<br>此时回到airodump-ng的界面查看，在下图中我们可以看到，作为”FAST_22E242”的”#Data”和”Frames”栏的数字在飞速递增。<br>使用aircrack-ng，开始破解WEP密码。<br>在抓取的无线数据报文达到了一定数量后，一般都是指ivs值达到2万以上时，就可以开始破解，<br>若不能成功就等待数据报文的继续抓取然后多试几次。</p>
 <p>注意:<br>此处不需要将进行注入攻击的Shell关闭，而是另外开一个Shell进行同步破解。</p>
 <p>分析捕获内容破解密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng output*.ivs</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng output*.ivs</span><br></pre></td></tr></table></figure>
 <p>由于是对指定无线频道的数据包捕获，所以有的时候大家会看到如下图中一样的情景，<br>在破解的时候出现了3个AP的数据报文，这是由于这些AP都工作在一个频道所致，很常见的。<br>此时，选择我们的目标，ESSID为”FAST_22E242”的，序号为2的那个数据包即可，输入2，回车后即可开始破解。</p>
 <p><img src="//files.iternull.com/images/2015-05-25_01-0004.png" alt=""></p>
 <p>那么经过很短时间的破解后，就可以看到如下图中出现”KEY FOUND!”的提示，<br>紧跟后面的是16进制形式，再后面的ASCII部分就是密码啦，此时便可以使用该密码来连接目标AP了。<br>WEP密码分为两种16进制类型和ASCII类型,以及密码的加密长度，16进制的密码破解后不会有ASCII提示。<br>一般来说，破解64位的WEP至少需要1万ivs以上，但若是要确保破解的成功，应捕获尽可能多的ivs数据。</p>
@@ -174,21 +174,21 @@
 <li>这里的密码是”1234567890”</li>
 </ul>
 <h2 id="5、停止监听"><a href="#5、停止监听" class="headerlink" title="5、停止监听"></a>5、停止监听</h2><p>关闭监听接口</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng stop mon0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng stop mon0</span><br></pre></td></tr></table></figure>
 <p>监听网络时误把”mon0”写成”wlan0”使用以下命令关闭</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng stop wlan0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng stop wlan0</span><br></pre></td></tr></table></figure>
 <p>启动网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service network-manager start</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network-manager start</span><br></pre></td></tr></table></figure>
 <h2 id="6、Others"><a href="#6、Others" class="headerlink" title="6、Others"></a>6、Others</h2><p>若希望捕获数据包时，能够不但是捕获包括ivs的内容，而是捕获所有的无线数据包，也可以在事后分析，<br>那么可以使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng –w output -c 1 mon0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng –w output -c 1 mon0</span><br></pre></td></tr></table></figure>
 <p>就是说，不再是”–ivs”过滤，而是全部捕获，这样的话，捕获的数据包将不再是output-01.ivs，而是output-01.cap，请大家注意。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng output*.cap</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng output*.<span class="built_in">cap</span></span><br></pre></td></tr></table></figure>
 <p>ivs和cap直接的区别到底在哪儿呢？其实很简单，若只是为了破解的话，建议保存为ivs，优点是生成文件小且效率高。<br>若是为了破解后同时来对捕获的无线数据包分析的话，就选为cap，这样就能及时作出分析，比如内网IP地址、密码等，<br>当然，缺点就是文件会比较大，若是在一个复杂无线网络环境的话，短短20分钟，也有可能使得捕获的数据包大小超过200MB。</p>
 <hr>
 <p><strong> 参考： </strong></p>
 <ul>
 <li>《BT4 Linux 黑客手册》</li>
-<li><a href="http://blog.csdn.net/kibaamor/article/details/42979863" target="_blank" rel="external">利用aircrack-ng工具获取附近wifi的密码</a></li>
+<li><a href="http://blog.csdn.net/kibaamor/article/details/42979863" target="_blank" rel="noopener">利用aircrack-ng工具获取附近wifi的密码</a></li>
 </ul>
 
       
@@ -200,7 +200,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" data-id="cjhucxo6f000ls8u88kcd8127" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2015/05/25/Aircrack-ng-Attack-WEP.html" data-id="cjpxq5hdw000h9ktxumifbi9g" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -248,6 +248,8 @@
   <div class="list-group">
     <h4 class="list-group-item active">最新文章</h4>
     
+    <a href="/posts/2018/12/19/Android-eMMC-Data-Recovery.html" class="list-group-item">Android eMMC Data Recovery</a>
+    
     <a href="/posts/2017/12/26/Hacking-IP-Camera-Hehuiyan-C08.html" class="list-group-item">Hacking IP Camera (和慧眼-C08)</a>
     
     <a href="/posts/2017/06/03/YubiKey-4-GPG-Tutorial.html" class="list-group-item">YubiKey 4 PGP 功能使用教程</a>
@@ -255,8 +257,6 @@
     <a href="/posts/2017/05/22/ChameleonMini-Tutorial.html" class="list-group-item">ChameleonMini 使用教程</a>
     
     <a href="/posts/2017/05/17/YARD-Stick-One-Tutorial.html" class="list-group-item">YARD Stick One 使用教程</a>
-    
-    <a href="/posts/2017/03/01/Itead-Wall-WiFi-Smart-Socket.html" class="list-group-item">ITEAD 86式WiFi智能插座拆解</a>
     
   </div>
 </div>
@@ -269,7 +269,7 @@
     <h4 class="list-group-item active">标签云</h4>
       <div class="panel panel-default">
         <div class="panel-body">
-          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Data-Recovery/" style="font-size: 10px;">Data Recovery</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/eMMC/" style="font-size: 10px;">eMMC</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
         </div>
       </div>
   </div>

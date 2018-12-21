@@ -120,41 +120,41 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="https://ngrok.com/" target="_blank" rel="external">Ngrok</a>是一款内网端口映射的程序，可以将内部网络里的主机端口映射到外网，当然前提是你已经连接了外网</p>
+        <p><a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok</a>是一款内网端口映射的程序，可以将内部网络里的主机端口映射到外网，当然前提是你已经连接了外网</p>
 <p>使用方法很简单</p>
 <h2 id="1、随机域名分配的使用方法"><a href="#1、随机域名分配的使用方法" class="headerlink" title="1、随机域名分配的使用方法"></a>1、随机域名分配的使用方法</h2><a id="more"></a>
 <ol>
-<li>访问<a href="https://ngrok.com/" target="_blank" rel="external">Ngrok</a>官网 下载对应的二进制文件</li>
+<li>访问<a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok</a>官网 下载对应的二进制文件</li>
 <li>解压执行二进制文件（以Linux为例）</li>
 </ol>
 <p>解压文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unzip ngrok.zip</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip ngrok.zip</span><br></pre></td></tr></table></figure>
 <p>赋予执行权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 755 ngrok</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 ngrok</span><br></pre></td></tr></table></figure>
 <p>执行端口映射</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok 80</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok 80</span><br></pre></td></tr></table></figure>
 <p>这样就把本机的80端口映射到外网了，<br>执行后会返回映射的信息，在信息里可以看到随机分配的ngrok二级域名</p>
-<h2 id="2、自定义域名分配的使用方法"><a href="#2、自定义域名分配的使用方法" class="headerlink" title="2、自定义域名分配的使用方法"></a>2、自定义域名分配的使用方法</h2><p>访问<a href="https://ngrok.com/" target="_blank" rel="external">Ngrok</a>官网 注册一个账号 然后登录<br>到<a href="https://ngrok.com/dashboard" target="_blank" rel="external">Dashboard</a>页面可以看到分配的授权命令代码</p>
+<h2 id="2、自定义域名分配的使用方法"><a href="#2、自定义域名分配的使用方法" class="headerlink" title="2、自定义域名分配的使用方法"></a>2、自定义域名分配的使用方法</h2><p>访问<a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok</a>官网 注册一个账号 然后登录<br>到<a href="https://ngrok.com/dashboard" target="_blank" rel="noopener">Dashboard</a>页面可以看到分配的授权命令代码</p>
 <p>解压执行二进制文件（以Linux为例）</p>
 <p>解压文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unzip ngrok.zip</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip ngrok.zip</span><br></pre></td></tr></table></figure>
 <p>赋予执行权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 755 ngrok</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 ngrok</span><br></pre></td></tr></table></figure>
 <p>执行端口映射</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ngrok -authtoken xxxxxxxxxx 80</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok -authtoken xxxxxxxxxx 80</span><br></pre></td></tr></table></figure>
 <p>弹出映射的信息后按Ctrl+C</p>
 <p>再执行以下命令（example为你的Ngrok二级域名的名称，自己改）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ngrok -subdomain=example 8080</div></pre></td></tr></table></figure>
-<p>Ngrok常用示例（参考<a href="http://dorole.com/" target="_blank" rel="external">Dorole’s Blog</a>）<br>采用自定义二级域名steven-mbp.ngrok.com转发到本机的8080端口</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok -subdomain steven-mbp 8080</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok -subdomain=example 8080</span><br></pre></td></tr></table></figure>
+<p>Ngrok常用示例（参考<a href="http://dorole.com/" target="_blank" rel="noopener">Dorole’s Blog</a>）<br>采用自定义二级域名steven-mbp.ngrok.com转发到本机的8080端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok -subdomain steven-mbp 8080</span><br></pre></td></tr></table></figure>
 <p>TCP端口转发，这意味着可以在外网ssh到本机了，当然外网端口是随机分配的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok -proto=tcp 22</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok -proto=tcp 22</span><br></pre></td></tr></table></figure>
 <p>转发到局域网其他的机器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok 192.168.0.1:80</div></pre></td></tr></table></figure>
-<p>绑定顶级域名(付费才可用)，在<a href="https://ngrok.com/dashboard" target="_blank" rel="external">Dashboard</a>中添加域名，将域名cname解析到<a href="https://ngrok.com/" target="_blank" rel="external">ngrok.com</a>即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok -hostname test.dorole.com 8080</div></pre></td></tr></table></figure>
-<h2 id="更多使用方法详见帮助"><a href="#更多使用方法详见帮助" class="headerlink" title="更多使用方法详见帮助"></a>更多使用方法详见帮助</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok -help</div></pre></td></tr></table></figure>
-<p>感谢<a href="https://ngrok.com/" target="_blank" rel="external">Ngrok</a>开发者的帮助，官网的二进制执行文件和我的系统不兼容，给我编译了两次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok 192.168.0.1:80</span><br></pre></td></tr></table></figure>
+<p>绑定顶级域名(付费才可用)，在<a href="https://ngrok.com/dashboard" target="_blank" rel="noopener">Dashboard</a>中添加域名，将域名cname解析到<a href="https://ngrok.com/" target="_blank" rel="noopener">ngrok.com</a>即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok -hostname test.dorole.com 8080</span><br></pre></td></tr></table></figure>
+<h2 id="更多使用方法详见帮助"><a href="#更多使用方法详见帮助" class="headerlink" title="更多使用方法详见帮助"></a>更多使用方法详见帮助</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok -<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>感谢<a href="https://ngrok.com/" target="_blank" rel="noopener">Ngrok</a>开发者的帮助，官网的二进制执行文件和我的系统不兼容，给我编译了两次</p>
 
       
     </div>
@@ -165,7 +165,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2014/09/23/Ngrok-Port-Mapping.html" data-id="cjhucxo860024s8u8bsjle478" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2014/09/23/Ngrok-Port-Mapping.html" data-id="cjpxq5hg7001x9ktxz0ip20a2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -213,6 +213,8 @@
   <div class="list-group">
     <h4 class="list-group-item active">最新文章</h4>
     
+    <a href="/posts/2018/12/19/Android-eMMC-Data-Recovery.html" class="list-group-item">Android eMMC Data Recovery</a>
+    
     <a href="/posts/2017/12/26/Hacking-IP-Camera-Hehuiyan-C08.html" class="list-group-item">Hacking IP Camera (和慧眼-C08)</a>
     
     <a href="/posts/2017/06/03/YubiKey-4-GPG-Tutorial.html" class="list-group-item">YubiKey 4 PGP 功能使用教程</a>
@@ -220,8 +222,6 @@
     <a href="/posts/2017/05/22/ChameleonMini-Tutorial.html" class="list-group-item">ChameleonMini 使用教程</a>
     
     <a href="/posts/2017/05/17/YARD-Stick-One-Tutorial.html" class="list-group-item">YARD Stick One 使用教程</a>
-    
-    <a href="/posts/2017/03/01/Itead-Wall-WiFi-Smart-Socket.html" class="list-group-item">ITEAD 86式WiFi智能插座拆解</a>
     
   </div>
 </div>
@@ -234,7 +234,7 @@
     <h4 class="list-group-item active">标签云</h4>
       <div class="panel panel-default">
         <div class="panel-body">
-          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Data-Recovery/" style="font-size: 10px;">Data Recovery</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/eMMC/" style="font-size: 10px;">eMMC</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
         </div>
       </div>
   </div>
