@@ -135,7 +135,7 @@
 <p>ART 数据里存储着 WiFi 功能的配置和驱动，如果损坏或丢失 ART 都会导致你安装后的 OpenWrt 没有无线功能。<br>按住 RESET 键后打开电源，持续按住 5 秒左右就可进入 Breed 的恢复模式。确保路由器使用网线连接到了电脑后，在浏览器里输入 <code>192.168.1.1</code> 进入 Breed Web 恢复控制台。<br>在【固件更新】选项里选择【编程器固件】取消勾选保留 ART 只勾选保留 Bootloader ，上传之前使用编程器备份的 FLASH dump 文件。</p>
 <p><img src="//files.iternull.com/images/2018-12-26_01-0002.png" alt=""></p>
 <h2 id="安装-OpenWrt"><a href="#安装-OpenWrt" class="headerlink" title="安装 OpenWrt"></a>安装 OpenWrt</h2><p>恢复完成并重启后，再次手动进入 Breed 恢复模式。在【固件更新】选项里选择【常规固件】只勾选固件并上传最新的 OpenWrt factory 固件，与此同时也可备份 ART 以便后续再次用到。固件可在 TL-MR10U 的 OpenWrt 官网页面下载。</p>
-<p><img src="//files.iternull.com/images//2018-12-26_01-0003.png" alt=""></p>
+<p><img src="//files.iternull.com/images/2018-12-26_01-0003.png" alt=""></p>
 <p>OpenWrt TP-Link TL-MR10U: <a href="https://openwrt.org/toh/tp-link/tl-mr10u" target="_blank" rel="noopener">https://openwrt.org/toh/tp-link/tl-mr10u</a><br>Firmware OpenWrt Install: <a href="http://downloads.openwrt.org/releases/17.01.6/targets/ar71xx/generic/lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin" target="_blank" rel="noopener">lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin</a><br>Firmware OpenWrt Upgrade: <a href="http://downloads.openwrt.org/releases/17.01.6/targets/ar71xx/generic/lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-sysupgrade.bin" target="_blank" rel="noopener">lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-sysupgrade.bin</a></p>
 <h2 id="配置-OpenWrt"><a href="#配置-OpenWrt" class="headerlink" title="配置 OpenWrt"></a>配置 OpenWrt</h2><p>安装完成后首先在 Web 控制台里配置密码；配置子网网段以防发生冲突；配置无线功能；配置互联网访问功能，可选择使用网线连接互联网或使用无线连接到另一个可访问互联网的 WiFi AP。<br>如果你想在非本路由所在网段访问该路由器的 SSH 和 Web 控制台的话记得在密码设置页面勾选上允许从远端主机访问已经在防火墙里添加开放允许 <code>22</code> 和 <code>80</code> 端口访问。</p>
 <p>更新软件包</p>
@@ -160,7 +160,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" data-id="cjq5j8ifz002mgotxe10ftfp6" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" data-id="cjq5j9qee002nwktxzcssigkx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
