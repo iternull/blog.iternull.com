@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  <title>TP-Link TL-MR10U Install Breed Bootloader + OpenWrt | IterNull Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <link rel="alternate" href="/atom.xml" title="IterNull Blog" type="application/atom+xml">
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/lib/bootstrap.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/blog.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lib/share-box.css" type="text/css">
+  <link rel="stylesheet" href="/css/lib/highlight.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <header class="header">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" title="万物即联网，万物皆可黑；">IterNull</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+        <li class=""><a href="//www.iternull.com/">Home</a></li>
+        
+        <li class=""><a href="/about">About</a></li>
+        
+        <li class=""><a href="//blog.iternull.com/">Blog</a></li>
+        
+        <li class=""><a href="//docs.iternull.com/">Docs</a></li>
+        
+        <li class=""><a href="//www.iternull.com/projects/">Projects</a></li>
+        
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          
+            <li><a target="_blank" href="//shop.iternull.com/">Product</a></li>
+          
+            <li><a target="_blank" href="//store.iternull.com/">Store</a></li>
+          
+          </ul>
+        </li>
+        
+      </ul>
+      <div class="search">
+  <form class="navbar-form navbar-right" action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="hidden" name="q" value="site:blog.iternull.com">
+    <input type="search" class="form-control col-lg-8" name="q" results="0" placeholder="Search">
+  </form>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container">
+    <div class="blog-header">
+      <h1 class="blog-title">IterNull Blog</h1>
+      
+      <p class="lead blog-description">万物即联网，万物皆可黑；</p>
+      
+    </div>
+  </div>
+</div>
+</header>
+
+  <div class="container">
+    <div class="row">
+        <!-- 左边区域 -->
+        <div class="col-lg-9 col-md-9 col-sm-8 blog-main">
+          <article class="article blog-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      TP-Link TL-MR10U Install Breed Bootloader + OpenWrt
+    </h1>
+  
+
+
+
+    </header>
+
+    <div class="article-meta">
+      <div class="article-datetime">
+  <a href="/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" class="article-date"><time datetime="2018-12-26T15:14:20.000Z" itemprop="datePublished">2018-12-26</time></a>
+</div>
+
+      
+      
+
+    </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>淘了一个二手的 TL-MR10U 自己升级一下硬件，装个 OpenWrt 再配上 LAN-Tap 作为可随身携带的便捷抓包工具使用。<br>还是自带电源，不然拖个充电宝太麻烦了，OpenWrt 官网上也有一个 <a href="https://openwrt.org/toh/views/toh_battery-powered" target="_blank" rel="noopener">Table of Hardware: Battery powered</a> 页面列出了所有官方支持的可刷 OpenWrt 的“充电宝”。<br><a id="more"></a><br><img src="//files.iternull.com/images//2018-12-26_01-0001.jpg" alt=""></p>
+<h2 id="升级硬件"><a href="#升级硬件" class="headerlink" title="升级硬件"></a>升级硬件</h2><p>你需要购买 64MB RAM 芯片 (HY5DU121622DTP-D43) 16MB FLASH 芯片 (W25Q128)；准备热风枪拆焊台、电烙铁、助焊剂、镊子等工具；以及一个 CH341A 编程器外加宽体 SOP8 烧录座。<br>具体怎么操作可以网上找视频看看。记得别用电烙铁抵着吸锡带去拖内存焊盘上剩余的高温锡，你绝对把焊盘给弄脱落的。其实只给旁边的原件区域贴上高温胶带，在焊盘上加点助焊剂再用热风枪把新元件吹焊上去即可。<br>拆前最好先拍照，好记得原件的第一 Pin 是哪个位置，以免之后焊错方向。</p>
+<h2 id="备份原始固件"><a href="#备份原始固件" class="headerlink" title="备份原始固件"></a>备份原始固件</h2><p>把拆下的 FLASH 用编程器读出所有数据并保存到备份文件里，再把读取的数据写入到新的 64MB FLASH 芯片里，最后再把新 FLASH 焊回主板上。</p>
+<h2 id="刷入-Breed-Bootloader"><a href="#刷入-Breed-Bootloader" class="headerlink" title="刷入 Breed Bootloader"></a>刷入 Breed Bootloader</h2><p>下载未锁分区的 <a href="https://archive.openwrt.org/snapshots/trunk/ar71xx/generic/openwrt-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin" target="_blank" rel="noopener">openwrt-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin</a>  固件，用于刷入 u-boot。<br>下载完成后直接在 TP-Link 官方的 Web 控制台里上传固件进行升级，TL-MR10U 插上网线与电脑相联，等待数分钟让路由器完成重启。</p>
+<p>使用 git-bash 附带的 <code>scp</code> 工具上传 Breed Bootloader 到 TL-MR10U 的 <code>/tmp</code> 目录里。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp breed-ar9331-mr12u-r1163.bin root@192.168.1.1:/tmp/</span><br></pre></td></tr></table></figure>
+<p>通过 SSH 登录 TL-MR10U 刷入新的 U-Boot</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br><span class="line">mtd -r write breed-ar9331-mr12u.bin u-boot</span><br></pre></td></tr></table></figure>
+<p>如果出现 Could not open mtd device: u-boot Can’t open device for writing! 意味着你使用了 OpenWrt 官方正式版固件，默认是锁了 U-Boot 的，需要使用未锁分区才行。</p>
+<h2 id="还原-Atheros-ART"><a href="#还原-Atheros-ART" class="headerlink" title="还原 Atheros ART"></a>还原 Atheros ART</h2><ul>
+<li>注：如果你更换了 FLASH 芯片，不还原 Atheros ART 数据会导致你路由器无法使用 WiFi 功能！</li>
+</ul>
+<p>ART 数据里存储着 WiFi 功能的配置和驱动，如果损坏或丢失 ART 都会导致你安装后的 OpenWrt 没有无线功能。<br>按住 RESET 键后打开电源，持续按住 5 秒左右就可进入 Breed 的恢复模式。确保路由器使用网线连接到了电脑后，在浏览器里输入 <code>192.168.1.1</code> 进入 Breed Web 恢复控制台。<br>在【固件更新】选项里选择【编程器固件】取消勾选保留 ART 只勾选保留 Bootloader ，上传之前使用编程器备份的 FLASH dump 文件。</p>
+<p><img src="//files.iternull.com/images/2018-12-26_01-0002.png" alt=""></p>
+<h2 id="安装-OpenWrt"><a href="#安装-OpenWrt" class="headerlink" title="安装 OpenWrt"></a>安装 OpenWrt</h2><p>恢复完成并重启后，再次手动进入 Breed 恢复模式。在【固件更新】选项里选择【常规固件】只勾选固件并上传最新的 OpenWrt factory 固件，与此同时也可备份 ART 以便后续再次用到。固件可在 TL-MR10U 的 OpenWrt 官网页面下载。</p>
+<p><img src="//files.iternull.com/images//2018-12-26_01-0003.png" alt=""></p>
+<p>OpenWrt TP-Link TL-MR10U: <a href="https://openwrt.org/toh/tp-link/tl-mr10u" target="_blank" rel="noopener">https://openwrt.org/toh/tp-link/tl-mr10u</a><br>Firmware OpenWrt Install: <a href="http://downloads.openwrt.org/releases/17.01.6/targets/ar71xx/generic/lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin" target="_blank" rel="noopener">lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin</a><br>Firmware OpenWrt Upgrade: <a href="http://downloads.openwrt.org/releases/17.01.6/targets/ar71xx/generic/lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-sysupgrade.bin" target="_blank" rel="noopener">lede-17.01.6-ar71xx-generic-tl-mr10u-v1-squashfs-sysupgrade.bin</a></p>
+<h2 id="配置-OpenWrt"><a href="#配置-OpenWrt" class="headerlink" title="配置 OpenWrt"></a>配置 OpenWrt</h2><p>安装完成后首先在 Web 控制台里配置密码；配置子网网段以防发生冲突；配置无线功能；配置互联网访问功能，可选择使用网线连接互联网或使用无线连接到另一个可访问互联网的 WiFi AP。<br>如果你想在非本路由所在网段访问该路由器的 SSH 和 Web 控制台的话记得在密码设置页面勾选上允许从远端主机访问已经在防火墙里添加开放允许 <code>22</code> 和 <code>80</code> 端口访问。</p>
+<p>更新软件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg list-upgradable | cut -f 1 -d <span class="string">' '</span> | xargs opkg upgrade</span><br></pre></td></tr></table></figure>
+<p>让 OpenWrt 支持挂载 U盘</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">opkg install usbutils</span><br><span class="line">opkg install block-mount e2fsprogs kmod-usb-storage kmod-usb-storage-extras kmod-usb2 kmod-usb3 kmod-fs-ext4 kmod-fs-vfat</span><br><span class="line">opkg install kmod-nls-cp437 kmod-nls-iso8859-1 kmod-nls-utf8</span><br><span class="line">mkdir /mnt/sda1</span><br><span class="line">block detect &gt; /etc/config/fstab </span><br><span class="line">uci <span class="built_in">set</span> fstab.@mount[0].enabled=<span class="string">'1'</span></span><br><span class="line">uci commit</span><br><span class="line">uci <span class="built_in">set</span> fstab.@global[0].check_fs=<span class="string">'1'</span></span><br><span class="line">uci commit</span><br><span class="line">block mount</span><br><span class="line">service fstab <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+<p>安装常用工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opkg install tcpdump htop lsof</span><br></pre></td></tr></table></figure>
+<h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><p>因为 ART 的问题我把官网所有能下载的 TL-MR10U 固件都刷了一遍；网上搜索到我 WiFi 不能用的解决办法都是修改 <code>/etc</code> 目录里的配置文件，然而我连无线网卡都识别不到。。。<br>TP-Link TL-MR10U 目前早已停产，能买到的都是二手的，另外这个系列还有 TL-MR11U, TL-MR12U, TL-MR13U 可以选择。</p>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><ul>
+<li><a href="https://oldwiki.archive.openwrt.org/doc/howto/generic.flashing" target="_blank" rel="noopener">Installing OpenWrt (Old OpenWrt Wiki)</a></li>
+<li><a href="https://www.cnblogs.com/11hwu2/articles/3702313.html" target="_blank" rel="noopener">Openwrt中的Art区域</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="https://blog.iternull.com/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" data-id="cjq5i5crs005p3wtx6eeluqi4" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Breed-Bootloader/">Breed Bootloader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TL-MR10U/">TL-MR10U</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  
+  <li role="presentation">
+    <a href="/posts/2018/12/19/Android-eMMC-Data-Recovery.html" id="article-nav-older" class="btn btn-default">
+      <span class="article-nav-link-title">Android eMMC Data Recovery</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <!-- 右边区域 -->
+        <div class="col-lg-3 col-md-3 col-sm-4 blog-sidebar">
+          <div class="row-offcanvas row-offcanvas-left">
+  
+    
+<div id="widget-recent-posts" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">最新文章</h4>
+    
+    <a href="/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" class="list-group-item">TP-Link TL-MR10U Install Breed Bootloader + OpenWrt</a>
+    
+    <a href="/posts/2018/12/19/Android-eMMC-Data-Recovery.html" class="list-group-item">Android eMMC Data Recovery</a>
+    
+    <a href="/posts/2017/12/26/Hacking-IP-Camera-Hehuiyan-C08.html" class="list-group-item">Hacking IP Camera (和慧眼-C08)</a>
+    
+    <a href="/posts/2017/06/03/YubiKey-4-GPG-Tutorial.html" class="list-group-item">YubiKey 4 PGP 功能使用教程</a>
+    
+    <a href="/posts/2017/05/22/ChameleonMini-Tutorial.html" class="list-group-item">ChameleonMini 使用教程</a>
+    
+  </div>
+</div>
+
+
+  
+    
+<div id="widget-tagcloud" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">标签云</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="/tags/315-MHz/" style="font-size: 10px;">315 MHz</a> <a href="/tags/433-MHz/" style="font-size: 16px;">433 MHz</a> <a href="/tags/ADS-B/" style="font-size: 10px;">ADS-B</a> <a href="/tags/Aircrack-ng/" style="font-size: 12px;">Aircrack-ng</a> <a href="/tags/Android/" style="font-size: 12px;">Android</a> <a href="/tags/Arduino/" style="font-size: 12px;">Arduino</a> <a href="/tags/Attack/" style="font-size: 12px;">Attack</a> <a href="/tags/Breed-Bootloader/" style="font-size: 10px;">Breed Bootloader</a> <a href="/tags/Brute-Force/" style="font-size: 10px;">Brute Force</a> <a href="/tags/ChameleonMini/" style="font-size: 10px;">ChameleonMini</a> <a href="/tags/DOS/" style="font-size: 10px;">DOS</a> <a href="/tags/Data-Recovery/" style="font-size: 10px;">Data Recovery</a> <a href="/tags/Decoding/" style="font-size: 10px;">Decoding</a> <a href="/tags/EMP/" style="font-size: 10px;">EMP</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/GPG/" style="font-size: 10px;">GPG</a> <a href="/tags/GoAgent/" style="font-size: 10px;">GoAgent</a> <a href="/tags/Hacking/" style="font-size: 10px;">Hacking</a> <a href="/tags/Hardware/" style="font-size: 14px;">Hardware</a> <a href="/tags/Hexo/" style="font-size: 14px;">Hexo</a> <a href="/tags/IPCamera/" style="font-size: 10px;">IPCamera</a> <a href="/tags/ITEAD/" style="font-size: 10px;">ITEAD</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Kali-Linux/" style="font-size: 12px;">Kali Linux</a> <a href="/tags/Keyborad/" style="font-size: 10px;">Keyborad</a> <a href="/tags/Links/" style="font-size: 10px;">Links</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Lock/" style="font-size: 10px;">Lock</a> <a href="/tags/Make/" style="font-size: 10px;">Make</a> <a href="/tags/Mouse/" style="font-size: 10px;">Mouse</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/NFC/" style="font-size: 10px;">NFC</a> <a href="/tags/NetHunter/" style="font-size: 10px;">NetHunter</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Ngrok/" style="font-size: 10px;">Ngrok</a> <a href="/tags/Nightcore/" style="font-size: 10px;">Nightcore</a> <a href="/tags/OpenVAS/" style="font-size: 12px;">OpenVAS</a> <a href="/tags/OpenWrt/" style="font-size: 10px;">OpenWrt</a> <a href="/tags/PGP/" style="font-size: 10px;">PGP</a> <a href="/tags/RC-Switch/" style="font-size: 10px;">RC Switch</a> <a href="/tags/RC522/" style="font-size: 10px;">RC522</a> <a href="/tags/RFID/" style="font-size: 12px;">RFID</a> <a href="/tags/Radio/" style="font-size: 12px;">Radio</a> <a href="/tags/Raspberry-Pi/" style="font-size: 16px;">Raspberry Pi</a> <a href="/tags/Reaver/" style="font-size: 10px;">Reaver</a> <a href="/tags/Reverse-Engineering/" style="font-size: 10px;">Reverse Engineering</a> <a href="/tags/SecUSB/" style="font-size: 10px;">SecUSB</a> <a href="/tags/Selfoss/" style="font-size: 10px;">Selfoss</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Smart-Socket/" style="font-size: 10px;">Smart Socket</a> <a href="/tags/Sphinx/" style="font-size: 10px;">Sphinx</a> <a href="/tags/Synergy/" style="font-size: 10px;">Synergy</a> <a href="/tags/TL-MR10U/" style="font-size: 10px;">TL-MR10U</a> <a href="/tags/Text/" style="font-size: 10px;">Text</a> <a href="/tags/ToTop/" style="font-size: 10px;">ToTop</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Tor/" style="font-size: 12px;">Tor</a> <a href="/tags/Tor-Browser/" style="font-size: 10px;">Tor Browser</a> <a href="/tags/Twitch/" style="font-size: 10px;">Twitch</a> <a href="/tags/USB/" style="font-size: 14px;">USB</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/WEP/" style="font-size: 10px;">WEP</a> <a href="/tags/WPA/" style="font-size: 10px;">WPA</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Weibo/" style="font-size: 10px;">Weibo</a> <a href="/tags/WiFi/" style="font-size: 18px;">WiFi</a> <a href="/tags/WinSetupFromUSB/" style="font-size: 10px;">WinSetupFromUSB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/YARD-Stick-One/" style="font-size: 10px;">YARD Stick One</a> <a href="/tags/YubiKey/" style="font-size: 10px;">YubiKey</a> <a href="/tags/bash-completion/" style="font-size: 10px;">bash-completion</a> <a href="/tags/eMMC/" style="font-size: 10px;">eMMC</a> <a href="/tags/onion/" style="font-size: 10px;">onion</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+<div id="widget-blogroll" class="widget">
+  <div class="list-group">
+    <h4 class="list-group-item active">友情链接</h4>
+    
+    <a class="list-group-item" href="https://blog.hakr.xyz/" target="_blank">ZnHoCn&#39;s Blog</a>
+    
+    <a class="list-group-item" href="https://freedom.moe/" target="_blank">音符の新世界</a>
+    
+    <a class="list-group-item" href="https://ysicing.net/" target="_blank">YsiCing&#39;s Blog</a>
+    
+    <a class="list-group-item" href="http://www.wangqianfang.com/" target="_blank">往前方</a>
+    
+    <a class="list-group-item" href="https://blog.nyan.im/" target="_blank">Yay Ka-Boom-Boom</a>
+    
+    <a class="list-group-item" href="http://k1two2.cnblogs.com/" target="_blank">K1two2&#39;s Geek Hub</a>
+    
+  </div>
+</div>
+
+
+  
+</div>
+
+        </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      <span>&copy; 2018 IterNull</span><br>
+      <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></span>
+      <span>& Theme by <a href="https://github.com/iternull/hexo-theme-cyborg-blog" target="_blank">Cyborg-Blog</a></span>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
