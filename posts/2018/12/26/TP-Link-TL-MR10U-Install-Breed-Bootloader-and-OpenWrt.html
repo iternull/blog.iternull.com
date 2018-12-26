@@ -126,8 +126,8 @@
 <h2 id="刷入-Breed-Bootloader"><a href="#刷入-Breed-Bootloader" class="headerlink" title="刷入 Breed Bootloader"></a>刷入 Breed Bootloader</h2><p>下载未锁分区的 <a href="https://archive.openwrt.org/snapshots/trunk/ar71xx/generic/openwrt-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin" target="_blank" rel="noopener">openwrt-ar71xx-generic-tl-mr10u-v1-squashfs-factory.bin</a>  固件，用于刷入 u-boot。<br>下载完成后直接在 TP-Link 官方的 Web 控制台里上传固件进行升级，TL-MR10U 插上网线与电脑相联，等待数分钟让路由器完成重启。</p>
 <p>使用 git-bash 附带的 <code>scp</code> 工具上传 Breed Bootloader 到 TL-MR10U 的 <code>/tmp</code> 目录里。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp breed-ar9331-mr12u-r1163.bin root@192.168.1.1:/tmp/</span><br></pre></td></tr></table></figure>
-<p>通过 SSH 登录 TL-MR10U 刷入新的 U-Boot</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br><span class="line">mtd -r write breed-ar9331-mr12u.bin u-boot</span><br></pre></td></tr></table></figure>
+<p>通过 SSH 登录 TL-MR10U 刷入新的 <a href="https://breed.hackpascal.net/EOL/breed-ar9331-mr12u-r1163.bin" target="_blank" rel="noopener">Breed Bootloader</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br><span class="line">mtd -r write breed-ar9331-mr12u-r1163.bin u-boot</span><br></pre></td></tr></table></figure>
 <p>如果出现 Could not open mtd device: u-boot Can’t open device for writing! 意味着你使用了 OpenWrt 官方正式版固件，默认是锁了 U-Boot 的，需要使用未锁分区才行。</p>
 <h2 id="还原-Atheros-ART"><a href="#还原-Atheros-ART" class="headerlink" title="还原 Atheros ART"></a>还原 Atheros ART</h2><ul>
 <li>注：如果你更换了 FLASH 芯片，不还原 Atheros ART 数据会导致你路由器无法使用 WiFi 功能！</li>
@@ -159,7 +159,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://blog.iternull.com/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" data-id="cjq5i5crs005p3wtx6eeluqi4" class="article-share-link">
+      <a data-url="https://blog.iternull.com/posts/2018/12/26/TP-Link-TL-MR10U-Install-Breed-Bootloader-and-OpenWrt.html" data-id="cjq5j10ko002qbotx1ovek69o" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
